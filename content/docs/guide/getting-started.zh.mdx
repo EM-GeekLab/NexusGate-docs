@@ -1,0 +1,137 @@
+---
+title: 快速开始
+description: 快速部署和使用 NexusGate 的指南
+icon: Play
+---
+
+本指南将帮助您快速部署 NexusGate 并开始使用。
+
+## 前置要求
+
+- Docker 和 Docker Compose
+- 至少一个 AI 服务商的 API Key（如 OpenAI、Anthropic、DeepSeek 等）
+
+## 部署 NexusGate
+
+### 使用 Docker Compose（推荐）
+
+1. 克隆仓库：
+
+```bash
+git clone https://github.com/EM-GeekLab/NexusGate.git
+cd NexusGate
+```
+
+2. 复制配置文件：
+
+```bash
+cp .env.example .env
+```
+
+3. 编辑 `.env` 文件，配置您的服务：
+
+```bash
+# 数据库配置
+DATABASE_URL=postgresql://postgres:postgres@db:5432/nexusgate
+
+# JWT 密钥（请更改为随机字符串）
+JWT_SECRET=your-secret-key
+
+# 上游服务商配置
+OPENAI_API_KEY=sk-xxx
+ANTHROPIC_API_KEY=sk-ant-xxx
+DEEPSEEK_API_KEY=sk-xxx
+```
+
+4. 启动服务：
+
+```bash
+docker compose up -d
+```
+
+5. 访问控制台：
+
+打开浏览器访问 <ServerUrl />
+
+## 创建 API Key
+
+1. 登录 NexusGate 控制台
+2. 进入「API Keys」页面
+3. 点击「创建 API Key」
+4. 保存生成的 Key（只显示一次）
+
+## 配置下游工具
+
+获取 API Key 后，您可以在下游工具中使用以下配置：
+
+| 配置项 | 值 |
+|--------|-----|
+| API 地址 | <ServerUrl path="/v1" /> |
+| API Key | <ApiKeyLink /> |
+| 模型 | 根据上游配置选择 |
+
+### 示例：配置 Chatbox
+
+1. 打开 Chatbox 设置
+2. 选择「OpenAI API」
+3. 填入配置：
+   - API Host: <ServerUrl />
+   - API Path: `/v1/chat/completions`
+   - API Key: <ApiKeyLink />
+
+## 验证连接
+
+使用 curl 测试 API 是否正常：
+
+<ConfigCode lang="bash">
+<CodeLine>curl -X POST <CodeString>"<ServerUrl path="/v1/chat/completions" />"</CodeString> {"\\"}</CodeLine>
+<CodeLine>  -H <CodeString>"Content-Type: application/json"</CodeString> {"\\"}</CodeLine>
+<CodeLine>  -H <CodeString>"Authorization: Bearer <ApiKeyLink />"</CodeString> {"\\"}</CodeLine>
+<CodeLine>  -d <CodeString>{`'{"model": "gpt-4o", "messages": [{"role": "user", "content": "Hello!"}]}'`}</CodeString></CodeLine>
+</ConfigCode>
+
+成功响应示例：
+
+```json
+{
+  "id": "chatcmpl-xxx",
+  "object": "chat.completion",
+  "created": 1234567890,
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Hello! How can I help you today?"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 10,
+    "completion_tokens": 9,
+    "total_tokens": 19
+  }
+}
+```
+
+## 下一步
+
+- 查看 [集成指南](../integrations/dev-tools/claude-code) 配置更多工具
+- 了解 [兼容性矩阵](../compatibility/matrix) 查看支持的服务商和工具
+- 参考 [上游服务商](../compatibility/upstream) 配置更多模型
+
+## 常见问题
+
+### 连接失败？
+
+1. 检查 NexusGate 服务是否正常运行：`docker compose ps`
+2. 确认 API 地址格式正确（需要包含 `/v1`）
+3. 验证 API Key 是否有效
+
+### 模型不可用？
+
+1. 确认已在 NexusGate 中配置了对应的上游服务商
+2. 检查上游服务商的 API Key 是否正确
+3. 查看 NexusGate 日志：`docker compose logs -f`

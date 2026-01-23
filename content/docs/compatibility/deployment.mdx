@@ -1,0 +1,286 @@
+---
+title: Deployment Frameworks
+description: NexusGate compatibility with LLM deployment frameworks
+icon: Server
+---
+
+This page explains how to integrate NexusGate with various local model deployment frameworks.
+
+<Callout type="info">
+Self-hosted model services are configured as upstream providers through the NexusGate web console. Add them in the **Upstreams** page using their OpenAI-compatible API endpoint.
+</Callout>
+
+## vLLM
+
+vLLM is a high-performance LLM inference framework that supports optimizations like PagedAttention.
+
+### Deploy vLLM
+
+```bash
+# Using Docker
+docker run --runtime nvidia --gpus all \
+  -v ~/.cache/huggingface:/root/.cache/huggingface \
+  -p 8000:8000 \
+  vllm/vllm-openai:latest \
+  --model Qwen/Qwen2.5-7B-Instruct \
+  --served-model-name qwen2.5-7b
+```
+
+### Configure in NexusGate
+
+In the NexusGate console, add a new upstream provider:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | OpenAI Compatible |
+| Base URL | `http://localhost:8000/v1` |
+| API Key | Your vLLM API Key (if configured) |
+| Models | `qwen2.5-7b` |
+
+### Compatibility
+
+| Feature | Status |
+|---------|--------|
+| Chat Completions | Supported |
+| Streaming | Supported |
+| Usage Statistics | Supported |
+| Function Calling | Supported (model-dependent) |
+| Vision | Supported (requires vision model) |
+
+## SGLang
+
+SGLang is an efficient LLM serving framework focused on structured generation.
+
+### Deploy SGLang
+
+```bash
+# Install
+pip install sglang[all]
+
+# Start service
+python -m sglang.launch_server \
+  --model-path Qwen/Qwen2.5-7B-Instruct \
+  --port 8000 \
+  --host 0.0.0.0
+```
+
+### Configure in NexusGate
+
+In the NexusGate console, add a new upstream provider:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | OpenAI Compatible |
+| Base URL | `http://localhost:8000/v1` |
+| Models | `Qwen/Qwen2.5-7B-Instruct` |
+
+### Compatibility
+
+| Feature | Status |
+|---------|--------|
+| Chat Completions | Supported |
+| Streaming | Supported |
+| Usage Statistics | Supported |
+| Function Calling | Partial support |
+| Vision | Supported (requires vision model) |
+
+### Known Issues
+
+SGLang's `reasoning_tokens` return format may differ from standard. Consider this when using reasoning models.
+
+## TGI (Text Generation Inference)
+
+TGI is a high-performance inference service from Hugging Face.
+
+### Deploy TGI
+
+```bash
+docker run --gpus all --shm-size 1g \
+  -p 8080:80 \
+  -v ~/.cache/huggingface:/data \
+  ghcr.io/huggingface/text-generation-inference:latest \
+  --model-id Qwen/Qwen2.5-7B-Instruct \
+  --max-input-length 4096 \
+  --max-total-tokens 8192
+```
+
+### Configure in NexusGate
+
+In the NexusGate console, add a new upstream provider:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | OpenAI Compatible |
+| Base URL | `http://localhost:8080/v1` |
+| Models | `Qwen/Qwen2.5-7B-Instruct` |
+
+### Compatibility
+
+| Feature | Status |
+|---------|--------|
+| Chat Completions | Supported |
+| Streaming | Supported |
+| Usage Statistics | Supported |
+| Function Calling | Model-dependent |
+| Vision | Not supported |
+
+## Ollama
+
+Ollama is an easy-to-use local model runtime tool.
+
+### Deploy Ollama
+
+```bash
+# Install Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Pull model
+ollama pull llama3.2
+
+# Start service (default port 11434)
+ollama serve
+```
+
+### Configure in NexusGate
+
+In the NexusGate console, add a new upstream provider:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | Ollama |
+| Base URL | `http://localhost:11434/v1` |
+| Models | `llama3.2`, `qwen2.5`, `deepseek-r1` |
+
+### Compatibility
+
+| Feature | Status |
+|---------|--------|
+| Chat Completions | Supported |
+| Streaming | Supported |
+| Usage Statistics | Supported |
+| Function Calling | Model-dependent |
+| Vision | Supported (requires vision model) |
+
+### Ollama Special Configuration
+
+Enable cross-origin requests if needed:
+
+```bash
+# Set environment variable
+export OLLAMA_ORIGINS="*"
+```
+
+## llama.cpp
+
+llama.cpp provides lightweight CPU/GPU inference capabilities.
+
+### Deploy llama.cpp Server
+
+```bash
+# Build
+git clone https://github.com/ggerganov/llama.cpp
+cd llama.cpp
+make LLAMA_CUDA=1
+
+# Start service
+./llama-server \
+  -m models/qwen2.5-7b.gguf \
+  --host 0.0.0.0 \
+  --port 8080
+```
+
+### Configure in NexusGate
+
+In the NexusGate console, add a new upstream provider:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | OpenAI Compatible |
+| Base URL | `http://localhost:8080/v1` |
+| Models | `qwen2.5-7b` |
+
+### Compatibility
+
+| Feature | Status |
+|---------|--------|
+| Chat Completions | Supported |
+| Streaming | Supported |
+| Usage Statistics | Supported |
+| Function Calling | Not supported |
+| Vision | Multimodal model needed |
+
+## MindIE
+
+MindIE is Huawei's AI inference engine.
+
+### Configure in NexusGate
+
+In the NexusGate console, add a new upstream provider:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | OpenAI Compatible |
+| Base URL | `http://localhost:8000/v1` |
+| Models | Your model name |
+
+### Compatibility
+
+| Feature | Status |
+|---------|--------|
+| Chat Completions | Supported |
+| Streaming | Supported |
+| Usage Statistics | Partial (version-dependent) |
+| Function Calling | Partial support |
+| Vision | Supported |
+
+## Performance Tuning Tips
+
+### vLLM
+
+```bash
+# Optimization parameters
+--tensor-parallel-size 2      # Multi-GPU parallelism
+--gpu-memory-utilization 0.9  # GPU memory usage
+--max-num-seqs 256           # Max concurrent sequences
+```
+
+### Ollama
+
+```bash
+# Environment variables
+OLLAMA_NUM_PARALLEL=4        # Parallel requests
+OLLAMA_MAX_LOADED_MODELS=2   # Max loaded models
+```
+
+### llama.cpp
+
+```bash
+# Start parameters
+--n-gpu-layers 35            # GPU layers
+--batch-size 512            # Batch size
+--ctx-size 8192             # Context length
+```
+
+## FAQ
+
+### Q: Model list shows incorrectly?
+
+Local deployment frameworks' `/models` endpoint may return different formats. Manually specify the model names when configuring the upstream in NexusGate.
+
+### Q: Usage statistics inaccurate?
+
+Some frameworks' token counting implementation may be inconsistent. This is a known limitation of certain self-hosted inference frameworks.
+
+### Q: Streaming response interrupted?
+
+1. Check network connection stability
+2. Increase timeout configuration
+3. Check model service logs
+
+## Related Links
+
+- [vLLM Documentation](https://docs.vllm.ai/)
+- [SGLang Documentation](https://github.com/sgl-project/sglang)
+- [TGI Documentation](https://huggingface.co/docs/text-generation-inference)
+- [Ollama Documentation](https://ollama.com/)
+- [llama.cpp Documentation](https://github.com/ggerganov/llama.cpp)

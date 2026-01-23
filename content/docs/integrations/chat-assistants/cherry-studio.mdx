@@ -1,0 +1,201 @@
+---
+title: Cherry Studio
+description: Configure Cherry Studio with NexusGate
+icon: Sparkles
+---
+
+Cherry Studio is a feature-rich desktop AI assistant that supports multi-model conversations, knowledge bases, agents, and other advanced features.
+
+## Overview
+
+- **Official Website**: [cherry-ai.com](https://cherry-ai.com/)
+- **GitHub**: [kangfenmao/cherry-studio](https://github.com/kangfenmao/cherry-studio)
+- **Platforms**: Windows, macOS, Linux
+- **Features**:
+  - Multi-model support
+  - Local knowledge base
+  - AI Agents
+  - Plugin system
+
+## Configuration Steps
+
+### 1. Download and Install
+
+Visit [Cherry Studio Official Site](https://cherry-ai.com/) or GitHub Releases to download the installer.
+
+```bash
+# macOS (Homebrew)
+brew install --cask cherry-studio
+```
+
+### 2. Open Settings
+
+1. Launch Cherry Studio
+2. Click the "Settings" icon in the bottom left
+3. Select "Model Services"
+
+### 3. Add OpenAI-Compatible Service
+
+1. Click "Add Service"
+2. Select "OpenAI"
+3. Fill in the configuration:
+
+| Config Item | Value |
+|-------------|-------|
+| Service Name | `NexusGate` |
+| API URL | <ServerUrl path="/api/v1" /> |
+| API Key | <ApiKeyLink /> |
+
+{/* TODO: Add Cherry Studio config screenshot */}
+{/* ![Cherry Studio Configuration](./images/cherry-studio-config.png) */}
+
+### 4. Add Models
+
+Add available models under the service configuration:
+
+```
+gpt-4o
+gpt-4o-mini
+claude-sonnet-4-20250514
+deepseek-chat
+deepseek-reasoner
+```
+
+### 5. Save and Test
+
+Click "Save" and create a new conversation to test.
+
+## Usage Examples
+
+### Basic Conversation
+
+1. Click "+ New Chat"
+2. Select a model
+3. Start chatting
+
+### Multi-Model Conversation
+
+Cherry Studio supports using multiple models in the same conversation:
+
+1. After sending a message, click "Try another model"
+2. Select another model for a different response
+3. Compare outputs from different models
+
+### Using Agents
+
+1. Go to "Agents" page
+2. Select a preset agent or create a new one
+3. Configure the agent's system prompt and tools
+
+### Knowledge Base Q&A
+
+1. Go to "Knowledge Base" page
+2. Create a new knowledge base
+3. Upload documents (PDF, Word, Markdown, etc.)
+4. Reference the knowledge base in conversations
+
+## Advanced Configuration
+
+### Configure Multiple Providers
+
+You can configure multiple service providers:
+
+```yaml
+Provider 1: NexusGate (OpenAI Compatible)
+  - gpt-4o
+  - gpt-4o-mini
+  - claude-sonnet-4-20250514
+
+Provider 2: Local Models (Ollama)
+  - llama3
+  - mistral
+```
+
+### Custom Agents
+
+Create domain-specific agents:
+
+```yaml
+Name: Code Assistant
+System Prompt: |
+  You are a senior software engineer.
+  You excel at:
+  - Code review and optimization
+  - Architecture design
+  - Bug fixing
+  - Unit test writing
+
+  Please respond in English with code comments.
+
+Model: gpt-4o
+Tools: Code execution, File read/write
+```
+
+### Configure Knowledge Base
+
+Optimize knowledge base retrieval:
+
+| Setting | Description | Recommended |
+|---------|-------------|-------------|
+| Chunk Size | Document chunk length | 500 |
+| Overlap Size | Chunk overlap length | 50 |
+| Top K | Number of results | 5 |
+| Similarity Threshold | Minimum similarity | 0.7 |
+
+### Configure Plugins
+
+Cherry Studio supports plugin extensions:
+
+1. Go to Settings → Plugins
+2. Browse available plugins
+3. Install and configure
+
+## Keyboard Shortcuts
+
+| Shortcut | Function |
+|----------|----------|
+| `Ctrl+N` | New conversation |
+| `Ctrl+Enter` | Send message |
+| `Ctrl+Shift+N` | New Agent conversation |
+| `Ctrl+K` | Quick switch |
+| `Ctrl+,` | Open settings |
+
+## FAQ
+
+### Q: Model list is empty?
+
+1. Check if API URL is correct
+2. Manually add model names
+3. Verify NexusGate service status
+
+### Q: Knowledge base retrieval inaccurate?
+
+1. Adjust chunk size
+2. Optimize document format
+3. Adjust similarity threshold
+
+### Q: Agent tool calls failing?
+
+1. Ensure using a model that supports Function Calling
+2. Check tool configuration
+3. View error logs
+
+### Q: How to export conversation history?
+
+1. Right-click on the conversation
+2. Select "Export"
+3. Choose format (Markdown, JSON, PDF)
+
+## Data Sync
+
+Cherry Studio supports data synchronization:
+
+1. Go to Settings → Sync
+2. Configure WebDAV or other sync services
+3. Enable auto-sync
+
+## Related Links
+
+- [Cherry Studio Official Site](https://cherry-ai.com/)
+- [Cherry Studio GitHub](https://github.com/kangfenmao/cherry-studio)
+- [Documentation](https://docs.cherry-ai.com/)

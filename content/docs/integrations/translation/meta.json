@@ -1,0 +1,9 @@
+{
+  "title": "Translation",
+  "title.zh": "翻译工具",
+  "pages": [
+    "bob",
+    "immersive-translate",
+    "pdf-math-translate"
+  ]
+}

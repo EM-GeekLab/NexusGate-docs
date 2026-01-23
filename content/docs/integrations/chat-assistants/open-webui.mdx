@@ -1,0 +1,233 @@
+---
+title: Open WebUI
+description: Configure Open WebUI with NexusGate
+icon: Globe
+---
+
+Open WebUI is a powerful, feature-rich, and user-friendly self-hosted web interface for various LLM backends, offering an excellent user experience.
+
+## Overview
+
+- **Official Website**: [openwebui.com](https://openwebui.com/)
+- **GitHub**: [open-webui/open-webui](https://github.com/open-webui/open-webui)
+- **Deployment**: Docker, Kubernetes
+- **Features**:
+  - User management system
+  - RAG knowledge base
+  - Multi-model support
+  - Plugin ecosystem
+
+## Configuration Steps
+
+### Option 1: Docker Deployment
+
+```bash
+docker run -d \
+  -p 3000:8080 \
+  -v open-webui:/app/backend/data \
+  -e OPENAI_API_BASE_URL="http://your-nexusgate-server:8080/api/v1" \
+  -e OPENAI_API_KEY="your-nexusgate-api-key" \
+  --name open-webui \
+  ghcr.io/open-webui/open-webui:main
+```
+
+Replace the configuration values with <ServerUrl path="/api/v1" /> and <ApiKeyLink />.
+
+### Option 2: Docker Compose
+
+Create `docker-compose.yml`:
+
+```yaml
+version: '3'
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - "3000:8080"
+    volumes:
+      - open-webui:/app/backend/data
+    environment:
+      - OPENAI_API_BASE_URL=http://your-nexusgate-server:8080/api/v1
+      - OPENAI_API_KEY=your-nexusgate-api-key
+      - WEBUI_AUTH=true
+    restart: unless-stopped
+
+volumes:
+  open-webui:
+```
+
+Start the service:
+
+```bash
+docker compose up -d
+```
+
+### 3. First Access
+
+1. Open `http://localhost:3000`
+2. Create an admin account
+3. Complete initial setup
+
+{/* TODO: Add Open WebUI setup screenshot */}
+{/* ![Open WebUI Setup](./images/open-webui-setup.png) */}
+
+### 4. Configure Models
+
+If you need to add more models in the UI:
+
+1. Go to "Settings" → "Admin Settings"
+2. Select "Connections"
+3. Configure OpenAI-compatible API
+
+## Usage Examples
+
+### Basic Conversation
+
+1. Click "New Chat"
+2. Select a model
+3. Start chatting
+
+### Using RAG
+
+1. Go to "Documents"
+2. Upload files
+3. Use `#` to reference documents in conversation
+
+### Create Prompt Templates
+
+1. Go to "Prompts"
+2. Create new template
+3. Use in conversations
+
+### Multi-User Management
+
+Administrators can:
+1. Create user accounts
+2. Set user permissions
+3. Assign model access rights
+
+## Advanced Configuration
+
+### Environment Variables
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `OPENAI_API_BASE_URL` | API address | `http://server:8080/api/v1` |
+| `OPENAI_API_KEY` | API key | `sk-xxx` |
+| `WEBUI_AUTH` | Enable authentication | `true` |
+| `WEBUI_SECRET_KEY` | JWT secret | `random-string` |
+| `DEFAULT_MODELS` | Default model | `gpt-4o` |
+| `MODEL_FILTER_ENABLED` | Enable model filtering | `true` |
+| `MODEL_FILTER_LIST` | Allowed models | `gpt-4o;gpt-4o-mini` |
+
+### Configure RAG
+
+Configure RAG in admin settings:
+
+```yaml
+# Document settings
+chunk_size: 500
+chunk_overlap: 50
+embedding_model: text-embedding-3-small
+
+# Retrieval settings
+top_k: 5
+relevance_threshold: 0.7
+```
+
+### Configure Webhooks
+
+Support for webhook notifications:
+
+```yaml
+webhooks:
+  - url: https://your-webhook-url
+    events:
+      - message.created
+      - chat.created
+    secret: webhook-secret
+```
+
+### Custom Interface
+
+```yaml
+# Custom settings
+title: "AI Assistant"
+description: "AI conversation platform powered by NexusGate"
+favicon_url: "/favicon.ico"
+logo_url: "/logo.png"
+```
+
+## Features
+
+### User System
+
+- Multi-user support
+- Role-based permissions
+- Usage statistics
+
+### Knowledge Base
+
+- Multiple document formats
+- Vector search
+- Citation tracking
+
+### Tools & Plugins
+
+- Web search
+- Code execution
+- Image generation
+
+### Model Management
+
+- Multi-model configuration
+- Model permission control
+- Usage analytics
+
+## FAQ
+
+### Q: Cannot connect to API?
+
+1. Check `OPENAI_API_BASE_URL` format
+2. Ensure NexusGate is accessible from Docker container
+3. Use `host.docker.internal` to access host services
+
+```bash
+# If NexusGate is on host
+-e OPENAI_API_BASE_URL="http://host.docker.internal:8080/api/v1"
+```
+
+### Q: Model list is empty?
+
+1. Check API connection
+2. Manually configure model list
+3. Enable model filtering and set allowed list
+
+### Q: Poor RAG retrieval results?
+
+1. Adjust chunk_size
+2. Optimize document format
+3. Choose a better embedding model
+
+### Q: How to backup data?
+
+```bash
+# Backup Docker volume
+docker run --rm \
+  -v open-webui:/data \
+  -v $(pwd):/backup \
+  alpine tar czf /backup/open-webui-backup.tar.gz /data
+```
+
+### Q: How to update version?
+
+```bash
+docker pull ghcr.io/open-webui/open-webui:main
+docker compose up -d
+```
+
+## Related Links
+
+- [Open WebUI Official Site](https://openwebui.com/)
+- [Open WebUI GitHub](https://github.com/open-webui/open-webui)
+- [Official Documentation](https://docs.openwebui.com/)

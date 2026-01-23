@@ -1,0 +1,157 @@
+---
+title: Dify
+description: 配置 Dify 使用 NexusGate
+icon: Workflow
+---
+
+Dify 是一个开源的 LLM 应用开发平台，支持通过可视化工作流、RAG 管道和 Agent 能力构建 AI 驱动的应用。
+
+## 工具简介
+
+- **官方网站**: [dify.ai](https://dify.ai/)
+- **GitHub**: [langgenius/dify](https://github.com/langgenius/dify)
+- **部署方式**: 自托管或云服务
+- **特点**:
+  - 可视化工作流构建器
+  - RAG 管道支持
+  - Agent 编排
+  - 多模型管理
+  - API 和 SDK 访问
+
+## 配置步骤
+
+### 1. 部署 Dify
+
+#### 使用 Docker
+
+```bash
+git clone https://github.com/langgenius/dify.git
+cd dify/docker
+docker compose up -d
+```
+
+访问 Dify: `http://localhost:3000`
+
+### 2. 添加模型供应商
+
+1. 登录 Dify 控制台
+2. 进入 **设置 > 模型供应商**
+3. 点击 **添加模型供应商**
+4. 选择 **OpenAI-API-compatible**
+
+### 3. 配置 NexusGate
+
+填入配置：
+
+| 配置项 | 值 |
+|--------|-----|
+| 模型供应商名称 | `NexusGate` |
+| API Key | <ApiKeyLink /> |
+| API Endpoint URL | <ServerUrl path="/v1" /> |
+
+### 4. 添加模型
+
+添加供应商后，添加具体模型：
+
+1. 点击 **添加模型**
+2. 输入模型名称（如 `gpt-4o`、`claude-sonnet-4-20250514`）
+3. 配置模型参数
+
+### 5. 测试连接
+
+创建简单应用测试：
+
+1. 进入 **工作室**
+2. 创建新的 **聊天助手**
+3. 选择 NexusGate 模型
+4. 在预览面板中测试
+
+## 使用示例
+
+### 创建聊天助手
+
+1. 进入工作室 > 创建应用
+2. 选择 **聊天助手** 类型
+3. 配置：
+   - 模型：选择 NexusGate 模型
+   - 系统提示词：定义助手行为
+   - 上下文：按需添加知识库
+
+### 构建工作流
+
+1. 创建 **工作流** 应用
+2. 添加节点：
+   - **开始** → **LLM** → **结束**
+3. 配置 LLM 节点使用 NexusGate 模型
+4. 发布并测试
+
+### 创建 RAG 应用
+
+1. 创建 **知识库**
+2. 上传文档
+3. 创建带知识库上下文的聊天助手
+4. 配置检索参数
+
+## 高级配置
+
+### 多模型配置
+
+为不同用途添加不同模型：
+
+| 模型 | 用途 |
+|------|------|
+| `gpt-4o` | 通用对话 |
+| `gpt-4o-mini` | 快速响应 |
+| `claude-sonnet-4-20250514` | 长上下文 |
+| `deepseek-chat` | 代码生成 |
+
+### Agent 配置
+
+启用 Agent 模式实现自主任务执行：
+
+1. 创建 Agent 应用
+2. 添加工具（网页搜索、代码执行等）
+3. 配置模型和系统提示词
+4. 设置迭代限制
+
+### API 集成
+
+通过 API 访问您的应用：
+
+```bash
+curl -X POST "http://localhost:3000/v1/chat-messages" \
+  -H "Authorization: Bearer YOUR_DIFY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "inputs": {},
+    "query": "你好！",
+    "response_mode": "blocking",
+    "user": "user-123"
+  }'
+```
+
+## 常见问题
+
+### Q: 模型不显示？
+
+1. 确认 API Endpoint 包含 `/v1`
+2. 检查 API Key 是否有效
+3. 确保模型名称完全匹配
+
+### Q: 工作流出错？
+
+1. 检查节点连接
+2. 验证模型配置
+3. 查看控制台错误日志
+
+### Q: 响应缓慢？
+
+1. 检查到 NexusGate 的网络连接
+2. 尝试使用较小的模型
+3. 减少上下文长度
+
+## 相关链接
+
+- [Dify 文档](https://docs.dify.ai/zh-hans)
+- [Dify GitHub](https://github.com/langgenius/dify)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

@@ -1,0 +1,77 @@
+---
+title: 介绍
+description: 了解 NexusGate 及其功能
+icon: BookOpen
+---
+
+## 什么是 NexusGate？
+
+NexusGate 是一个开源的 AI 网关服务，旨在为您提供统一的 AI 模型调用管理能力。它作为中间层，连接您的应用与各种 AI 模型服务商。
+
+## 为什么需要 NexusGate？
+
+### 1. 统一管理多个 AI 服务
+
+如果您同时使用多个 AI 服务商（如 OpenAI、Anthropic、DeepSeek），NexusGate 可以帮助您：
+
+- 集中管理所有 API Key
+- 统一监控各服务的用量
+- 简化下游工具的配置
+
+### 2. 保护您的 API Key
+
+通过 NexusGate，您可以：
+
+- 为不同用途创建独立的 API Key
+- 设置 Key 的使用限制
+- 随时撤销泄露的 Key
+
+### 3. 监控和分析
+
+NexusGate 提供详细的使用统计：
+
+- Token 使用量追踪
+- 请求成功率监控
+- Reasoning Token 统计（支持 o1 等推理模型）
+
+## 核心特性
+
+### OpenAI 兼容 API
+
+NexusGate 完全兼容 OpenAI API 格式，这意味着：
+
+- 所有支持 OpenAI API 的工具都可以直接使用
+- 无需修改现有代码，只需更改 API 地址
+- 支持 Chat Completions、Models 等核心接口
+
+### 多模型路由
+
+支持配置多个上游模型服务商：
+
+- **OpenAI**：GPT-4o、GPT-4o-mini 等
+- **Anthropic**：Claude 4 Opus/Sonnet
+- **DeepSeek**：DeepSeek-V3、DeepSeek-R1
+- **阿里云百炼**：Qwen 系列
+- **火山方舟**：豆包等模型
+- **本地部署**：vLLM、SGLang、TGI 等
+
+### 用量追踪
+
+精确统计每次请求的资源消耗：
+
+```json
+{
+  "usage": {
+    "prompt_tokens": 100,
+    "completion_tokens": 50,
+    "total_tokens": 150,
+    "reasoning_tokens": 30
+  }
+}
+```
+
+## 下一步
+
+- [快速开始](./getting-started) - 部署您的 NexusGate 实例
+- [集成指南](../integrations/dev-tools/claude-code) - 配置您的第一个下游工具
+- [兼容性矩阵](../compatibility/matrix) - 查看支持的工具和服务商

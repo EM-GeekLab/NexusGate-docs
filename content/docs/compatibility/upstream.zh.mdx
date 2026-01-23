@@ -1,0 +1,221 @@
+---
+title: 上游服务商
+description: NexusGate 与上游 LLM 服务商的兼容性
+icon: Cloud
+---
+
+本页面详细介绍 NexusGate 支持的上游 AI 服务商。
+
+<Callout type="info">
+所有上游服务商都通过 NexusGate 控制台进行配置。请进入**上游服务商**页面来添加和管理服务商。
+</Callout>
+
+## OpenAI
+
+### 支持的模型
+
+| 模型 | 类型 | 说明 |
+|------|------|------|
+| gpt-4o | Chat | 最新旗舰模型 |
+| gpt-4o-mini | Chat | 快速经济型 |
+| gpt-4-turbo | Chat | 高性能版本 |
+| o1 | Reasoning | 推理模型 |
+| o1-mini | Reasoning | 轻量推理 |
+| o3-mini | Reasoning | 最新轻量推理 |
+| text-embedding-3-small | Embedding | 小型嵌入 |
+| text-embedding-3-large | Embedding | 大型嵌入 |
+
+### 配置说明
+
+在 NexusGate 控制台中，添加 OpenAI 服务商时需要填写：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | OpenAI |
+| API Key | 您的 OpenAI API Key (`sk-...`) |
+| Base URL | `https://api.openai.com/v1`（默认） |
+
+### 特性支持
+
+- Chat Completions
+- Embeddings
+- Function Calling
+- Vision（图像理解）
+- 流式响应
+- JSON Mode
+
+## Anthropic
+
+### 支持的模型
+
+| 模型 | 类型 | 说明 |
+|------|------|------|
+| claude-opus-4-20250514 | Chat | 最强模型 |
+| claude-sonnet-4-20250514 | Chat | 平衡性能 |
+| claude-3-5-sonnet-20241022 | Chat | 上一代 |
+| claude-3-5-haiku-20241022 | Chat | 快速响应 |
+
+### 配置说明
+
+在 NexusGate 控制台中，添加 Anthropic 服务商时需要填写：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | Anthropic |
+| API Key | 您的 Anthropic API Key (`sk-ant-...`) |
+| Base URL | `https://api.anthropic.com`（默认） |
+
+### 特性支持
+
+- Chat Completions
+- Tool Use (Function Calling)
+- Vision（图像理解）
+- 流式响应
+- 长上下文 (200K)
+
+### 注意事项
+
+NexusGate 会自动将 OpenAI 格式的请求转换为 Anthropic 格式，因此下游工具可以使用标准的 OpenAI API 格式进行调用。
+
+## DeepSeek
+
+### 支持的模型
+
+| 模型 | 类型 | 说明 |
+|------|------|------|
+| deepseek-chat | Chat | 通用对话 |
+| deepseek-coder | Chat | 代码专用 |
+| deepseek-reasoner | Reasoning | 推理模型 (R1) |
+
+### 配置说明
+
+在 NexusGate 控制台中，添加 DeepSeek 服务商时需要填写：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | DeepSeek |
+| API Key | 您的 DeepSeek API Key |
+| Base URL | `https://api.deepseek.com/v1`（默认） |
+
+### 特性支持
+
+- Chat Completions
+- Function Calling
+- 流式响应
+- Reasoning Token 统计
+
+### DeepSeek-R1 特殊说明
+
+DeepSeek-R1 (deepseek-reasoner) 支持在响应中返回思考过程：
+
+```json
+{
+  "usage": {
+    "prompt_tokens": 100,
+    "completion_tokens": 500,
+    "reasoning_tokens": 400
+  }
+}
+```
+
+## 阿里云百炼
+
+### 支持的模型
+
+| 模型 | 类型 | 说明 |
+|------|------|------|
+| qwen-turbo | Chat | 快速版 |
+| qwen-plus | Chat | 增强版 |
+| qwen-max | Chat | 最强版 |
+| qwen-vl-max | Vision | 多模态 |
+| text-embedding-v3 | Embedding | 嵌入模型 |
+
+### 配置说明
+
+在 NexusGate 控制台中，添加阿里云服务商时需要填写：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | 阿里云 / DashScope |
+| API Key | 您的 DashScope API Key |
+| Base URL | `https://dashscope.aliyuncs.com/compatible-mode/v1` |
+
+### 特性支持
+
+- Chat Completions
+- Embeddings
+- Function Calling
+- Vision
+- 流式响应
+
+## 火山方舟
+
+### 支持的模型
+
+| 模型 | 类型 | 说明 |
+|------|------|------|
+| doubao-pro | Chat | 豆包专业版 |
+| doubao-lite | Chat | 豆包轻量版 |
+
+### 配置说明
+
+在 NexusGate 控制台中，添加火山方舟服务商时需要填写：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | 火山方舟 / Volcengine |
+| API Key | 您的火山方舟 API Key |
+| Base URL | `https://ark.cn-beijing.volces.com/api/v3` |
+
+### 特性支持
+
+- Chat Completions
+- Embeddings
+- Function Calling
+- Vision
+- 流式响应
+
+## Azure OpenAI
+
+### 配置说明
+
+在 NexusGate 控制台中，添加 Azure OpenAI 服务商时需要填写：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | Azure OpenAI |
+| API Key | 您的 Azure OpenAI API Key |
+| Base URL | `https://your-resource.openai.azure.com` |
+| API Version | `2024-02-15-preview`（或最新版本） |
+
+### 部署映射
+
+Azure OpenAI 使用部署名称而非模型名称。在 NexusGate 中配置时，您需要将模型名称映射到您的部署名称（例如 `gpt-4o` → `your-gpt4o-deployment`）。
+
+### 特性支持
+
+与 OpenAI 相同，完全兼容。
+
+## 自托管模型
+
+NexusGate 支持连接提供 OpenAI 兼容 API 的自托管模型服务。有关 vLLM、Ollama、llama.cpp 等支持的框架详情，请参阅[部署框架](./deployment)文档。
+
+## 添加新服务商
+
+添加新的上游服务商：
+
+1. 登录 NexusGate 控制台
+2. 进入**上游服务商**或**服务商管理**页面
+3. 点击**添加服务商**
+4. 选择服务商类型
+5. 输入 API Key 和其他必要配置
+6. 选择要启用的模型
+7. 保存配置
+
+## 相关链接
+
+- [OpenAI API 文档](https://platform.openai.com/docs)
+- [Anthropic API 文档](https://docs.anthropic.com/)
+- [DeepSeek API 文档](https://platform.deepseek.com/docs)
+- [阿里云百炼文档](https://help.aliyun.com/zh/dashscope/)
+- [火山方舟文档](https://www.volcengine.com/docs/82379)

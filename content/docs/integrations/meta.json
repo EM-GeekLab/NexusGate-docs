@@ -1,0 +1,10 @@
+{
+  "title": "Integrations",
+  "title.zh": "集成指南",
+  "pages": [
+    "dev-tools",
+    "chat-assistants",
+    "translation",
+    "productivity"
+  ]
+}

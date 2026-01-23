@@ -1,0 +1,137 @@
+---
+title: Cursor
+description: Configure Cursor with NexusGate
+icon: Code
+---
+
+Cursor is an AI-powered code editor built on VS Code that provides intelligent code completion, chat capabilities, and AI-assisted editing.
+
+## Overview
+
+- **Official Website**: [cursor.com](https://cursor.com/)
+- **Supported Platforms**: Windows, macOS, Linux
+- **Features**:
+  - AI code completion (Tab)
+  - Inline editing (Ctrl+K)
+  - Chat with codebase context (Ctrl+L)
+  - VS Code extension compatibility
+
+## Configuration Steps
+
+### 1. Install Cursor
+
+Download and install from [cursor.com](https://cursor.com/).
+
+### 2. Open Settings
+
+1. Open Cursor
+2. Go to Settings (Ctrl+,)
+3. Search for "OpenAI"
+
+### 3. Configure API
+
+Navigate to **Cursor Settings > Models > OpenAI API Key** section:
+
+| Config Item | Value |
+|-------------|-------|
+| OpenAI API Key | <ApiKeyLink /> |
+| Override OpenAI Base URL | <ServerUrl path="/v1" /> |
+
+<Callout type="info">
+Enable "Override OpenAI Base URL" option to use custom API endpoint.
+</Callout>
+
+### 4. Select Model
+
+In Cursor settings, configure which models to use:
+
+- For Chat: `gpt-4o` or `claude-sonnet-4-20250514`
+- For Autocomplete: `gpt-4o-mini`
+
+### 5. Verify Configuration
+
+1. Open a code file
+2. Press Ctrl+L to open chat
+3. Ask a question to test the connection
+
+## Usage Examples
+
+### Chat (Ctrl+L)
+
+Open the AI chat panel to ask questions about your code:
+
+```
+What does this function do?
+How can I optimize this code?
+Explain this error message
+```
+
+### Inline Edit (Ctrl+K)
+
+Select code and press Ctrl+K to edit inline:
+
+```
+Add error handling to this function
+Convert to TypeScript
+Add unit tests
+```
+
+### Tab Completion
+
+Cursor provides intelligent completions as you type. Press Tab to accept suggestions.
+
+## Advanced Configuration
+
+### Configure Multiple Models
+
+You can add multiple model configurations:
+
+1. Go to Cursor Settings > Models
+2. Add models available through NexusGate
+3. Switch between models as needed
+
+### Custom Rules
+
+Create a `.cursorrules` file in your project root:
+
+```
+- Use TypeScript for all new files
+- Follow the existing code style
+- Add comments for complex logic
+- Use async/await over callbacks
+```
+
+## Keyboard Shortcuts
+
+| Shortcut | Function |
+|----------|----------|
+| `Ctrl+L` | Open chat |
+| `Ctrl+K` | Inline edit |
+| `Ctrl+Shift+K` | Edit selection |
+| `Tab` | Accept completion |
+| `Esc` | Dismiss suggestion |
+
+## FAQ
+
+### Q: Completions not working?
+
+1. Check if OpenAI API Key is set correctly
+2. Verify Override Base URL is enabled
+3. Ensure NexusGate service is running
+
+### Q: Chat returns errors?
+
+1. Verify API endpoint format: `<ServerUrl path="/v1" />`
+2. Check API Key permissions
+3. Confirm model name is valid
+
+### Q: How to use Claude models?
+
+1. Ensure Anthropic upstream is configured in NexusGate
+2. Enter model names like `claude-sonnet-4-20250514` in Cursor settings
+
+## Related Links
+
+- [Cursor Official Site](https://cursor.com/)
+- [Cursor Documentation](https://docs.cursor.com/)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

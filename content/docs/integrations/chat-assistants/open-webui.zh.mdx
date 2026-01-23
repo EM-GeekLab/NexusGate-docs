@@ -1,0 +1,233 @@
+---
+title: Open WebUI
+description: 配置 Open WebUI 使用 NexusGate
+icon: Globe
+---
+
+Open WebUI 是一款功能强大的自托管 AI 界面，支持多种模型后端，提供丰富的功能和优秀的用户体验。
+
+## 工具简介
+
+- **官方网站**：[openwebui.com](https://openwebui.com/)
+- **GitHub**：[open-webui/open-webui](https://github.com/open-webui/open-webui)
+- **支持部署**：Docker、Kubernetes
+- **特点**：
+  - 用户管理系统
+  - RAG 知识库
+  - 多模型支持
+  - 插件生态
+
+## 配置步骤
+
+### 方式一：Docker 部署
+
+```bash
+docker run -d \
+  -p 3000:8080 \
+  -v open-webui:/app/backend/data \
+  -e OPENAI_API_BASE_URL="http://your-nexusgate-server:8080/api/v1" \
+  -e OPENAI_API_KEY="your-nexusgate-api-key" \
+  --name open-webui \
+  ghcr.io/open-webui/open-webui:main
+```
+
+将配置值替换为 <ServerUrl path="/api/v1" /> 和 <ApiKeyLink />。
+
+### 方式二：Docker Compose
+
+创建 `docker-compose.yml`：
+
+```yaml
+version: '3'
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - "3000:8080"
+    volumes:
+      - open-webui:/app/backend/data
+    environment:
+      - OPENAI_API_BASE_URL=http://your-nexusgate-server:8080/api/v1
+      - OPENAI_API_KEY=your-nexusgate-api-key
+      - WEBUI_AUTH=true
+    restart: unless-stopped
+
+volumes:
+  open-webui:
+```
+
+启动服务：
+
+```bash
+docker compose up -d
+```
+
+### 3. 首次访问
+
+1. 打开 `http://localhost:3000`
+2. 创建管理员账户
+3. 完成初始设置
+
+{/* TODO: 添加 Open WebUI 设置截图 */}
+{/* ![Open WebUI 设置](./images/open-webui-setup.png) */}
+
+### 4. 配置模型
+
+如果需要在 UI 中添加更多模型：
+
+1. 进入「设置」→「管理员设置」
+2. 选择「连接」
+3. 配置 OpenAI 兼容 API
+
+## 使用示例
+
+### 基本对话
+
+1. 点击「新对话」
+2. 选择模型
+3. 开始对话
+
+### 使用 RAG
+
+1. 进入「文档」
+2. 上传文件
+3. 在对话中使用 `#` 引用文档
+
+### 创建 Prompt 模板
+
+1. 进入「提示词」
+2. 创建新模板
+3. 在对话中使用
+
+### 多用户管理
+
+管理员可以：
+1. 创建用户账户
+2. 设置用户权限
+3. 分配模型访问权限
+
+## 高级配置
+
+### 环境变量
+
+| 变量 | 说明 | 示例 |
+|------|------|------|
+| `OPENAI_API_BASE_URL` | API 地址 | `http://server:8080/api/v1` |
+| `OPENAI_API_KEY` | API 密钥 | `sk-xxx` |
+| `WEBUI_AUTH` | 启用认证 | `true` |
+| `WEBUI_SECRET_KEY` | JWT 密钥 | `random-string` |
+| `DEFAULT_MODELS` | 默认模型 | `gpt-4o` |
+| `MODEL_FILTER_ENABLED` | 启用模型过滤 | `true` |
+| `MODEL_FILTER_LIST` | 允许的模型 | `gpt-4o;gpt-4o-mini` |
+
+### 配置 RAG
+
+在管理设置中配置 RAG：
+
+```yaml
+# 文档设置
+chunk_size: 500
+chunk_overlap: 50
+embedding_model: text-embedding-3-small
+
+# 检索设置
+top_k: 5
+relevance_threshold: 0.7
+```
+
+### 配置 Webhook
+
+支持配置 Webhook 通知：
+
+```yaml
+webhooks:
+  - url: https://your-webhook-url
+    events:
+      - message.created
+      - chat.created
+    secret: webhook-secret
+```
+
+### 自定义界面
+
+```yaml
+# 自定义设置
+title: "AI 助手"
+description: "基于 NexusGate 的 AI 对话平台"
+favicon_url: "/favicon.ico"
+logo_url: "/logo.png"
+```
+
+## 功能特性
+
+### 用户系统
+
+- 多用户支持
+- 角色权限管理
+- 使用量统计
+
+### 知识库
+
+- 支持多种文档格式
+- 向量检索
+- 引用溯源
+
+### 工具与插件
+
+- 网页搜索
+- 代码执行
+- 图像生成
+
+### 模型管理
+
+- 多模型配置
+- 模型权限控制
+- 使用统计
+
+## 常见问题
+
+### Q: 无法连接到 API？
+
+1. 检查 `OPENAI_API_BASE_URL` 格式
+2. 确保 NexusGate 可从 Docker 容器访问
+3. 使用 `host.docker.internal` 访问宿主机服务
+
+```bash
+# 如果 NexusGate 在宿主机
+-e OPENAI_API_BASE_URL="http://host.docker.internal:8080/api/v1"
+```
+
+### Q: 模型列表为空？
+
+1. 检查 API 连接
+2. 手动配置模型列表
+3. 启用模型过滤并设置允许列表
+
+### Q: RAG 检索效果差？
+
+1. 调整 chunk_size
+2. 优化文档格式
+3. 选择更好的嵌入模型
+
+### Q: 如何备份数据？
+
+```bash
+# 备份 Docker volume
+docker run --rm \
+  -v open-webui:/data \
+  -v $(pwd):/backup \
+  alpine tar czf /backup/open-webui-backup.tar.gz /data
+```
+
+### Q: 如何更新版本？
+
+```bash
+docker pull ghcr.io/open-webui/open-webui:main
+docker compose up -d
+```
+
+## 相关链接
+
+- [Open WebUI 官网](https://openwebui.com/)
+- [Open WebUI GitHub](https://github.com/open-webui/open-webui)
+- [官方文档](https://docs.openwebui.com/)

@@ -1,0 +1,184 @@
+---
+title: Continue
+description: 配置 Continue 使用 NexusGate
+icon: Code
+---
+
+Continue 是一款开源的 AI 代码助手扩展，支持 VS Code 和 JetBrains IDE，提供代码补全、聊天和编辑功能。
+
+## 工具简介
+
+- **官方网站**: [continue.dev](https://continue.dev/)
+- **GitHub**: [continuedev/continue](https://github.com/continuedev/continue)
+- **支持的 IDE**: VS Code、JetBrains (IntelliJ、PyCharm 等)
+- **特点**:
+  - 带代码库上下文的 AI 聊天
+  - Tab 自动补全
+  - 内联编辑
+  - 自定义斜杠命令
+
+## 配置步骤
+
+### 1. 安装扩展
+
+#### VS Code
+
+1. 打开 VS Code
+2. 进入扩展页面 (Ctrl+Shift+X)
+3. 搜索 "Continue"
+4. 点击安装
+
+#### JetBrains
+
+1. 打开设置/首选项
+2. 进入插件
+3. 搜索 "Continue"
+4. 点击安装
+
+### 2. 打开配置
+
+1. 点击侧边栏的 Continue 图标
+2. 点击齿轮图标打开设置
+3. 选择 "Open config.json"
+
+### 3. 配置 API
+
+编辑 `~/.continue/config.json`：
+
+```json
+{
+  "models": [
+    {
+      "title": "GPT-4o via NexusGate",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "apiBase": "YOUR_SERVER_URL/v1",
+      "apiKey": "YOUR_API_KEY"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Autocomplete",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "apiBase": "YOUR_SERVER_URL/v1",
+    "apiKey": "YOUR_API_KEY"
+  }
+}
+```
+
+将 `YOUR_SERVER_URL` 替换为 <ServerUrl />，将 `YOUR_API_KEY` 替换为 <ApiKeyLink />。
+
+### 4. 验证配置
+
+按 Ctrl+L 打开聊天并测试连接。
+
+## 使用示例
+
+### 聊天 (Ctrl+L)
+
+询问关于代码的问题：
+
+```
+解释这个函数
+找出潜在的 bug
+提出改进建议
+```
+
+### 编辑 (Ctrl+I)
+
+选中代码并描述修改：
+
+```
+添加错误处理
+转换为 async/await
+添加 TypeScript 类型
+```
+
+### Tab 自动补全
+
+Continue 在您输入时提供智能代码补全。
+
+### 斜杠命令
+
+使用内置命令：
+
+- `/edit` - 编辑选中代码
+- `/comment` - 添加注释
+- `/share` - 分享对话
+- `/cmd` - 生成终端命令
+
+## 高级配置
+
+### 多模型配置
+
+为不同任务配置不同模型：
+
+```json
+{
+  "models": [
+    {
+      "title": "Claude 用于推理",
+      "provider": "openai",
+      "model": "claude-sonnet-4-20250514",
+      "apiBase": "YOUR_SERVER_URL/v1",
+      "apiKey": "YOUR_API_KEY"
+    },
+    {
+      "title": "GPT-4o 用于编码",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "apiBase": "YOUR_SERVER_URL/v1",
+      "apiKey": "YOUR_API_KEY"
+    }
+  ]
+}
+```
+
+### 上下文提供器
+
+添加自定义上下文到您的提示：
+
+```json
+{
+  "contextProviders": [
+    { "name": "code" },
+    { "name": "docs" },
+    { "name": "diff" },
+    { "name": "terminal" }
+  ]
+}
+```
+
+## 快捷键
+
+| 快捷键 | 功能 |
+|--------|------|
+| `Ctrl+L` | 打开聊天 |
+| `Ctrl+I` | 内联编辑 |
+| `Ctrl+Shift+L` | 添加到上下文 |
+| `Tab` | 接受补全 |
+| `Ctrl+Shift+R` | 重新生成 |
+
+## 常见问题
+
+### Q: 连接失败？
+
+1. 确认 `apiBase` 包含 `/v1`
+2. 检查 `apiKey` 是否有效
+3. 确保 NexusGate 正在运行
+
+### Q: 自动补全不工作？
+
+1. 检查 `tabAutocompleteModel` 配置
+2. 验证模型是否可用
+3. 重启 IDE
+
+### Q: 如何使用不同模型？
+
+在 `models` 数组中添加多个条目。在聊天面板中使用模型选择器切换。
+
+## 相关链接
+
+- [Continue 文档](https://docs.continue.dev/)
+- [Continue GitHub](https://github.com/continuedev/continue)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

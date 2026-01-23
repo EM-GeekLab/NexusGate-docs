@@ -1,0 +1,147 @@
+---
+title: Bob
+description: Configure Bob with NexusGate
+icon: Languages
+---
+
+Bob is an excellent translation and OCR software for macOS that supports text selection translation, screenshot translation, and multiple translation services.
+
+## Overview
+
+- **Official Website**: [ripperhe.gitee.io/bob](https://ripperhe.gitee.io/bob/)
+- **Platform**: macOS
+- **Features**:
+  - Text selection translation
+  - Screenshot translation
+  - Input translation
+  - Multiple translation services
+
+## Configuration Steps
+
+### 1. Install Bob
+
+#### App Store (Recommended)
+
+Search for "Bob" in the Mac App Store and install.
+
+#### Homebrew
+
+```bash
+brew install --cask bob
+```
+
+### 2. Install OpenAI Translation Plugin
+
+Bob requires a plugin to support OpenAI-compatible APIs:
+
+1. Open Bob Preferences
+2. Go to "Plugins" page
+3. Search and install "OpenAI Translator" plugin
+
+{/* TODO: Add Bob install plugin screenshot */}
+{/* ![Bob Install Plugin](./images/bob-install-plugin.png) */}
+
+### 3. Configure NexusGate API
+
+1. Go to "Services" page
+2. Click "+" to add service
+3. Select "OpenAI Translator"
+4. Fill in configuration:
+
+| Config Item | Value |
+|-------------|-------|
+| API URL | <ServerUrl path="/api/v1/chat/completions" /> |
+| API Key | <ApiKeyLink /> |
+| Model | `gpt-4o-mini` |
+
+{/* TODO: Add Bob config screenshot */}
+{/* ![Bob Configuration](./images/bob-config.png) */}
+
+### 4. Set as Default Translation Service
+
+1. Drag the configured service to the top in the service list
+2. Or select the default service in "Translation" settings
+
+## Usage Examples
+
+### Text Selection Translation
+
+1. Select the text to translate
+2. Press the shortcut key (default `⌥ + D`)
+3. Translation result pops up
+
+### Screenshot Translation
+
+1. Press the shortcut key (default `⌥ + S`)
+2. Select the area to translate
+3. Automatic OCR and translation
+
+### Input Translation
+
+1. Press the shortcut key (default `⌥ + A`)
+2. Enter the text to translate
+3. Press Enter to get translation result
+
+## Advanced Configuration
+
+### Custom Prompt
+
+Customize the translation prompt in plugin settings:
+
+```
+You are a professional translation expert. Please translate the following text into {{to}}. Requirements:
+1. Maintain the original tone and style
+2. Keep technical terms accurate
+3. Make the translation natural and fluent
+
+Original text: {{text}}
+```
+
+### Configure Multiple Services
+
+Configure multiple translation services for different scenarios:
+
+- **Daily translation**: gpt-4o-mini (fast, economical)
+- **Professional translation**: gpt-4o (high accuracy)
+- **Academic translation**: claude-sonnet-4-20250514 (long text)
+
+### Shortcut Settings
+
+Customize in "Preferences" → "Shortcuts":
+
+| Function | Default Shortcut |
+|----------|------------------|
+| Text selection translation | `⌥ + D` |
+| Screenshot translation | `⌥ + S` |
+| Input translation | `⌥ + A` |
+
+## FAQ
+
+### Q: Translation failed with network error?
+
+1. Check if API URL format is correct
+2. Verify NexusGate service is accessible
+3. Confirm API Key is valid
+
+### Q: Translation result not ideal?
+
+1. Try using a more powerful model (e.g., gpt-4o)
+2. Adjust custom prompt
+3. Check source and target language settings
+
+### Q: OCR recognition inaccurate?
+
+Bob's OCR feature is independent of the translation API:
+1. Improve screenshot clarity
+2. Select larger text area
+3. Adjust OCR engine settings
+
+### Q: How to view request logs?
+
+Enable debug mode in Bob's "Preferences" → "Advanced".
+
+## Related Links
+
+- [Bob Official Documentation](https://ripperhe.gitee.io/bob/)
+- [Bob GitHub](https://github.com/ripperhe/Bob)
+- [OpenAI Translator Plugin](https://github.com/openai-translator/bob-plugin-openai-translator)

@@ -1,0 +1,9 @@
+{
+  "title": "Productivity",
+  "title.zh": "效率工具",
+  "pages": [
+    "obsidian-copilot",
+    "notegen",
+    "sider"
+  ]
+}

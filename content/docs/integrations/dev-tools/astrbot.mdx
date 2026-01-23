@@ -1,0 +1,153 @@
+---
+title: AstrBot
+description: Configure AstrBot with NexusGate
+icon: Bot
+---
+
+AstrBot is an AI chatbot framework that supports multiple messaging platforms (QQ, Telegram, Discord, etc.) and LLM backends.
+
+## Overview
+
+- **GitHub**: [Soulter/AstrBot](https://github.com/Soulter/AstrBot)
+- **Supported Platforms**: QQ, Telegram, Discord, WeChat, and more
+- **Features**:
+  - Multi-platform support
+  - Plugin system
+  - Conversation management
+  - OpenAI-compatible API support
+
+## Configuration Steps
+
+### 1. Install AstrBot
+
+```bash
+git clone https://github.com/Soulter/AstrBot.git
+cd AstrBot
+pip install -r requirements.txt
+```
+
+### 2. Configure LLM Provider
+
+Edit `config.yaml` or use the web configuration interface:
+
+```yaml
+llm:
+  provider: openai
+  openai:
+    api_base: "YOUR_SERVER_URL/v1"
+    api_key: "YOUR_API_KEY"
+    model: "gpt-4o"
+```
+
+Replace `YOUR_SERVER_URL` with <ServerUrl /> and `YOUR_API_KEY` with <ApiKeyLink />.
+
+{/* TODO: Add screenshot of AstrBot config interface */}
+{/* ![AstrBot Configuration](./images/astrbot-config.png) */}
+
+### 3. Start AstrBot
+
+```bash
+python main.py
+```
+
+### 4. Verify Configuration
+
+Send a test message through any connected platform.
+
+## Usage Examples
+
+### Basic Chat
+
+Once configured, users can chat with the bot on connected platforms:
+
+```
+User: Hello!
+Bot: Hello! How can I help you today?
+```
+
+### Plugin Commands
+
+AstrBot supports various plugins:
+
+```
+/help - Show available commands
+/model - Switch AI model
+/clear - Clear conversation history
+```
+
+## Advanced Configuration
+
+### Multiple Models
+
+Configure multiple models for different use cases:
+
+```yaml
+llm:
+  provider: openai
+  openai:
+    api_base: "YOUR_SERVER_URL/v1"
+    api_key: "YOUR_API_KEY"
+    models:
+      default: "gpt-4o"
+      fast: "gpt-4o-mini"
+      creative: "claude-sonnet-4-20250514"
+```
+
+### Platform Configuration
+
+Configure different platforms:
+
+```yaml
+platforms:
+  qq:
+    enabled: true
+    # QQ-specific settings
+  telegram:
+    enabled: true
+    token: "YOUR_TELEGRAM_BOT_TOKEN"
+  discord:
+    enabled: true
+    token: "YOUR_DISCORD_BOT_TOKEN"
+```
+
+### System Prompt
+
+Customize the bot's personality:
+
+```yaml
+llm:
+  system_prompt: |
+    You are a friendly and helpful assistant.
+    Be concise in your responses.
+    Use emojis when appropriate.
+```
+
+## FAQ
+
+### Q: Connection failed?
+
+1. Verify API Base URL includes `/v1`
+2. Check API Key is valid
+3. Ensure NexusGate is accessible
+
+### Q: Bot not responding?
+
+1. Check platform connection status
+2. Verify LLM configuration
+3. Check logs for errors
+
+### Q: How to use Claude models?
+
+Ensure Anthropic upstream is configured in NexusGate, then set model name:
+
+```yaml
+llm:
+  openai:
+    model: "claude-sonnet-4-20250514"
+```
+
+## Related Links
+
+- [AstrBot GitHub](https://github.com/Soulter/AstrBot)
+- [AstrBot Documentation](https://astrbot.soulter.top/)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

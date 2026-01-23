@@ -1,0 +1,230 @@
+---
+title: LangChain
+description: 配置 LangChain 使用 NexusGate
+icon: Link
+---
+
+LangChain 是一个通过可组合组件和链式调用开发大语言模型应用的框架。
+
+## 工具简介
+
+- **官方网站**: [langchain.com](https://www.langchain.com/)
+- **GitHub**: [langchain-ai/langchain](https://github.com/langchain-ai/langchain)
+- **支持语言**: Python、JavaScript/TypeScript
+- **特点**:
+  - 可组合的链和智能体
+  - RAG（检索增强生成）
+  - 记忆管理
+  - 工具集成
+
+## 配置步骤
+
+### Python
+
+#### 1. 安装依赖
+
+```bash
+pip install langchain langchain-openai
+```
+
+#### 2. 配置环境变量
+
+```bash
+export OPENAI_API_BASE="YOUR_SERVER_URL/v1"
+export OPENAI_API_KEY="YOUR_API_KEY"
+```
+
+将 `YOUR_SERVER_URL` 替换为 <ServerUrl />，将 `YOUR_API_KEY` 替换为 <ApiKeyLink />。
+
+#### 3. 初始化客户端
+
+```python
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+
+response = llm.invoke("你好，今天怎么样？")
+print(response.content)
+```
+
+### JavaScript/TypeScript
+
+#### 1. 安装依赖
+
+```bash
+npm install langchain @langchain/openai
+```
+
+#### 2. 初始化客户端
+
+```typescript
+import { ChatOpenAI } from "@langchain/openai";
+
+const llm = new ChatOpenAI({
+  modelName: "gpt-4o",
+  configuration: {
+    baseURL: "YOUR_SERVER_URL/v1",
+  },
+  openAIApiKey: "YOUR_API_KEY",
+});
+
+const response = await llm.invoke("你好，今天怎么样？");
+console.log(response.content);
+```
+
+## 使用示例
+
+### 简单链
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "你是一个有帮助的助手。"),
+    ("user", "{input}")
+])
+
+chain = prompt | llm
+
+response = chain.invoke({"input": "解释量子计算"})
+print(response.content)
+```
+
+### RAG 应用
+
+```python
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+
+# 初始化 LLM 和嵌入模型
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+
+embeddings = OpenAIEmbeddings(
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+
+# 创建向量存储
+texts = ["文档1内容", "文档2内容"]
+vectorstore = FAISS.from_texts(texts, embeddings)
+
+# 创建 RAG 链
+retriever = vectorstore.as_retriever()
+prompt = ChatPromptTemplate.from_template(
+    "根据上下文回答问题: {context}\n\n问题: {question}"
+)
+
+chain = (
+    {"context": retriever, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+)
+
+response = chain.invoke("你的问题")
+```
+
+### 带工具的智能体
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain.agents import create_openai_functions_agent, AgentExecutor
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_community.tools import DuckDuckGoSearchRun
+
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+
+tools = [DuckDuckGoSearchRun()]
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "你是一个有帮助的助手。"),
+    ("user", "{input}"),
+    ("placeholder", "{agent_scratchpad}"),
+])
+
+agent = create_openai_functions_agent(llm, tools, prompt)
+agent_executor = AgentExecutor(agent=agent, tools=tools)
+
+result = agent_executor.invoke({"input": "东京现在的天气怎么样？"})
+```
+
+## 高级配置
+
+### 流式响应
+
+```python
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+    streaming=True,
+)
+
+for chunk in llm.stream("写一首关于AI的诗"):
+    print(chunk.content, end="", flush=True)
+```
+
+### 自定义参数
+
+```python
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+    temperature=0.7,
+    max_tokens=1000,
+    request_timeout=60,
+)
+```
+
+## 常见问题
+
+### Q: 连接失败？
+
+1. 确认 `openai_api_base` 包含 `/v1`
+2. 检查 API Key 是否有效
+3. 确保 NexusGate 正在运行
+
+### Q: 找不到模型？
+
+确保模型名称与 NexusGate 中配置的完全匹配。
+
+### Q: 如何使用 Claude 模型？
+
+使用相同的配置，但指定 Claude 模型名称：
+
+```python
+llm = ChatOpenAI(
+    model="claude-sonnet-4-20250514",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+```
+
+## 相关链接
+
+- [LangChain 文档](https://python.langchain.com/docs/)
+- [LangChain GitHub](https://github.com/langchain-ai/langchain)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

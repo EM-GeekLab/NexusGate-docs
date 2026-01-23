@@ -1,0 +1,127 @@
+---
+title: Cline
+description: Configure Cline with NexusGate
+icon: Code
+---
+
+Cline is an AI coding assistant extension for VS Code that helps with code writing, debugging, and refactoring. It provides an interactive chat interface and can directly edit your code.
+
+## Overview
+
+- **Marketplace**: [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
+- **GitHub**: [cline/cline](https://github.com/cline/cline)
+- **Supported IDEs**: VS Code, Cursor
+- **Features**:
+  - Interactive AI chat in sidebar
+  - Direct code editing and file creation
+  - Terminal command execution
+  - Multi-model support
+
+## Configuration Steps
+
+### 1. Install Extension
+
+1. Open VS Code
+2. Go to Extensions (Ctrl+Shift+X)
+3. Search for "Cline"
+4. Click Install
+
+### 2. Open Cline Settings
+
+1. Click the Cline icon in the sidebar
+2. Click the settings gear icon
+3. Select "API Provider"
+
+### 3. Configure API
+
+Select "OpenAI Compatible" as the provider and fill in:
+
+| Config Item | Value |
+|-------------|-------|
+| Base URL | <ServerUrl path="/v1" /> |
+| API Key | <ApiKeyLink /> |
+| Model ID | `gpt-4o` or `claude-sonnet-4-20250514` |
+
+### 4. Verify Configuration
+
+Type a message in the Cline chat panel to test the connection.
+
+## Usage Examples
+
+### Code Explanation
+
+```
+Explain what this function does and suggest improvements
+```
+
+### Bug Fixing
+
+```
+Find and fix the bug in the selected code
+```
+
+### Code Generation
+
+```
+Create a React component for a login form with validation
+```
+
+### Refactoring
+
+```
+Refactor this code to use async/await instead of callbacks
+```
+
+## Advanced Configuration
+
+### Custom Instructions
+
+Add custom instructions in settings to guide Cline's behavior:
+
+```
+- Always use TypeScript
+- Follow ESLint rules
+- Add JSDoc comments to functions
+- Use functional components for React
+```
+
+### Model Selection
+
+Configure different models for different tasks:
+
+| Task | Recommended Model |
+|------|-------------------|
+| Complex reasoning | `gpt-4o` or `claude-sonnet-4-20250514` |
+| Quick edits | `gpt-4o-mini` |
+| Code generation | `deepseek-chat` |
+
+## Keyboard Shortcuts
+
+| Shortcut | Function |
+|----------|----------|
+| `Ctrl+Shift+P` → "Cline" | Open Cline commands |
+| `Ctrl+L` | Open Cline chat |
+
+## FAQ
+
+### Q: Connection failed?
+
+1. Verify Base URL includes `/v1`
+2. Check API Key is valid
+3. Ensure NexusGate service is running
+
+### Q: Model not available?
+
+Ensure the corresponding upstream provider is configured in NexusGate and the model name is correct.
+
+### Q: Slow response?
+
+1. Check network connection
+2. Try a smaller model like `gpt-4o-mini`
+3. Reduce context length
+
+## Related Links
+
+- [Cline Documentation](https://github.com/cline/cline#readme)
+- [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

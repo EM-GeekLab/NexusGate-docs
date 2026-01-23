@@ -1,0 +1,157 @@
+---
+title: Dify
+description: Configure Dify with NexusGate
+icon: Workflow
+---
+
+Dify is an open-source LLM application development platform that enables building AI-powered applications with visual workflows, RAG pipelines, and agent capabilities.
+
+## Overview
+
+- **Official Website**: [dify.ai](https://dify.ai/)
+- **GitHub**: [langgenius/dify](https://github.com/langgenius/dify)
+- **Deployment**: Self-hosted or Cloud
+- **Features**:
+  - Visual workflow builder
+  - RAG pipeline support
+  - Agent orchestration
+  - Multi-model management
+  - API & SDK access
+
+## Configuration Steps
+
+### 1. Deploy Dify
+
+#### Using Docker
+
+```bash
+git clone https://github.com/langgenius/dify.git
+cd dify/docker
+docker compose up -d
+```
+
+Access Dify at `http://localhost:3000`.
+
+### 2. Add Model Provider
+
+1. Log in to Dify console
+2. Go to **Settings > Model Providers**
+3. Click **Add Model Provider**
+4. Select **OpenAI-API-compatible**
+
+### 3. Configure NexusGate
+
+Fill in the configuration:
+
+| Config Item | Value |
+|-------------|-------|
+| Model Provider Name | `NexusGate` |
+| API Key | <ApiKeyLink /> |
+| API Endpoint URL | <ServerUrl path="/v1" /> |
+
+### 4. Add Models
+
+After adding the provider, add specific models:
+
+1. Click **Add Model**
+2. Enter model name (e.g., `gpt-4o`, `claude-sonnet-4-20250514`)
+3. Configure model parameters
+
+### 5. Test Connection
+
+Create a simple application to test:
+
+1. Go to **Studio**
+2. Create a new **Chatbot**
+3. Select your NexusGate model
+4. Test in the preview panel
+
+## Usage Examples
+
+### Create a Chatbot
+
+1. Go to Studio > Create Application
+2. Select **Chatbot** type
+3. Configure:
+   - Model: Select NexusGate model
+   - System prompt: Define assistant behavior
+   - Context: Add knowledge base if needed
+
+### Build a Workflow
+
+1. Create **Workflow** application
+2. Add nodes:
+   - **Start** → **LLM** → **End**
+3. Configure LLM node with NexusGate model
+4. Publish and test
+
+### Create RAG Application
+
+1. Create **Knowledge Base**
+2. Upload documents
+3. Create Chatbot with knowledge base context
+4. Configure retrieval parameters
+
+## Advanced Configuration
+
+### Multiple Models
+
+Add different models for different purposes:
+
+| Model | Use Case |
+|-------|----------|
+| `gpt-4o` | General conversation |
+| `gpt-4o-mini` | Quick responses |
+| `claude-sonnet-4-20250514` | Long context |
+| `deepseek-chat` | Code generation |
+
+### Agent Configuration
+
+Enable agent mode for autonomous task execution:
+
+1. Create Agent application
+2. Add tools (web search, code execution, etc.)
+3. Configure model and system prompt
+4. Set iteration limits
+
+### API Integration
+
+Access your applications via API:
+
+```bash
+curl -X POST "http://localhost:3000/v1/chat-messages" \
+  -H "Authorization: Bearer YOUR_DIFY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "inputs": {},
+    "query": "Hello!",
+    "response_mode": "blocking",
+    "user": "user-123"
+  }'
+```
+
+## FAQ
+
+### Q: Model not appearing?
+
+1. Verify API Endpoint includes `/v1`
+2. Check API Key is valid
+3. Ensure model name matches exactly
+
+### Q: Workflow errors?
+
+1. Check node connections
+2. Verify model configuration
+3. Review error logs in console
+
+### Q: Slow responses?
+
+1. Check network connection to NexusGate
+2. Try smaller models
+3. Reduce context length
+
+## Related Links
+
+- [Dify Documentation](https://docs.dify.ai/)
+- [Dify GitHub](https://github.com/langgenius/dify)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

@@ -1,0 +1,127 @@
+---
+title: Cline
+description: 配置 Cline 使用 NexusGate
+icon: Code
+---
+
+Cline 是一个 VS Code 的 AI 编程助手扩展，可以帮助编写、调试和重构代码。它提供交互式聊天界面，可以直接编辑您的代码。
+
+## 工具简介
+
+- **扩展市场**: [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
+- **GitHub**: [cline/cline](https://github.com/cline/cline)
+- **支持的 IDE**: VS Code、Cursor
+- **特点**:
+  - 侧边栏交互式 AI 聊天
+  - 直接编辑代码和创建文件
+  - 终端命令执行
+  - 多模型支持
+
+## 配置步骤
+
+### 1. 安装扩展
+
+1. 打开 VS Code
+2. 进入扩展页面 (Ctrl+Shift+X)
+3. 搜索 "Cline"
+4. 点击安装
+
+### 2. 打开 Cline 设置
+
+1. 点击侧边栏的 Cline 图标
+2. 点击设置齿轮图标
+3. 选择 "API Provider"
+
+### 3. 配置 API
+
+选择 "OpenAI Compatible" 作为提供商，填入以下配置：
+
+| 配置项 | 值 |
+|--------|-----|
+| Base URL | <ServerUrl path="/v1" /> |
+| API Key | <ApiKeyLink /> |
+| Model ID | `gpt-4o` 或 `claude-sonnet-4-20250514` |
+
+### 4. 验证配置
+
+在 Cline 聊天面板中输入消息测试连接。
+
+## 使用示例
+
+### 代码解释
+
+```
+解释这个函数的作用并提出改进建议
+```
+
+### 修复 Bug
+
+```
+找出并修复选中代码中的 bug
+```
+
+### 代码生成
+
+```
+创建一个带验证的登录表单 React 组件
+```
+
+### 代码重构
+
+```
+将这段代码重构为使用 async/await 而不是回调
+```
+
+## 高级配置
+
+### 自定义指令
+
+在设置中添加自定义指令来指导 Cline 的行为：
+
+```
+- 始终使用 TypeScript
+- 遵循 ESLint 规则
+- 为函数添加 JSDoc 注释
+- React 使用函数式组件
+```
+
+### 模型选择
+
+为不同任务配置不同的模型：
+
+| 任务 | 推荐模型 |
+|------|----------|
+| 复杂推理 | `gpt-4o` 或 `claude-sonnet-4-20250514` |
+| 快速编辑 | `gpt-4o-mini` |
+| 代码生成 | `deepseek-chat` |
+
+## 快捷键
+
+| 快捷键 | 功能 |
+|--------|------|
+| `Ctrl+Shift+P` → "Cline" | 打开 Cline 命令 |
+| `Ctrl+L` | 打开 Cline 聊天 |
+
+## 常见问题
+
+### Q: 连接失败？
+
+1. 确认 Base URL 包含 `/v1`
+2. 检查 API Key 是否有效
+3. 确保 NexusGate 服务正在运行
+
+### Q: 模型不可用？
+
+确保在 NexusGate 中配置了对应的上游服务商，且模型名称正确。
+
+### Q: 响应缓慢？
+
+1. 检查网络连接
+2. 尝试使用较小的模型如 `gpt-4o-mini`
+3. 减少上下文长度
+
+## 相关链接
+
+- [Cline 文档](https://github.com/cline/cline#readme)
+- [VS Code 扩展市场](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

@@ -1,0 +1,109 @@
+---
+title: Compatibility Matrix
+description: NexusGate compatibility with upstream providers, deployment frameworks, and downstream tools
+icon: Grid3x3
+---
+
+This page lists NexusGate's compatibility status with various upstream providers, deployment frameworks, and downstream tools.
+
+## Upstream Provider Compatibility
+
+| Provider | Chat | Embedding | Streaming | Function Call | Vision | Status |
+|----------|------|-----------|-----------|---------------|--------|--------|
+| OpenAI | ✅ | ✅ | ✅ | ✅ | ✅ | Full Support |
+| Anthropic | ✅ | ❌ | ✅ | ✅ | ✅ | Full Support |
+| DeepSeek | ✅ | ❌ | ✅ | ✅ | ❌ | Full Support |
+| Alibaba Cloud | ✅ | ✅ | ✅ | ✅ | ✅ | Full Support |
+| Volcengine | ✅ | ✅ | ✅ | ✅ | ✅ | Full Support |
+| Azure OpenAI | ✅ | ✅ | ✅ | ✅ | ✅ | Full Support |
+| Google Gemini | ✅ | ✅ | ✅ | ✅ | ✅ | Testing |
+
+## Deployment Framework Compatibility
+
+| Framework | Basic Chat | Streaming | Usage Stats | Reasoning Token | Status |
+|-----------|------------|-----------|-------------|-----------------|--------|
+| vLLM | ✅ | ✅ | ✅ | ✅ | Full Support |
+| SGLang | ✅ | ✅ | ✅ | ⚠️ | Basic Support |
+| TGI | ✅ | ✅ | ✅ | ❌ | Basic Support |
+| MindIE | ✅ | ✅ | ⚠️ | ❌ | Testing |
+| Ollama | ✅ | ✅ | ✅ | ❌ | Full Support |
+| llama.cpp | ✅ | ✅ | ✅ | ❌ | Full Support |
+
+## Downstream Tool Compatibility
+
+### Dev Tools
+
+| Tool | Basic Chat | Streaming | Code Completion | Status |
+|------|------------|-----------|-----------------|--------|
+| Claude Code | ✅ | ✅ | ✅ | Full Support |
+| Cline | ✅ | ✅ | ✅ | Full Support |
+| Continue | ✅ | ✅ | ✅ | Full Support |
+| Cursor | ✅ | ✅ | ✅ | Full Support |
+| Dify | ✅ | ✅ | N/A | Full Support |
+| LangChain | ✅ | ✅ | N/A | Full Support |
+| LlamaIndex | ✅ | ✅ | N/A | Full Support |
+
+### Translation Tools
+
+| Tool | Basic Translation | Streaming | Status |
+|------|-------------------|-----------|--------|
+| Bob | ✅ | ✅ | Full Support |
+| Immersive Translate | ✅ | ✅ | Full Support |
+| PDFMathTranslate | ✅ | ❌ | Full Support |
+
+### Chat Assistants
+
+| Tool | Basic Chat | Streaming | Multimodal | Status |
+|------|------------|-----------|------------|--------|
+| Chatbox | ✅ | ✅ | ✅ | Full Support |
+| Cherry Studio | ✅ | ✅ | ✅ | Full Support |
+| NextChat | ✅ | ✅ | ✅ | Full Support |
+| Open WebUI | ✅ | ✅ | ✅ | Full Support |
+| ChatHub | ✅ | ✅ | ❌ | Full Support |
+
+### Productivity Tools
+
+| Tool | Basic Chat | RAG | Status |
+|------|------------|-----|--------|
+| Obsidian Copilot | ✅ | ✅ | Full Support |
+| NoteGen | ✅ | ❌ | Full Support |
+| Sider | ✅ | ❌ | Full Support |
+
+## Legend
+
+| Symbol | Meaning |
+|--------|---------|
+| ✅ | Full Support |
+| ⚠️ | Partial Support / Known Issues |
+| ❌ | Not Supported |
+| N/A | Not Applicable |
+
+## Status Definitions
+
+| Status | Meaning |
+|--------|---------|
+| Full Support | Tested and verified, all features work |
+| Basic Support | Core features work, some advanced features may be limited |
+| Testing | Compatibility testing in progress |
+| Planned | Planning to support, testing not started |
+
+## Known Issues
+
+### SGLang Reasoning Token
+
+SGLang's `reasoning_tokens` return format for DeepSeek-R1 and other reasoning models differs from OpenAI standard, which may cause missing statistics.
+
+**Workaround**: Enable `normalize_reasoning_tokens` option in NexusGate configuration.
+
+### MindIE Usage Statistics
+
+Some MindIE versions return incomplete `usage` fields.
+
+**Recommendation**: Upgrade to the latest MindIE version or enable token counting in NexusGate.
+
+## Report Issues
+
+If you discover compatibility issues, please report via:
+
+1. [GitHub Issues](https://github.com/EM-GeekLab/NexusGate/issues)
+2. Provide detailed environment information and reproduction steps

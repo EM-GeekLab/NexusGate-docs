@@ -1,0 +1,212 @@
+---
+title: ChatHub
+description: Configure ChatHub with NexusGate
+icon: MessagesSquare
+---
+
+ChatHub is a browser extension that allows you to use multiple AI chatbots simultaneously and compare their responses in one interface.
+
+## Overview
+
+- **Official Website**: [chathub.gg](https://chathub.gg/)
+- **GitHub**: [chathub-dev/chathub](https://github.com/chathub-dev/chathub)
+- **Platforms**: Chrome, Edge, Firefox
+- **Features**:
+  - Multi-model simultaneous chat
+  - Response comparison
+  - Keyboard shortcuts
+  - Prompt templates
+
+## Configuration Steps
+
+### 1. Install Extension
+
+#### Chrome / Edge
+
+1. Visit [Chrome Web Store](https://chrome.google.com/webstore)
+2. Search for "ChatHub"
+3. Click Install
+
+#### Firefox
+
+1. Visit [Firefox Add-ons](https://addons.mozilla.org/)
+2. Search for "ChatHub"
+3. Click Install
+
+### 2. Open Settings
+
+1. Click the ChatHub icon in the browser toolbar
+2. Click the settings gear icon
+
+### 3. Configure OpenAI API
+
+1. Find "OpenAI API" in settings
+2. Expand configuration options
+3. Fill in the information:
+
+| Config Item | Value |
+|-------------|-------|
+| API Host | <ServerUrl /> |
+| API Key | <ApiKeyLink /> |
+| Model | `gpt-4o` |
+
+{/* TODO: Add ChatHub config screenshot */}
+{/* ![ChatHub Configuration](./images/chathub-config.png) */}
+
+### 4. Add to Comparison List
+
+1. In "All-In-One" mode
+2. Check the configured OpenAI API
+3. You can also check other models for comparison
+
+## Usage Examples
+
+### Single Model Chat
+
+1. Select a model
+2. Enter your question in the input box
+3. View the response
+
+### Multi-Model Comparison
+
+1. Select "All-In-One" mode
+2. Check multiple models (e.g., GPT-4o, Claude, DeepSeek)
+3. Enter your question
+4. View responses from multiple models simultaneously
+
+### Use Prompt Templates
+
+1. Click the template icon next to the input box
+2. Select a preset template
+3. Auto-fill and send
+
+### Quick Ask
+
+Use keyboard shortcuts to quickly open ChatHub on any webpage:
+
+- Windows/Linux: `Ctrl+Shift+H`
+- macOS: `Cmd+Shift+H`
+
+## Advanced Configuration
+
+### Configure Multiple OpenAI-Compatible Services
+
+You can configure multiple services using NexusGate:
+
+```
+Service 1: NexusGate GPT
+  - Host: http://your-server:8080
+  - Model: gpt-4o
+
+Service 2: NexusGate Claude
+  - Host: http://your-server:8080
+  - Model: claude-sonnet-4-20250514
+
+Service 3: NexusGate DeepSeek
+  - Host: http://your-server:8080
+  - Model: deepseek-chat
+```
+
+### Custom Prompt Templates
+
+Create frequently used prompt templates:
+
+```yaml
+Template Name: Code Review
+Content: |
+  Please review the following code and provide improvement suggestions:
+
+  ```
+  {{selection}}
+  ```
+
+  Please focus on:
+  1. Code quality
+  2. Performance issues
+  3. Security concerns
+  4. Best practices
+```
+
+### Configure Shortcuts
+
+Customize shortcuts in settings:
+
+| Function | Default Shortcut |
+|----------|------------------|
+| Open ChatHub | `Ctrl+Shift+H` |
+| Send message | `Enter` |
+| New line | `Shift+Enter` |
+| Clear conversation | `Ctrl+Shift+C` |
+
+### Configure Interface
+
+Adjust display settings:
+
+- **Theme**: Light/Dark/Follow system
+- **Font size**: Small/Medium/Large
+- **Code highlighting**: Enable/Disable
+
+## FAQ
+
+### Q: API connection failed?
+
+1. Confirm API Host format is correct (include protocol)
+2. Check if full path needs to be configured
+3. Verify NexusGate service status
+
+### Q: Response is slow?
+
+1. Check network connection
+2. Reduce the number of models being compared simultaneously
+3. Use a faster model
+
+### Q: How to export conversation?
+
+1. Click the menu in the conversation area
+2. Select "Export"
+3. Choose format (Markdown, Text)
+
+### Q: Some models fail during multi-model comparison?
+
+1. Check if each model's configuration is correct
+2. Confirm NexusGate has the corresponding upstream service configured
+3. View the specific error message
+
+### Q: How to sync settings?
+
+ChatHub supports syncing settings via browser sync:
+
+1. Log in to browser account
+2. Enable extension sync
+3. Settings will automatically sync to other devices
+
+## Usage Tips
+
+### Quick Model Comparison
+
+When you need to evaluate different models' performance:
+
+1. Prepare a series of test questions
+2. Use All-In-One mode
+3. Record each model's performance
+
+### Domain-Specific Testing
+
+Test models for specific domains:
+
+```
+Test Domain: Code Generation
+Question: "Implement an LRU cache in Python"
+
+Evaluation Dimensions:
+- Code correctness
+- Code style
+- Performance considerations
+- Edge case handling
+```
+
+## Related Links
+
+- [ChatHub Official Site](https://chathub.gg/)
+- [ChatHub GitHub](https://github.com/chathub-dev/chathub)
+- [User Guide](https://github.com/chathub-dev/chathub/wiki)

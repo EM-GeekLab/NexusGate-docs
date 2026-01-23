@@ -1,0 +1,234 @@
+---
+title: LlamaIndex
+description: Configure LlamaIndex with NexusGate
+icon: Database
+---
+
+LlamaIndex is a data framework for building LLM applications with powerful data ingestion, indexing, and querying capabilities.
+
+## Overview
+
+- **Official Website**: [llamaindex.ai](https://www.llamaindex.ai/)
+- **GitHub**: [run-llama/llama_index](https://github.com/run-llama/llama_index)
+- **Languages**: Python, TypeScript
+- **Features**:
+  - Data connectors (100+ sources)
+  - Advanced indexing strategies
+  - Query engines
+  - Agent framework
+
+## Configuration Steps
+
+### Python
+
+#### 1. Install Dependencies
+
+```bash
+pip install llama-index llama-index-llms-openai-like
+```
+
+#### 2. Initialize LLM
+
+```python
+from llama_index.llms.openai_like import OpenAILike
+
+llm = OpenAILike(
+    model="gpt-4o",
+    api_base="YOUR_SERVER_URL/v1",
+    api_key="YOUR_API_KEY",
+)
+
+response = llm.complete("Hello, how are you?")
+print(response.text)
+```
+
+Replace `YOUR_SERVER_URL` with <ServerUrl /> and `YOUR_API_KEY` with <ApiKeyLink />.
+
+### TypeScript
+
+#### 1. Install Dependencies
+
+```bash
+npm install llamaindex
+```
+
+#### 2. Initialize LLM
+
+```typescript
+import { OpenAI } from "llamaindex";
+
+const llm = new OpenAI({
+  model: "gpt-4o",
+  apiKey: "YOUR_API_KEY",
+  additionalSessionOptions: {
+    baseURL: "YOUR_SERVER_URL/v1",
+  },
+});
+
+const response = await llm.complete({ prompt: "Hello!" });
+console.log(response.text);
+```
+
+## Usage Examples
+
+### Document Q&A
+
+```python
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+from llama_index.llms.openai_like import OpenAILike
+from llama_index.embeddings.openai import OpenAIEmbedding
+from llama_index.core import Settings
+
+# Configure LLM
+Settings.llm = OpenAILike(
+    model="gpt-4o",
+    api_base="YOUR_SERVER_URL/v1",
+    api_key="YOUR_API_KEY",
+)
+
+# Configure embeddings
+Settings.embed_model = OpenAIEmbedding(
+    api_base="YOUR_SERVER_URL/v1",
+    api_key="YOUR_API_KEY",
+)
+
+# Load documents and create index
+documents = SimpleDirectoryReader("./data").load_data()
+index = VectorStoreIndex.from_documents(documents)
+
+# Query
+query_engine = index.as_query_engine()
+response = query_engine.query("What is this document about?")
+print(response)
+```
+
+### Chat Engine
+
+```python
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+from llama_index.llms.openai_like import OpenAILike
+from llama_index.core import Settings
+
+Settings.llm = OpenAILike(
+    model="gpt-4o",
+    api_base="YOUR_SERVER_URL/v1",
+    api_key="YOUR_API_KEY",
+)
+
+documents = SimpleDirectoryReader("./data").load_data()
+index = VectorStoreIndex.from_documents(documents)
+
+# Create chat engine with memory
+chat_engine = index.as_chat_engine(chat_mode="context")
+
+response = chat_engine.chat("Tell me about the content")
+print(response)
+
+# Follow-up question
+response = chat_engine.chat("Can you elaborate on that?")
+print(response)
+```
+
+### Agent
+
+```python
+from llama_index.core.agent import ReActAgent
+from llama_index.llms.openai_like import OpenAILike
+from llama_index.core.tools import FunctionTool
+
+llm = OpenAILike(
+    model="gpt-4o",
+    api_base="YOUR_SERVER_URL/v1",
+    api_key="YOUR_API_KEY",
+)
+
+def multiply(a: int, b: int) -> int:
+    """Multiply two integers."""
+    return a * b
+
+def add(a: int, b: int) -> int:
+    """Add two integers."""
+    return a + b
+
+tools = [
+    FunctionTool.from_defaults(fn=multiply),
+    FunctionTool.from_defaults(fn=add),
+]
+
+agent = ReActAgent.from_tools(tools, llm=llm, verbose=True)
+response = agent.chat("What is 3 * 4 + 5?")
+print(response)
+```
+
+## Advanced Configuration
+
+### Custom System Prompt
+
+```python
+from llama_index.llms.openai_like import OpenAILike
+
+llm = OpenAILike(
+    model="gpt-4o",
+    api_base="YOUR_SERVER_URL/v1",
+    api_key="YOUR_API_KEY",
+    system_prompt="You are a helpful coding assistant.",
+)
+```
+
+### Streaming
+
+```python
+from llama_index.llms.openai_like import OpenAILike
+
+llm = OpenAILike(
+    model="gpt-4o",
+    api_base="YOUR_SERVER_URL/v1",
+    api_key="YOUR_API_KEY",
+)
+
+response = llm.stream_complete("Write a story about AI")
+for chunk in response:
+    print(chunk.delta, end="", flush=True)
+```
+
+### Custom Parameters
+
+```python
+llm = OpenAILike(
+    model="gpt-4o",
+    api_base="YOUR_SERVER_URL/v1",
+    api_key="YOUR_API_KEY",
+    temperature=0.7,
+    max_tokens=2000,
+    timeout=60,
+)
+```
+
+## FAQ
+
+### Q: Connection failed?
+
+1. Verify `api_base` includes `/v1`
+2. Check API Key is valid
+3. Ensure NexusGate is running
+
+### Q: Embedding errors?
+
+Make sure the embedding model is available through NexusGate or use a local embedding model.
+
+### Q: How to use Claude models?
+
+```python
+llm = OpenAILike(
+    model="claude-sonnet-4-20250514",
+    api_base="YOUR_SERVER_URL/v1",
+    api_key="YOUR_API_KEY",
+    is_chat_model=True,
+)
+```
+
+## Related Links
+
+- [LlamaIndex Documentation](https://docs.llamaindex.ai/)
+- [LlamaIndex GitHub](https://github.com/run-llama/llama_index)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

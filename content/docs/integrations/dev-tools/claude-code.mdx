@@ -1,0 +1,124 @@
+---
+title: Claude Code
+description: Configure Claude Code with NexusGate
+icon: Terminal
+---
+
+Claude Code is Anthropic's official AI programming assistant CLI tool that allows direct interaction with Claude in the terminal for code writing, debugging, refactoring, and more.
+
+## Overview
+
+- **Official Website**: [claude.ai/claude-code](https://claude.ai/claude-code)
+- **Supported Platforms**: macOS, Linux, Windows (WSL)
+- **Features**:
+  - Native terminal experience
+  - Multi-file editing support
+  - Powerful code understanding
+  - MCP protocol extensions
+
+## Configuration Steps
+
+### 1. Install Claude Code
+
+```bash
+# Using npm
+npm install -g @anthropic-ai/claude-code
+
+# Or using Homebrew (macOS)
+brew install claude-code
+```
+
+### 2. Configure NexusGate API
+
+Claude Code supports custom API endpoints via environment variables.
+
+#### Option 1: Set Environment Variables
+
+<ConfigCode lang="bash">
+<CodeLine><CodeComment># Add to ~/.bashrc or ~/.zshrc</CodeComment></CodeLine>
+<CodeLine><CodeKeyword>export</CodeKeyword> ANTHROPIC_BASE_URL=<CodeString>"<ServerUrl path="/v1" />"</CodeString></CodeLine>
+<CodeLine><CodeKeyword>export</CodeKeyword> ANTHROPIC_API_KEY=<CodeString>"<ApiKeyLink />"</CodeString></CodeLine>
+</ConfigCode>
+
+#### Option 2: Use Configuration File
+
+Edit `~/.claude-code/config.json`:
+
+<ConfigCode lang="json">
+<CodeLine>{"{"}</CodeLine>
+<CodeLine>  <CodeString>"apiBaseUrl"</CodeString>: <CodeString>"<ServerUrl path="/v1" />"</CodeString>,</CodeLine>
+<CodeLine>  <CodeString>"apiKey"</CodeString>: <CodeString>"<ApiKeyLink />"</CodeString></CodeLine>
+<CodeLine>{"}"}</CodeLine>
+</ConfigCode>
+
+### 3. Verify Configuration
+
+```bash
+claude-code --version
+claude-code "Hello, Claude!"
+```
+
+## Usage Examples
+
+### Basic Conversation
+
+```bash
+claude-code "Please explain what this code does"
+```
+
+### Edit Files
+
+```bash
+claude-code "Please fix the type errors in src/main.ts"
+```
+
+### Project Analysis
+
+```bash
+claude-code "Analyze the architecture of this project"
+```
+
+## Advanced Configuration
+
+### Configure Model
+
+After configuring Claude models in NexusGate, Claude Code will automatically use available models:
+
+```bash
+# Specify a specific model
+claude-code --model claude-sonnet-4-20250514 "Hello"
+```
+
+### Configure Proxy
+
+If you need to access through a proxy:
+
+```bash
+export HTTPS_PROXY="http://proxy:port"
+export HTTP_PROXY="http://proxy:port"
+```
+
+## FAQ
+
+### Q: Connection failed?
+
+1. Check if `ANTHROPIC_BASE_URL` is correctly set
+2. Confirm NexusGate service is running
+3. Verify API Key is valid
+
+### Q: Model unavailable?
+
+Ensure Anthropic upstream service is configured in NexusGate and the API Key has appropriate permissions.
+
+### Q: How to view request logs?
+
+```bash
+# Enable debug mode
+export CLAUDE_CODE_DEBUG=1
+claude-code "Test"
+```
+
+## Related Links
+
+- [Claude Code Official Docs](https://docs.anthropic.com/claude-code)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

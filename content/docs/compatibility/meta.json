@@ -1,0 +1,9 @@
+{
+  "title": "Compatibility",
+  "title.zh": "兼容性",
+  "pages": [
+    "matrix",
+    "upstream",
+    "deployment"
+  ]
+}

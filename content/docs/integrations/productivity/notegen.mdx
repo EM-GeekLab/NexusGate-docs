@@ -1,0 +1,159 @@
+---
+title: NoteGen
+description: Configure NoteGen with NexusGate
+icon: Pencil
+---
+
+NoteGen is an AI-powered note generation tool that can automatically convert various content into structured notes.
+
+## Overview
+
+- **GitHub**: [NoteGen](https://github.com/nicepkg/notegen)
+- **Platforms**: Web, Desktop app
+- **Features**:
+  - Automatic content organization
+  - Multiple format support
+  - AI summarization
+  - Knowledge graph
+
+## Configuration Steps
+
+### 1. Install NoteGen
+
+#### Desktop App
+
+Download the installer for your platform from GitHub Releases.
+
+#### Web Version
+
+Visit the NoteGen online version or deploy self-hosted.
+
+### 2. Open Settings
+
+1. Launch NoteGen
+2. Click the settings icon
+3. Select "AI Configuration"
+
+### 3. Configure OpenAI-Compatible API
+
+| Config Item | Value |
+|-------------|-------|
+| API Type | OpenAI Compatible |
+| API URL | <ServerUrl path="/api/v1" /> |
+| API Key | <ApiKeyLink /> |
+| Model | `gpt-4o` |
+
+{/* TODO: Add NoteGen config screenshot */}
+{/* ![NoteGen Configuration](./images/notegen-config.png) */}
+
+### 4. Test Connection
+
+Click "Test Connection" to verify configuration is correct.
+
+## Usage Examples
+
+### Web Page to Notes
+
+1. Copy a webpage link
+2. Paste into NoteGen
+3. AI automatically extracts key content and generates notes
+
+### Video to Notes
+
+1. Enter video link (YouTube, Bilibili, etc.)
+2. NoteGen extracts subtitles
+3. AI generates structured notes
+
+### PDF to Notes
+
+1. Upload PDF file
+2. AI analyzes document structure
+3. Generate notes with table of contents
+
+### Audio to Notes
+
+1. Upload audio file or recording
+2. Automatic transcription
+3. AI organizes into note format
+
+## Advanced Configuration
+
+### Custom Note Templates
+
+Configure note generation templates:
+
+```yaml
+Template Name: Technical Article
+Format: |
+  # {{title}}
+
+  ## Overview
+  {{summary}}
+
+  ## Key Points
+  {{key_points}}
+
+  ## Technical Details
+  {{details}}
+
+  ## References
+  {{references}}
+```
+
+### Configure Different Models for Different Scenarios
+
+```yaml
+Web extraction: gpt-4o-mini  # Fast
+Long document processing: gpt-4o  # Accurate
+Academic papers: claude-sonnet-4-20250514  # Professional
+```
+
+### Configure Extraction Rules
+
+```yaml
+Extraction Rules:
+  - Title: Auto-detect
+  - Author: Extract author info
+  - Date: Extract publish date
+  - Tags: AI auto-generate
+  - Summary: Limit to 200 characters
+```
+
+## FAQ
+
+### Q: Extracted content incomplete?
+
+1. Check if source content is complete
+2. Adjust extraction parameters
+3. Try using a stronger model
+
+### Q: Note format not ideal?
+
+1. Customize note template
+2. Adjust AI prompt
+3. Manual editing adjustments
+
+### Q: Video transcription inaccurate?
+
+1. Ensure video has subtitles
+2. For videos without subtitles, use speech recognition service
+3. Check audio quality
+
+### Q: How to batch process?
+
+1. Use batch import feature
+2. Or use API for automation
+
+## Export Formats
+
+NoteGen supports multiple export formats:
+
+- **Markdown**: For Obsidian, Notion
+- **HTML**: For web display
+- **PDF**: For sharing and printing
+- **JSON**: For programmatic processing
+
+## Related Links
+
+- [NoteGen GitHub](https://github.com/nicepkg/notegen)
+- [Documentation](https://github.com/nicepkg/notegen/wiki)

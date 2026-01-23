@@ -1,0 +1,195 @@
+---
+title: Sider
+description: Configure Sider with NexusGate
+icon: PanelRight
+---
+
+Sider is a browser sidebar AI assistant that allows you to quickly access AI for Q&A, translation, summarization, and more while browsing any webpage.
+
+## Overview
+
+- **Official Website**: [sider.ai](https://sider.ai/)
+- **Platforms**: Chrome, Edge, Firefox, Safari
+- **Features**:
+  - Quick sidebar access
+  - Web content understanding
+  - Multiple AI functions
+  - Keyboard shortcuts
+
+## Configuration Steps
+
+### 1. Install Extension
+
+#### Chrome / Edge
+
+1. Visit [Chrome Web Store](https://chrome.google.com/webstore)
+2. Search for "Sider"
+3. Click Install
+
+#### Firefox
+
+1. Visit [Firefox Add-ons](https://addons.mozilla.org/)
+2. Search for "Sider"
+3. Click Install
+
+### 2. Open Settings
+
+1. Click the Sider icon in the browser toolbar
+2. Log in or create an account (if required)
+3. Go to settings page
+
+### 3. Configure Custom API
+
+1. Find "Custom API" or "OpenAI API" in settings
+2. Fill in configuration:
+
+| Config Item | Value |
+|-------------|-------|
+| API Endpoint | <ServerUrl path="/api/v1" /> |
+| API Key | <ApiKeyLink /> |
+| Model | `gpt-4o` |
+
+{/* TODO: Add Sider config screenshot */}
+{/* ![Sider Configuration](./images/sider-config.png) */}
+
+### 4. Save Settings
+
+Save and reopen the sidebar to test.
+
+## Usage Examples
+
+### Quick Q&A
+
+1. Press `Ctrl+P` (or click icon) to open sidebar
+2. Enter your question in the input box
+3. Get AI response
+
+### Page Summary
+
+1. Open any webpage
+2. Open Sider sidebar
+3. Click "Summarize page"
+
+### Selected Text Actions
+
+1. Select text on a webpage
+2. Click the floating Sider icon
+3. Choose action (translate, explain, rewrite, etc.)
+
+### Writing Assistance
+
+1. Write in any input box
+2. Select text
+3. Use Sider to polish, expand, or condense
+
+## Advanced Configuration
+
+### Configure Multiple AI Services
+
+Sider supports configuring multiple AI services:
+
+```yaml
+Service 1: NexusGate GPT-4o
+Service 2: NexusGate Claude
+Service 3: NexusGate DeepSeek
+```
+
+### Custom Prompt Templates
+
+Create frequently used prompt templates:
+
+```yaml
+Template: Code Explanation
+Content: |
+  Please explain what the following code does:
+
+  ```
+  {{selected_text}}
+  ```
+
+  Please describe:
+  1. Code functionality
+  2. Key logic
+  3. Potential improvements
+```
+
+### Configure Shortcuts
+
+| Function | Default Shortcut |
+|----------|------------------|
+| Open sidebar | `Ctrl+P` |
+| Quick ask | `Ctrl+Shift+P` |
+| Translate selection | `Ctrl+Shift+T` |
+
+### Configure Website Rules
+
+Configure different behaviors for specific websites:
+
+```yaml
+Rules:
+  - Website: github.com
+    Default action: Code explanation
+
+  - Website: arxiv.org
+    Default action: Paper summary
+
+  - Website: twitter.com
+    Default action: Translate
+```
+
+## Feature List
+
+### Content Understanding
+
+- **Summarize page**: Extract key information
+- **Explain content**: Deep dive into complex concepts
+- **Q&A**: Answer questions based on page content
+
+### Writing Assistance
+
+- **Rewrite**: Rephrase content
+- **Expand**: Add detail to content
+- **Condense**: Remove redundant content
+- **Grammar check**: Fix grammar errors
+
+### Translation Features
+
+- **Instant translation**: Quick translation of selected text
+- **Full page translation**: Translate entire page
+- **Multi-language**: Support multiple language pairs
+
+### Creative Features
+
+- **Generate copy**: Create content from descriptions
+- **Brainstorm**: Generate creative ideas
+- **Outline generation**: Create content outlines
+
+## FAQ
+
+### Q: Sidebar won't open?
+
+1. Check if extension is enabled
+2. Try refreshing the page
+3. Check for shortcut conflicts
+
+### Q: API call failed?
+
+1. Verify API endpoint format
+2. Check API Key is correct
+3. Confirm NexusGate service status
+
+### Q: Summary results inaccurate?
+
+1. Ensure page content is fully loaded
+2. Try using a stronger model
+3. Long web pages may be truncated
+
+### Q: How to sync settings?
+
+Log in to your Sider account and settings will automatically sync to other devices.
+
+## Related Links
+
+- [Sider Official Site](https://sider.ai/)
+- [Help Documentation](https://sider.ai/help)
+- [Feature Guide](https://sider.ai/features)

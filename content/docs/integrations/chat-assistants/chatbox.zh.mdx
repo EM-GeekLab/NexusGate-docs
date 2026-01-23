@@ -1,0 +1,151 @@
+---
+title: Chatbox
+description: 配置 Chatbox 使用 NexusGate
+icon: MessageSquare
+---
+
+Chatbox 是一款跨平台的 AI 对话客户端，支持多种 AI 服务，提供简洁优雅的用户界面。
+
+## 工具简介
+
+- **官方网站**：[chatboxai.app](https://chatboxai.app/)
+- **GitHub**：[Bin-Huang/chatbox](https://github.com/Bin-Huang/chatbox)
+- **支持平台**：Windows、macOS、Linux、iOS、Android
+- **特点**：
+  - 跨平台支持
+  - 本地数据存储
+  - 多模型切换
+  - Markdown 渲染
+
+## 配置步骤
+
+### 1. 下载安装
+
+#### 桌面版
+
+访问 [Chatbox 官网](https://chatboxai.app/) 下载对应平台安装包。
+
+```bash
+# macOS (Homebrew)
+brew install --cask chatbox
+
+# Windows (Scoop)
+scoop install chatbox
+```
+
+#### 移动端
+
+在 App Store 或 Google Play 搜索「Chatbox」安装。
+
+### 2. 打开设置
+
+1. 启动 Chatbox
+2. 点击左下角设置图标
+3. 选择「模型设置」
+
+### 3. 添加 OpenAI API 配置
+
+1. 选择「OpenAI API」
+2. 填入配置信息：
+
+| 配置项 | 值 |
+|--------|-----|
+| API Host | <ServerUrl /> |
+| API Path | `/v1/chat/completions` |
+| API Key | <ApiKeyLink /> |
+| 模型 | `gpt-4o` |
+
+### 4. 测试连接
+
+点击「检查」按钮验证配置是否正确。
+
+## 使用示例
+
+### 基本对话
+
+1. 点击左侧「+ 新对话」
+2. 在输入框中输入问题
+3. 按 Enter 发送
+
+### 切换模型
+
+1. 点击对话窗口顶部的模型名称
+2. 选择其他已配置的模型
+
+### 使用 Prompt 模板
+
+1. 点击输入框左侧的模板图标
+2. 选择预设模板或创建新模板
+
+### 导出对话
+
+1. 点击对话标题旁的菜单
+2. 选择「导出」
+3. 选择导出格式（Markdown、JSON 等）
+
+## 高级配置
+
+### 配置多个模型
+
+在设置中可以添加多个模型配置：
+
+```
+模型 1: gpt-4o (日常对话)
+模型 2: gpt-4o-mini (快速回复)
+模型 3: claude-sonnet-4-20250514 (长文本)
+模型 4: deepseek-chat (代码生成)
+```
+
+### 自定义系统提示词
+
+在对话设置中配置系统提示词：
+
+```
+你是一位专业的技术顾问，擅长解答编程和技术问题。
+请使用中文回复，代码注释使用英文。
+回答要简洁明了，必要时提供代码示例。
+```
+
+### 调整模型参数
+
+| 参数 | 说明 | 建议值 |
+|------|------|--------|
+| Temperature | 随机性 | 0.7 |
+| Max Tokens | 最大输出 | 4096 |
+| Top P | 核采样 | 1 |
+| Presence Penalty | 存在惩罚 | 0 |
+| Frequency Penalty | 频率惩罚 | 0 |
+
+## 快捷键
+
+| 快捷键 | 功能 |
+|--------|------|
+| `Ctrl+N` | 新建对话 |
+| `Ctrl+Enter` | 发送消息 |
+| `Ctrl+Shift+C` | 复制最后回复 |
+| `Ctrl+,` | 打开设置 |
+| `Ctrl+K` | 搜索对话 |
+
+## 常见问题
+
+### Q: 连接失败？
+
+1. 检查 API Host 是否包含协议（http://）
+2. 确认 API Path 格式正确
+3. 验证 NexusGate 服务状态
+
+### Q: 响应中断？
+
+1. 检查网络连接
+2. 增加超时时间设置
+3. 减少 Max Tokens 值
+
+### Q: 如何使用 Claude 模型？
+
+确保 NexusGate 已配置 Anthropic 上游，然后在模型名称中填入 `claude-sonnet-4-20250514` 等模型名。
+
+## 相关链接
+
+- [Chatbox 官网](https://chatboxai.app/)
+- [Chatbox GitHub](https://github.com/Bin-Huang/chatbox)
+- [使用文档](https://chatboxai.app/help)

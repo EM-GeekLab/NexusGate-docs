@@ -1,0 +1,144 @@
+---
+title: ComfyUI
+description: Configure ComfyUI with NexusGate
+icon: Image
+---
+
+ComfyUI is a powerful and modular Stable Diffusion GUI and backend with a graph/nodes interface for creating AI-generated images.
+
+## Overview
+
+- **GitHub**: [comfyanonymous/ComfyUI](https://github.com/comfyanonymous/ComfyUI)
+- **Features**:
+  - Node-based workflow
+  - Modular and extensible
+  - Support for custom nodes
+  - LLM integration for prompts
+
+## Configuration Steps
+
+### 1. Install ComfyUI
+
+```bash
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+pip install -r requirements.txt
+```
+
+### 2. Install LLM Node
+
+Install a custom node that supports OpenAI-compatible APIs:
+
+```bash
+cd custom_nodes
+git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git
+```
+
+Or use ComfyUI Manager to install LLM-related nodes.
+
+### 3. Configure LLM Node
+
+In the LLM node settings, configure:
+
+| Config Item | Value |
+|-------------|-------|
+| API Base URL | <ServerUrl path="/v1" /> |
+| API Key | <ApiKeyLink /> |
+| Model | `gpt-4o` |
+
+### 4. Verify Connection
+
+Add an LLM node to your workflow and test with a simple prompt.
+
+## Usage Examples
+
+### Prompt Enhancement
+
+Use LLM to enhance image generation prompts:
+
+1. Add **Text Input** node
+2. Connect to **LLM** node
+3. Set system prompt: "Enhance this image prompt with more details"
+4. Connect output to **CLIP Text Encode**
+5. Generate image
+
+### Dynamic Prompts
+
+Create dynamic prompts based on input:
+
+```
+System Prompt:
+You are a creative prompt engineer for Stable Diffusion.
+Given a simple concept, expand it into a detailed image prompt.
+Include: style, lighting, composition, and artistic details.
+Output only the prompt, no explanations.
+
+User Input: "a cat in space"
+
+Expected Output:
+"a majestic orange tabby cat floating gracefully in zero gravity,
+surrounded by colorful nebulae and distant galaxies, soft cosmic
+lighting with star reflections in its eyes, highly detailed fur,
+digital art style, 8k resolution, cinematic composition"
+```
+
+### Workflow Automation
+
+Combine LLM with ComfyUI workflows:
+
+1. **Concept Input** → **LLM Prompt Generator** → **CLIP Encode** → **KSampler** → **Image Output**
+2. LLM can generate variations, styles, or completely new prompts
+
+## Advanced Configuration
+
+### Multiple Models
+
+Configure different models for different purposes:
+
+| Use Case | Model |
+|----------|-------|
+| Prompt enhancement | `gpt-4o` |
+| Quick iterations | `gpt-4o-mini` |
+| Creative writing | `claude-sonnet-4-20250514` |
+
+### Custom System Prompts
+
+Create specialized prompt generators:
+
+```
+For anime style:
+"You are a prompt engineer specializing in anime/manga style images.
+Include: character details, art style references, color palette,
+background elements, and mood descriptors."
+
+For photography:
+"You are a prompt engineer for photorealistic images.
+Include: camera settings, lighting setup, lens type, composition
+rules, and post-processing style."
+```
+
+## FAQ
+
+### Q: LLM node not appearing?
+
+1. Ensure custom node is installed correctly
+2. Restart ComfyUI
+3. Check console for errors
+
+### Q: Connection failed?
+
+1. Verify API Base URL includes `/v1`
+2. Check API Key is valid
+3. Ensure NexusGate is accessible from ComfyUI
+
+### Q: Slow responses?
+
+1. Use faster models like `gpt-4o-mini`
+2. Reduce max tokens
+3. Check network latency
+
+## Related Links
+
+- [ComfyUI GitHub](https://github.com/comfyanonymous/ComfyUI)
+- [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

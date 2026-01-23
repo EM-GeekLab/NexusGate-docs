@@ -1,0 +1,232 @@
+---
+title: LangChain
+description: Configure LangChain with NexusGate
+icon: Link
+---
+
+LangChain is a framework for developing applications powered by large language models through composable components and chains.
+
+## Overview
+
+- **Official Website**: [langchain.com](https://www.langchain.com/)
+- **GitHub**: [langchain-ai/langchain](https://github.com/langchain-ai/langchain)
+- **Languages**: Python, JavaScript/TypeScript
+- **Features**:
+  - Composable chains and agents
+  - RAG (Retrieval-Augmented Generation)
+  - Memory management
+  - Tool integration
+
+## Configuration Steps
+
+### Python
+
+#### 1. Install Dependencies
+
+```bash
+pip install langchain langchain-openai
+```
+
+#### 2. Configure Environment
+
+Set environment variables:
+
+```bash
+export OPENAI_API_BASE="YOUR_SERVER_URL/v1"
+export OPENAI_API_KEY="YOUR_API_KEY"
+```
+
+Replace `YOUR_SERVER_URL` with <ServerUrl /> and `YOUR_API_KEY` with <ApiKeyLink />.
+
+#### 3. Initialize Client
+
+```python
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+
+response = llm.invoke("Hello, how are you?")
+print(response.content)
+```
+
+### JavaScript/TypeScript
+
+#### 1. Install Dependencies
+
+```bash
+npm install langchain @langchain/openai
+```
+
+#### 2. Initialize Client
+
+```typescript
+import { ChatOpenAI } from "@langchain/openai";
+
+const llm = new ChatOpenAI({
+  modelName: "gpt-4o",
+  configuration: {
+    baseURL: "YOUR_SERVER_URL/v1",
+  },
+  openAIApiKey: "YOUR_API_KEY",
+});
+
+const response = await llm.invoke("Hello, how are you?");
+console.log(response.content);
+```
+
+## Usage Examples
+
+### Simple Chain
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a helpful assistant."),
+    ("user", "{input}")
+])
+
+chain = prompt | llm
+
+response = chain.invoke({"input": "Explain quantum computing"})
+print(response.content)
+```
+
+### RAG Application
+
+```python
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+
+# Initialize LLM and embeddings
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+
+embeddings = OpenAIEmbeddings(
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+
+# Create vector store
+texts = ["Document 1 content", "Document 2 content"]
+vectorstore = FAISS.from_texts(texts, embeddings)
+
+# Create RAG chain
+retriever = vectorstore.as_retriever()
+prompt = ChatPromptTemplate.from_template(
+    "Answer based on context: {context}\n\nQuestion: {question}"
+)
+
+chain = (
+    {"context": retriever, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+)
+
+response = chain.invoke("Your question here")
+```
+
+### Agent with Tools
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain.agents import create_openai_functions_agent, AgentExecutor
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_community.tools import DuckDuckGoSearchRun
+
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+
+tools = [DuckDuckGoSearchRun()]
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a helpful assistant."),
+    ("user", "{input}"),
+    ("placeholder", "{agent_scratchpad}"),
+])
+
+agent = create_openai_functions_agent(llm, tools, prompt)
+agent_executor = AgentExecutor(agent=agent, tools=tools)
+
+result = agent_executor.invoke({"input": "What's the weather in Tokyo?"})
+```
+
+## Advanced Configuration
+
+### Streaming Responses
+
+```python
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+    streaming=True,
+)
+
+for chunk in llm.stream("Write a poem about AI"):
+    print(chunk.content, end="", flush=True)
+```
+
+### Custom Parameters
+
+```python
+llm = ChatOpenAI(
+    model="gpt-4o",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+    temperature=0.7,
+    max_tokens=1000,
+    request_timeout=60,
+)
+```
+
+## FAQ
+
+### Q: Connection failed?
+
+1. Verify `openai_api_base` includes `/v1`
+2. Check API Key is valid
+3. Ensure NexusGate is running
+
+### Q: Model not found?
+
+Ensure the model name matches exactly what's configured in NexusGate.
+
+### Q: How to use Claude models?
+
+Use the same configuration but specify Claude model names:
+
+```python
+llm = ChatOpenAI(
+    model="claude-sonnet-4-20250514",
+    openai_api_base="YOUR_SERVER_URL/v1",
+    openai_api_key="YOUR_API_KEY",
+)
+```
+
+## Related Links
+
+- [LangChain Documentation](https://python.langchain.com/docs/)
+- [LangChain GitHub](https://github.com/langchain-ai/langchain)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

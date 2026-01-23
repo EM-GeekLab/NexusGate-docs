@@ -1,0 +1,151 @@
+---
+title: Chatbox
+description: Configure Chatbox with NexusGate
+icon: MessageSquare
+---
+
+Chatbox is a cross-platform AI chat client that supports multiple AI services with a clean and elegant user interface.
+
+## Overview
+
+- **Official Website**: [chatboxai.app](https://chatboxai.app/)
+- **GitHub**: [Bin-Huang/chatbox](https://github.com/Bin-Huang/chatbox)
+- **Supported Platforms**: Windows, macOS, Linux, iOS, Android
+- **Features**:
+  - Cross-platform support
+  - Local data storage
+  - Multi-model switching
+  - Markdown rendering
+
+## Configuration Steps
+
+### 1. Download and Install
+
+#### Desktop
+
+Visit [Chatbox Official Site](https://chatboxai.app/) to download the installer for your platform.
+
+```bash
+# macOS (Homebrew)
+brew install --cask chatbox
+
+# Windows (Scoop)
+scoop install chatbox
+```
+
+#### Mobile
+
+Search for "Chatbox" in App Store or Google Play.
+
+### 2. Open Settings
+
+1. Launch Chatbox
+2. Click the settings icon in the bottom left
+3. Select "Model Settings"
+
+### 3. Add OpenAI API Configuration
+
+1. Select "OpenAI API"
+2. Fill in the configuration:
+
+| Config Item | Value |
+|-------------|-------|
+| API Host | <ServerUrl /> |
+| API Path | `/v1/chat/completions` |
+| API Key | <ApiKeyLink /> |
+| Model | `gpt-4o` |
+
+### 4. Test Connection
+
+Click the "Check" button to verify the configuration.
+
+## Usage Examples
+
+### Basic Conversation
+
+1. Click "+ New Chat" on the left
+2. Type your question in the input box
+3. Press Enter to send
+
+### Switch Models
+
+1. Click the model name at the top of the chat window
+2. Select another configured model
+
+### Use Prompt Templates
+
+1. Click the template icon on the left side of the input box
+2. Select a preset template or create a new one
+
+### Export Conversations
+
+1. Click the menu next to the chat title
+2. Select "Export"
+3. Choose export format (Markdown, JSON, etc.)
+
+## Advanced Configuration
+
+### Configure Multiple Models
+
+You can add multiple model configurations in settings:
+
+```
+Model 1: gpt-4o (daily chat)
+Model 2: gpt-4o-mini (quick replies)
+Model 3: claude-sonnet-4-20250514 (long text)
+Model 4: deepseek-chat (code generation)
+```
+
+### Custom System Prompt
+
+Configure system prompts in chat settings:
+
+```
+You are a professional technical consultant skilled in programming and technical questions.
+Please respond in English and use clear code comments.
+Answers should be concise with code examples when necessary.
+```
+
+### Adjust Model Parameters
+
+| Parameter | Description | Recommended |
+|-----------|-------------|-------------|
+| Temperature | Randomness | 0.7 |
+| Max Tokens | Maximum output | 4096 |
+| Top P | Nucleus sampling | 1 |
+| Presence Penalty | Presence penalty | 0 |
+| Frequency Penalty | Frequency penalty | 0 |
+
+## Keyboard Shortcuts
+
+| Shortcut | Function |
+|----------|----------|
+| `Ctrl+N` | New chat |
+| `Ctrl+Enter` | Send message |
+| `Ctrl+Shift+C` | Copy last reply |
+| `Ctrl+,` | Open settings |
+| `Ctrl+K` | Search chats |
+
+## FAQ
+
+### Q: Connection failed?
+
+1. Check if API Host includes the protocol (http://)
+2. Confirm API Path format is correct
+3. Verify NexusGate service status
+
+### Q: Response interrupted?
+
+1. Check network connection
+2. Increase timeout setting
+3. Reduce Max Tokens value
+
+### Q: How to use Claude models?
+
+Ensure Anthropic upstream is configured in NexusGate, then enter model names like `claude-sonnet-4-20250514`.
+
+## Related Links
+
+- [Chatbox Official Site](https://chatboxai.app/)
+- [Chatbox GitHub](https://github.com/Bin-Huang/chatbox)
+- [Documentation](https://chatboxai.app/help)

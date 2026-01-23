@@ -1,0 +1,212 @@
+---
+title: ChatHub
+description: 配置 ChatHub 使用 NexusGate
+icon: MessagesSquare
+---
+
+ChatHub 是一款浏览器扩展，可以同时使用多个 AI 聊天机器人，并在一个界面中对比它们的回答。
+
+## 工具简介
+
+- **官方网站**：[chathub.gg](https://chathub.gg/)
+- **GitHub**：[chathub-dev/chathub](https://github.com/chathub-dev/chathub)
+- **支持平台**：Chrome、Edge、Firefox
+- **特点**：
+  - 多模型同时对话
+  - 回答对比
+  - 快捷键支持
+  - Prompt 模板
+
+## 配置步骤
+
+### 1. 安装扩展
+
+#### Chrome / Edge
+
+1. 访问 [Chrome 网上应用店](https://chrome.google.com/webstore)
+2. 搜索「ChatHub」
+3. 点击安装
+
+#### Firefox
+
+1. 访问 [Firefox 附加组件](https://addons.mozilla.org/)
+2. 搜索「ChatHub」
+3. 点击安装
+
+### 2. 打开设置
+
+1. 点击浏览器工具栏的 ChatHub 图标
+2. 点击设置齿轮图标
+
+### 3. 配置 OpenAI API
+
+1. 在设置中找到「OpenAI API」
+2. 展开配置选项
+3. 填入信息：
+
+| 配置项 | 值 |
+|--------|-----|
+| API Host | <ServerUrl /> |
+| API Key | <ApiKeyLink /> |
+| 模型 | `gpt-4o` |
+
+{/* TODO: 添加 ChatHub 配置截图 */}
+{/* ![ChatHub 配置](./images/chathub-config.png) */}
+
+### 4. 添加到对比列表
+
+1. 在「All-In-One」模式中
+2. 勾选配置好的 OpenAI API
+3. 可以同时勾选其他模型进行对比
+
+## 使用示例
+
+### 单模型对话
+
+1. 选择一个模型
+2. 在输入框输入问题
+3. 查看回答
+
+### 多模型对比
+
+1. 选择「All-In-One」模式
+2. 勾选多个模型（如 GPT-4o、Claude、DeepSeek）
+3. 输入问题
+4. 同时查看多个模型的回答
+
+### 使用 Prompt 模板
+
+1. 点击输入框旁的模板图标
+2. 选择预设模板
+3. 自动填充并发送
+
+### 快速提问
+
+使用快捷键在任意网页快速打开 ChatHub：
+
+- Windows/Linux: `Ctrl+Shift+H`
+- macOS: `Cmd+Shift+H`
+
+## 高级配置
+
+### 配置多个 OpenAI 兼容服务
+
+可以配置多个使用 NexusGate 的服务：
+
+```
+服务 1: NexusGate GPT
+  - Host: http://your-server:8080
+  - 模型: gpt-4o
+
+服务 2: NexusGate Claude
+  - Host: http://your-server:8080
+  - 模型: claude-sonnet-4-20250514
+
+服务 3: NexusGate DeepSeek
+  - Host: http://your-server:8080
+  - 模型: deepseek-chat
+```
+
+### 自定义 Prompt 模板
+
+创建常用的 Prompt 模板：
+
+```yaml
+模板名称: 代码审查
+内容: |
+  请审查以下代码并提供改进建议：
+
+  ```
+  {{selection}}
+  ```
+
+  请关注：
+  1. 代码质量
+  2. 性能问题
+  3. 安全隐患
+  4. 最佳实践
+```
+
+### 配置快捷键
+
+在设置中自定义快捷键：
+
+| 功能 | 默认快捷键 |
+|------|------------|
+| 打开 ChatHub | `Ctrl+Shift+H` |
+| 发送消息 | `Enter` |
+| 换行 | `Shift+Enter` |
+| 清空对话 | `Ctrl+Shift+C` |
+
+### 配置界面
+
+调整界面显示：
+
+- **主题**: 亮色/暗色/跟随系统
+- **字体大小**: 小/中/大
+- **代码高亮**: 启用/禁用
+
+## 常见问题
+
+### Q: API 连接失败？
+
+1. 确认 API Host 格式正确（包含协议）
+2. 检查是否需要配置完整路径
+3. 验证 NexusGate 服务状态
+
+### Q: 响应很慢？
+
+1. 检查网络连接
+2. 减少同时对比的模型数量
+3. 使用更快的模型
+
+### Q: 如何导出对话？
+
+1. 点击对话区域的菜单
+2. 选择「导出」
+3. 选择格式（Markdown、文本）
+
+### Q: 多模型对比时部分模型失败？
+
+1. 检查各模型的配置是否正确
+2. 确认 NexusGate 已配置对应的上游服务
+3. 查看失败的具体错误信息
+
+### Q: 如何同步设置？
+
+ChatHub 支持通过浏览器同步功能同步设置：
+
+1. 登录浏览器账户
+2. 启用扩展同步
+3. 设置会自动同步到其他设备
+
+## 使用技巧
+
+### 快速对比模型
+
+当你需要评估不同模型的表现时：
+
+1. 准备一系列测试问题
+2. 使用 All-In-One 模式
+3. 记录各模型的表现
+
+### 专业领域测试
+
+针对特定领域测试模型：
+
+```
+测试领域: 代码生成
+问题: "用 Python 实现一个 LRU 缓存"
+
+评估维度:
+- 代码正确性
+- 代码风格
+- 性能考虑
+- 边界处理
+```
+
+## 相关链接
+
+- [ChatHub 官网](https://chathub.gg/)
+- [ChatHub GitHub](https://github.com/chathub-dev/chathub)
+- [使用指南](https://github.com/chathub-dev/chathub/wiki)

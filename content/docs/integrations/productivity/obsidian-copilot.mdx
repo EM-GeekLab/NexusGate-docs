@@ -1,0 +1,193 @@
+---
+title: Obsidian Copilot
+description: Configure Obsidian Copilot with NexusGate
+icon: NotebookPen
+---
+
+Obsidian Copilot is an AI assistant plugin for Obsidian note-taking software that helps with note summarization, Q&A, writing assistance, and more.
+
+## Overview
+
+- **GitHub**: [logancyang/obsidian-copilot](https://github.com/logancyang/obsidian-copilot)
+- **Platforms**: Windows, macOS, Linux (all Obsidian-supported platforms)
+- **Features**:
+  - Note Q&A
+  - Content summarization
+  - Writing assistance
+  - Local knowledge base
+
+## Configuration Steps
+
+### 1. Install Obsidian
+
+If you haven't installed Obsidian yet, download it from [obsidian.md](https://obsidian.md/).
+
+### 2. Install Copilot Plugin
+
+1. Open Obsidian
+2. Go to "Settings" → "Community plugins"
+3. Disable "Restricted mode"
+4. Click "Browse community plugins"
+5. Search for "Copilot"
+6. Click Install and Enable
+
+{/* TODO: Add Obsidian install plugin screenshot */}
+{/* ![Obsidian Install Plugin](./images/obsidian-install-plugin.png) */}
+
+### 3. Configure NexusGate API
+
+1. Go to "Settings" → "Copilot"
+2. Find "OpenAI API Settings"
+3. Fill in configuration:
+
+| Config Item | Value |
+|-------------|-------|
+| API Key | <ApiKeyLink /> |
+| OpenAI API Base URL | <ServerUrl path="/api/v1" /> |
+| Default Model | `gpt-4o` |
+
+{/* TODO: Add Obsidian Copilot config screenshot */}
+{/* ![Obsidian Copilot Configuration](./images/obsidian-copilot-config.png) */}
+
+### 4. Configure Embedding Model (Optional)
+
+If you need RAG functionality:
+
+| Config Item | Value |
+|-------------|-------|
+| Embedding Model | `text-embedding-3-small` |
+| Embedding API Base URL | <ServerUrl path="/api/v1" /> |
+
+### 5. Save and Test
+
+Restart Obsidian, then use shortcut `Ctrl+Shift+C` to open the Copilot panel.
+
+## Usage Examples
+
+### Chat Q&A
+
+1. Press `Ctrl+Shift+C` to open Copilot
+2. Enter your question in the dialog box
+3. Get AI response
+
+### Note Summarization
+
+1. Open the note to summarize
+2. Select text or use the entire note
+3. Use the "Summarize" command
+
+### Context-Based Q&A
+
+1. Open relevant notes
+2. Ask questions in Copilot
+3. AI will answer based on current note content
+
+### Writing Assistance
+
+Use built-in commands:
+- **Continue writing**: Continue the text
+- **Make it longer**: Expand content
+- **Make it shorter**: Condense content
+- **Fix grammar**: Correct grammar
+
+## Advanced Configuration
+
+### Configure Multiple Models
+
+Configure models for different purposes:
+
+```yaml
+Chat model: gpt-4o
+Summary model: gpt-4o-mini
+Embedding model: text-embedding-3-small
+```
+
+### Custom Prompt
+
+Configure custom system prompts in settings:
+
+```
+You are a note assistant, specializing in organizing and analyzing Obsidian notes.
+Your responses should:
+1. Be concise and clear
+2. Use Markdown formatting
+3. Quote note content when necessary
+4. Provide actionable suggestions
+```
+
+### Configure RAG (Knowledge Base)
+
+Enable local knowledge base functionality:
+
+1. Enable "Use Local Vector Store" in settings
+2. Click "Index Vault" to index your notes
+3. Reference note content in conversations
+
+### Configure Shortcuts
+
+Customize shortcuts in Obsidian settings:
+
+| Command | Suggested Shortcut |
+|---------|-------------------|
+| Open Copilot | `Ctrl+Shift+C` |
+| Summarize current note | `Ctrl+Shift+S` |
+| Continue writing | `Ctrl+Shift+W` |
+
+## FAQ
+
+### Q: Connection failed?
+
+1. Check API Base URL format
+2. Confirm NexusGate service is running
+3. Verify API Key is correct
+
+### Q: Indexing failed?
+
+1. Check embedding model configuration
+2. Confirm NexusGate supports embedding API
+3. Reduce number of files for initial indexing
+
+### Q: Response is slow?
+
+1. Use faster model (e.g., gpt-4o-mini)
+2. Reduce conversation context length
+3. Check network connection
+
+### Q: How to update index?
+
+When vault has updates:
+
+1. Go to Copilot settings
+2. Click "Reindex"
+3. Or enable auto-indexing
+
+## Usage Tips
+
+### Note Linking
+
+Use `[[note name]]` to reference specific notes in questions:
+
+```
+Please summarize the key points in [[Project Plan]]
+```
+
+### Batch Processing
+
+Use the Templater plugin with Copilot for batch processing notes.
+
+### Daily Journal Assistant
+
+Configure daily summary template:
+
+```
+Please summarize today's journal, extracting:
+1. Main accomplishments
+2. Problems encountered
+3. Plans for tomorrow
+```
+
+## Related Links
+
+- [Obsidian Official Site](https://obsidian.md/)
+- [Obsidian Copilot GitHub](https://github.com/logancyang/obsidian-copilot)
+- [Documentation](https://github.com/logancyang/obsidian-copilot/wiki)

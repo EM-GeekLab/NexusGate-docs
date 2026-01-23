@@ -1,0 +1,144 @@
+---
+title: ComfyUI
+description: 配置 ComfyUI 使用 NexusGate
+icon: Image
+---
+
+ComfyUI 是一款功能强大的模块化 Stable Diffusion 图形界面和后端，通过图形/节点界面创建 AI 生成图像。
+
+## 工具简介
+
+- **GitHub**: [comfyanonymous/ComfyUI](https://github.com/comfyanonymous/ComfyUI)
+- **特点**:
+  - 基于节点的工作流
+  - 模块化且可扩展
+  - 支持自定义节点
+  - LLM 集成用于提示词生成
+
+## 配置步骤
+
+### 1. 安装 ComfyUI
+
+```bash
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+pip install -r requirements.txt
+```
+
+### 2. 安装 LLM 节点
+
+安装支持 OpenAI 兼容 API 的自定义节点：
+
+```bash
+cd custom_nodes
+git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git
+```
+
+或使用 ComfyUI Manager 安装 LLM 相关节点。
+
+### 3. 配置 LLM 节点
+
+在 LLM 节点设置中配置：
+
+| 配置项 | 值 |
+|--------|-----|
+| API Base URL | <ServerUrl path="/v1" /> |
+| API Key | <ApiKeyLink /> |
+| Model | `gpt-4o` |
+
+### 4. 验证连接
+
+在工作流中添加 LLM 节点并用简单提示词测试。
+
+## 使用示例
+
+### 提示词增强
+
+使用 LLM 增强图像生成提示词：
+
+1. 添加 **Text Input** 节点
+2. 连接到 **LLM** 节点
+3. 设置系统提示词："增强这个图像提示词，添加更多细节"
+4. 将输出连接到 **CLIP Text Encode**
+5. 生成图像
+
+### 动态提示词
+
+基于输入创建动态提示词：
+
+```
+系统提示词：
+你是 Stable Diffusion 的创意提示词工程师。
+给定一个简单概念，将其扩展为详细的图像提示词。
+包括：风格、光照、构图和艺术细节。
+只输出提示词，不要解释。
+
+用户输入："太空中的猫"
+
+预期输出：
+"一只威严的橙色虎斑猫优雅地漂浮在零重力中，
+被五彩斑斓的星云和遥远的星系环绕，柔和的宇宙光
+在它眼中反射出星星，高度细节的毛发，
+数字艺术风格，8K分辨率，电影级构图"
+```
+
+### 工作流自动化
+
+将 LLM 与 ComfyUI 工作流结合：
+
+1. **概念输入** → **LLM 提示词生成器** → **CLIP 编码** → **KSampler** → **图像输出**
+2. LLM 可以生成变体、风格或全新的提示词
+
+## 高级配置
+
+### 多模型配置
+
+为不同用途配置不同模型：
+
+| 用途 | 模型 |
+|------|------|
+| 提示词增强 | `gpt-4o` |
+| 快速迭代 | `gpt-4o-mini` |
+| 创意写作 | `claude-sonnet-4-20250514` |
+
+### 自定义系统提示词
+
+创建专门的提示词生成器：
+
+```
+动漫风格：
+"你是专门为动漫/漫画风格图像设计的提示词工程师。
+包括：角色细节、艺术风格参考、色彩搭配、
+背景元素和情绪描述。"
+
+摄影风格：
+"你是为写实图像设计的提示词工程师。
+包括：相机设置、灯光布置、镜头类型、构图
+规则和后期处理风格。"
+```
+
+## 常见问题
+
+### Q: LLM 节点不显示？
+
+1. 确保自定义节点正确安装
+2. 重启 ComfyUI
+3. 检查控制台错误
+
+### Q: 连接失败？
+
+1. 确认 API Base URL 包含 `/v1`
+2. 检查 API Key 是否有效
+3. 确保 ComfyUI 可以访问 NexusGate
+
+### Q: 响应缓慢？
+
+1. 使用更快的模型如 `gpt-4o-mini`
+2. 减少 max tokens
+3. 检查网络延迟
+
+## 相关链接
+
+- [ComfyUI GitHub](https://github.com/comfyanonymous/ComfyUI)
+- [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

@@ -1,0 +1,200 @@
+---
+title: NextChat
+description: Configure NextChat with NexusGate
+icon: MessageCircle
+---
+
+NextChat (formerly ChatGPT-Next-Web) is a self-hosted AI conversation web application that supports multiple model services and can be deployed with one click.
+
+## Overview
+
+- **Official Website**: [nextchat.dev](https://nextchat.dev/)
+- **GitHub**: [ChatGPTNextWeb/ChatGPT-Next-Web](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web)
+- **Deployment**: Vercel, Docker, Cloudflare
+- **Features**:
+  - One-click deployment
+  - Responsive design
+  - Markdown support
+  - Multi-language interface
+
+## Configuration Steps
+
+### Option 1: Docker Deployment
+
+```bash
+docker run -d \
+  -p 3000:3000 \
+  -e OPENAI_API_KEY="your-nexusgate-api-key" \
+  -e BASE_URL="http://your-nexusgate-server:8080" \
+  --name nextchat \
+  yidadaa/chatgpt-next-web
+```
+
+Replace the values with <ServerUrl /> and <ApiKeyLink />.
+
+### Option 2: Docker Compose
+
+Create `docker-compose.yml`:
+
+```yaml
+version: '3'
+services:
+  nextchat:
+    image: yidadaa/chatgpt-next-web
+    ports:
+      - "3000:3000"
+    environment:
+      - OPENAI_API_KEY=your-nexusgate-api-key
+      - BASE_URL=http://your-nexusgate-server:8080
+      - CODE=your-access-code  # Optional access password
+    restart: unless-stopped
+```
+
+Start the service:
+
+```bash
+docker compose up -d
+```
+
+### Option 3: Vercel Deployment
+
+1. Fork [NextChat Repository](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web)
+2. Import project in Vercel
+3. Configure environment variables:
+
+| Variable | Value |
+|----------|-------|
+| `OPENAI_API_KEY` | <ApiKeyLink /> |
+| `BASE_URL` | <ServerUrl /> |
+| `CODE` | Access password (optional) |
+
+### 4. Access and Use
+
+Open your browser and visit `http://localhost:3000`
+
+{/* TODO: Add NextChat interface screenshot */}
+{/* ![NextChat Interface](./images/nextchat-ui.png) */}
+
+## Usage Examples
+
+### Basic Conversation
+
+1. Click "New Chat"
+2. Enter your question and send
+3. Wait for AI response
+
+### Use Preset Roles (Masks)
+
+1. Click the "Mask" icon
+2. Select a preset role
+3. Start role-play conversation
+
+### Export Conversation
+
+1. Click conversation settings
+2. Select "Export"
+3. Download Markdown file
+
+## Advanced Configuration
+
+### Environment Variables
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `OPENAI_API_KEY` | API key | `sk-xxx` |
+| `BASE_URL` | API address | `http://server:8080` |
+| `CODE` | Access password | `password123` |
+| `HIDE_USER_API_KEY` | Hide API key setting | `1` |
+| `DISABLE_GPT4` | Disable GPT-4 | `1` |
+| `ENABLE_BALANCE_QUERY` | Enable balance query | `1` |
+| `CUSTOM_MODELS` | Custom model list | `gpt-4o,claude-3` |
+
+### Custom Model List
+
+Configure available models via `CUSTOM_MODELS`:
+
+```bash
+CUSTOM_MODELS="-all,+gpt-4o,+gpt-4o-mini,+claude-sonnet-4-20250514,+deepseek-chat"
+```
+
+- `-all`: Remove all default models
+- `+model`: Add model
+- `-model`: Remove model
+
+### Access Control
+
+```bash
+# Set access password
+CODE=your-password
+
+# Multiple passwords separated by commas
+CODE=password1,password2,password3
+```
+
+### Custom Prompt
+
+Create custom role masks:
+
+```json
+{
+  "name": "Code Assistant",
+  "context": [
+    {
+      "role": "system",
+      "content": "You are a professional software engineer skilled in multiple programming languages. Please respond in English with code comments."
+    }
+  ],
+  "modelConfig": {
+    "model": "gpt-4o",
+    "temperature": 0.7,
+    "max_tokens": 4096
+  }
+}
+```
+
+## FAQ
+
+### Q: Cannot access after deployment?
+
+1. Check if port is correctly mapped
+2. Confirm firewall settings
+3. Check Docker logs
+
+```bash
+docker logs nextchat
+```
+
+### Q: API call failed?
+
+1. Verify `BASE_URL` format (no `/v1` suffix needed)
+2. Check API Key is correct
+3. Confirm NexusGate service is accessible
+
+### Q: How to update version?
+
+```bash
+# Docker
+docker pull yidadaa/chatgpt-next-web
+docker compose up -d
+
+# Vercel
+# Redeploy in Vercel dashboard
+```
+
+### Q: How to enable streaming response?
+
+NextChat enables streaming by default. Ensure NexusGate supports SSE.
+
+### Q: Mobile adaptation issues?
+
+NextChat supports PWA and can be added to home screen:
+
+1. Open in mobile browser
+2. Select "Add to Home Screen"
+3. Use as an app
+
+## Related Links
+
+- [NextChat Official Site](https://nextchat.dev/)
+- [NextChat GitHub](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web)
+- [Deployment Documentation](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web#deploy-on-your-own)

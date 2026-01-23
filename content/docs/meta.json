@@ -1,0 +1,10 @@
+{
+  "title": "NexusGate",
+  "root": true,
+  "pages": [
+    "index",
+    "guide",
+    "integrations",
+    "compatibility"
+  ]
+}

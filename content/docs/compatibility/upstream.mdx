@@ -1,0 +1,221 @@
+---
+title: Upstream Providers
+description: NexusGate compatibility with upstream LLM service providers
+icon: Cloud
+---
+
+This page documents NexusGate's compatibility with various upstream LLM service providers.
+
+<Callout type="info">
+All upstream providers are configured through the NexusGate web console. Navigate to the **Upstreams** page to add and manage your providers.
+</Callout>
+
+## OpenAI
+
+### Supported Models
+
+| Model | Type | Description |
+|-------|------|-------------|
+| gpt-4o | Chat | Latest flagship model |
+| gpt-4o-mini | Chat | Fast and economical |
+| gpt-4-turbo | Chat | High performance version |
+| o1 | Reasoning | Reasoning model |
+| o1-mini | Reasoning | Lightweight reasoning |
+| o3-mini | Reasoning | Latest lightweight reasoning |
+| text-embedding-3-small | Embedding | Small embedding |
+| text-embedding-3-large | Embedding | Large embedding |
+
+### Configuration
+
+In the NexusGate console, add an OpenAI provider with:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | OpenAI |
+| API Key | Your OpenAI API Key (`sk-...`) |
+| Base URL | `https://api.openai.com/v1` (default) |
+
+### Feature Support
+
+- Chat Completions
+- Embeddings
+- Function Calling
+- Vision (image understanding)
+- Streaming response
+- JSON Mode
+
+## Anthropic
+
+### Supported Models
+
+| Model | Type | Description |
+|-------|------|-------------|
+| claude-opus-4-20250514 | Chat | Most powerful model |
+| claude-sonnet-4-20250514 | Chat | Balanced performance |
+| claude-3-5-sonnet-20241022 | Chat | Previous generation |
+| claude-3-5-haiku-20241022 | Chat | Fast response |
+
+### Configuration
+
+In the NexusGate console, add an Anthropic provider with:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | Anthropic |
+| API Key | Your Anthropic API Key (`sk-ant-...`) |
+| Base URL | `https://api.anthropic.com` (default) |
+
+### Feature Support
+
+- Chat Completions
+- Tool Use (Function Calling)
+- Vision (image understanding)
+- Streaming response
+- Long context (200K)
+
+### Note
+
+NexusGate automatically converts OpenAI-format requests to Anthropic format, so downstream tools can use the standard OpenAI API format.
+
+## DeepSeek
+
+### Supported Models
+
+| Model | Type | Description |
+|-------|------|-------------|
+| deepseek-chat | Chat | General conversation |
+| deepseek-coder | Chat | Code-specific |
+| deepseek-reasoner | Reasoning | Reasoning model (R1) |
+
+### Configuration
+
+In the NexusGate console, add a DeepSeek provider with:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | DeepSeek |
+| API Key | Your DeepSeek API Key |
+| Base URL | `https://api.deepseek.com/v1` (default) |
+
+### Feature Support
+
+- Chat Completions
+- Function Calling
+- Streaming response
+- Reasoning Token statistics
+
+### DeepSeek-R1 Special Notes
+
+DeepSeek-R1 (deepseek-reasoner) supports returning the thinking process in the response:
+
+```json
+{
+  "usage": {
+    "prompt_tokens": 100,
+    "completion_tokens": 500,
+    "reasoning_tokens": 400
+  }
+}
+```
+
+## Alibaba Cloud (DashScope)
+
+### Supported Models
+
+| Model | Type | Description |
+|-------|------|-------------|
+| qwen-turbo | Chat | Fast version |
+| qwen-plus | Chat | Enhanced version |
+| qwen-max | Chat | Most powerful |
+| qwen-vl-max | Vision | Multimodal |
+| text-embedding-v3 | Embedding | Embedding model |
+
+### Configuration
+
+In the NexusGate console, add an Alibaba Cloud provider with:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | Alibaba Cloud / DashScope |
+| API Key | Your DashScope API Key |
+| Base URL | `https://dashscope.aliyuncs.com/compatible-mode/v1` |
+
+### Feature Support
+
+- Chat Completions
+- Embeddings
+- Function Calling
+- Vision
+- Streaming response
+
+## Volcengine (Ark)
+
+### Supported Models
+
+| Model | Type | Description |
+|-------|------|-------------|
+| doubao-pro | Chat | Doubao professional |
+| doubao-lite | Chat | Doubao lightweight |
+
+### Configuration
+
+In the NexusGate console, add a Volcengine provider with:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | Volcengine / Ark |
+| API Key | Your Volcengine API Key |
+| Base URL | `https://ark.cn-beijing.volces.com/api/v3` |
+
+### Feature Support
+
+- Chat Completions
+- Embeddings
+- Function Calling
+- Vision
+- Streaming response
+
+## Azure OpenAI
+
+### Configuration
+
+In the NexusGate console, add an Azure OpenAI provider with:
+
+| Field | Value |
+|-------|-------|
+| Provider Type | Azure OpenAI |
+| API Key | Your Azure OpenAI API Key |
+| Base URL | `https://your-resource.openai.azure.com` |
+| API Version | `2024-02-15-preview` (or latest) |
+
+### Deployment Mapping
+
+Azure OpenAI uses deployment names instead of model names. When configuring in NexusGate, you'll need to map model names to your deployment names (e.g., `gpt-4o` → `your-gpt4o-deployment`).
+
+### Feature Support
+
+Same as OpenAI, fully compatible.
+
+## Self-Hosted Models
+
+NexusGate supports connecting to self-hosted model services that provide OpenAI-compatible APIs. See the [Deployment Frameworks](./deployment) documentation for details on supported frameworks like vLLM, Ollama, and llama.cpp.
+
+## Adding a New Provider
+
+To add a new upstream provider:
+
+1. Log in to the NexusGate console
+2. Navigate to **Upstreams** or **Providers**
+3. Click **Add Provider**
+4. Select the provider type
+5. Enter your API Key and any required configuration
+6. Select which models to enable
+7. Save the configuration
+
+## Related Links
+
+- [OpenAI API Documentation](https://platform.openai.com/docs)
+- [Anthropic API Documentation](https://docs.anthropic.com/)
+- [DeepSeek API Documentation](https://platform.deepseek.com/docs)
+- [Alibaba Cloud DashScope Documentation](https://help.aliyun.com/zh/dashscope/)
+- [Volcengine Ark Documentation](https://www.volcengine.com/docs/82379)

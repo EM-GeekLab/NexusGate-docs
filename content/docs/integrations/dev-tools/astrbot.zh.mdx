@@ -1,0 +1,153 @@
+---
+title: AstrBot
+description: 配置 AstrBot 使用 NexusGate
+icon: Bot
+---
+
+AstrBot 是一个支持多平台（QQ、Telegram、Discord 等）和多种 LLM 后端的 AI 聊天机器人框架。
+
+## 工具简介
+
+- **GitHub**: [Soulter/AstrBot](https://github.com/Soulter/AstrBot)
+- **支持平台**: QQ、Telegram、Discord、微信等
+- **特点**:
+  - 多平台支持
+  - 插件系统
+  - 对话管理
+  - 兼容 OpenAI API
+
+## 配置步骤
+
+### 1. 安装 AstrBot
+
+```bash
+git clone https://github.com/Soulter/AstrBot.git
+cd AstrBot
+pip install -r requirements.txt
+```
+
+### 2. 配置 LLM 提供商
+
+编辑 `config.yaml` 或使用 Web 配置界面：
+
+```yaml
+llm:
+  provider: openai
+  openai:
+    api_base: "YOUR_SERVER_URL/v1"
+    api_key: "YOUR_API_KEY"
+    model: "gpt-4o"
+```
+
+将 `YOUR_SERVER_URL` 替换为 <ServerUrl />，将 `YOUR_API_KEY` 替换为 <ApiKeyLink />。
+
+{/* TODO: 添加 AstrBot 配置界面截图 */}
+{/* ![AstrBot 配置](./images/astrbot-config.png) */}
+
+### 3. 启动 AstrBot
+
+```bash
+python main.py
+```
+
+### 4. 验证配置
+
+通过任意已连接的平台发送测试消息。
+
+## 使用示例
+
+### 基本聊天
+
+配置完成后，用户可以在连接的平台上与机器人聊天：
+
+```
+用户: 你好！
+机器人: 你好！有什么可以帮助你的吗？
+```
+
+### 插件命令
+
+AstrBot 支持各种插件：
+
+```
+/help - 显示可用命令
+/model - 切换 AI 模型
+/clear - 清除对话历史
+```
+
+## 高级配置
+
+### 多模型配置
+
+为不同用途配置多个模型：
+
+```yaml
+llm:
+  provider: openai
+  openai:
+    api_base: "YOUR_SERVER_URL/v1"
+    api_key: "YOUR_API_KEY"
+    models:
+      default: "gpt-4o"
+      fast: "gpt-4o-mini"
+      creative: "claude-sonnet-4-20250514"
+```
+
+### 平台配置
+
+配置不同平台：
+
+```yaml
+platforms:
+  qq:
+    enabled: true
+    # QQ 特定设置
+  telegram:
+    enabled: true
+    token: "YOUR_TELEGRAM_BOT_TOKEN"
+  discord:
+    enabled: true
+    token: "YOUR_DISCORD_BOT_TOKEN"
+```
+
+### 系统提示词
+
+自定义机器人的个性：
+
+```yaml
+llm:
+  system_prompt: |
+    你是一个友好且乐于助人的助手。
+    回复要简洁。
+    适当使用表情符号。
+```
+
+## 常见问题
+
+### Q: 连接失败？
+
+1. 确认 API Base URL 包含 `/v1`
+2. 检查 API Key 是否有效
+3. 确保 NexusGate 可访问
+
+### Q: 机器人不响应？
+
+1. 检查平台连接状态
+2. 验证 LLM 配置
+3. 查看日志中的错误信息
+
+### Q: 如何使用 Claude 模型？
+
+确保在 NexusGate 中配置了 Anthropic 上游，然后设置模型名称：
+
+```yaml
+llm:
+  openai:
+    model: "claude-sonnet-4-20250514"
+```
+
+## 相关链接
+
+- [AstrBot GitHub](https://github.com/Soulter/AstrBot)
+- [AstrBot 文档](https://astrbot.soulter.top/)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

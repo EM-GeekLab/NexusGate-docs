@@ -1,0 +1,187 @@
+---
+title: 沉浸式翻译
+description: 配置沉浸式翻译使用 NexusGate
+icon: Languages
+---
+
+沉浸式翻译是一款浏览器翻译插件，支持网页双语对照翻译、PDF 翻译、视频字幕翻译等功能。
+
+## 工具简介
+
+- **官方网站**：[immersivetranslate.com](https://immersivetranslate.com/)
+- **支持平台**：Chrome、Edge、Firefox、Safari
+- **特点**：
+  - 双语对照显示
+  - 智能识别翻译区域
+  - 支持多种翻译服务
+  - PDF 和 EPUB 翻译
+
+## 配置步骤
+
+### 1. 安装插件
+
+#### Chrome / Edge
+
+1. 访问 [Chrome 网上应用店](https://chrome.google.com/webstore)
+2. 搜索「沉浸式翻译」
+3. 点击安装
+
+#### Firefox
+
+1. 访问 [Firefox 附加组件](https://addons.mozilla.org/)
+2. 搜索「沉浸式翻译」
+3. 点击安装
+
+#### Safari
+
+1. 在 Mac App Store 搜索「沉浸式翻译」
+2. 安装 Safari 扩展
+
+### 2. 打开设置
+
+1. 点击浏览器工具栏的沉浸式翻译图标
+2. 点击「设置」或齿轮图标
+
+### 3. 配置 OpenAI 翻译服务
+
+1. 在设置页面找到「翻译服务」
+2. 选择「OpenAI」
+3. 点击「自定义 API 接口地址」
+4. 填入配置：
+
+| 配置项 | 值 |
+|--------|-----|
+| API 接口地址 | <ServerUrl path="/api/v1/chat/completions" /> |
+| API Key | <ApiKeyLink /> |
+| 模型 | `gpt-4o-mini` |
+
+{/* TODO: 添加沉浸式翻译配置截图 */}
+{/* ![沉浸式翻译配置](./images/immersive-translate-config.png) */}
+
+### 4. 设置为默认服务
+
+在「翻译服务」列表中将 OpenAI 设为默认。
+
+## 使用示例
+
+### 网页翻译
+
+1. 打开任意外语网页
+2. 点击插件图标或使用快捷键
+3. 页面显示双语对照
+
+### PDF 翻译
+
+1. 在浏览器中打开 PDF 文件
+2. 点击插件的 PDF 翻译功能
+3. 生成双语对照 PDF
+
+### 视频字幕翻译
+
+1. 打开 YouTube 或其他视频网站
+2. 启用字幕翻译功能
+3. 显示双语字幕
+
+### 输入框翻译
+
+1. 在任意输入框中输入文字
+2. 使用快捷键触发翻译
+3. 替换为翻译结果
+
+## 高级配置
+
+### 自定义翻译 Prompt
+
+在设置中可以自定义翻译提示词：
+
+```
+你是一位专业的翻译专家。请将以下{{from}}文本翻译成{{to}}。
+
+要求：
+1. 保持原文格式
+2. 专业术语准确
+3. 语言流畅自然
+4. 适当本地化表达
+
+原文：
+{{text}}
+```
+
+### 配置翻译规则
+
+针对不同网站配置不同的翻译规则：
+
+```json
+{
+  "rules": [
+    {
+      "matches": ["twitter.com", "x.com"],
+      "translationService": "openai",
+      "model": "gpt-4o-mini"
+    },
+    {
+      "matches": ["arxiv.org"],
+      "translationService": "openai",
+      "model": "gpt-4o"
+    }
+  ]
+}
+```
+
+### 配置快捷键
+
+在设置中自定义快捷键：
+
+| 功能 | 建议快捷键 |
+|------|------------|
+| 翻译页面 | `Alt + T` |
+| 翻译选中文字 | `Alt + Y` |
+| 切换翻译 | `Alt + W` |
+
+### 排除翻译区域
+
+使用 CSS 选择器排除不需要翻译的区域：
+
+```
+.code-block
+pre
+code
+.no-translate
+```
+
+## 常见问题
+
+### Q: 翻译速度慢？
+
+1. 使用更快的模型（如 gpt-4o-mini）
+2. 减少每次翻译的文本量
+3. 检查网络连接
+
+### Q: 部分网站无法翻译？
+
+1. 检查是否被列入排除列表
+2. 尝试刷新页面
+3. 检查网站是否使用特殊框架
+
+### Q: 翻译质量不佳？
+
+1. 尝试使用更强的模型
+2. 调整翻译 Prompt
+3. 针对特定领域优化设置
+
+### Q: API 调用失败？
+
+1. 检查 API 地址格式
+2. 验证 API Key 是否有效
+3. 确认 NexusGate 服务状态
+
+### Q: 如何翻译本地 PDF？
+
+1. 将 PDF 拖入浏览器打开
+2. 或使用插件的「上传 PDF」功能
+
+## 相关链接
+
+- [沉浸式翻译官网](https://immersivetranslate.com/)
+- [使用文档](https://immersivetranslate.com/docs/)
+- [GitHub](https://github.com/immersive-translate/immersive-translate)

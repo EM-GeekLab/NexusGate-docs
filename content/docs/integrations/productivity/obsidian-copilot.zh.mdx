@@ -1,0 +1,193 @@
+---
+title: Obsidian Copilot
+description: 配置 Obsidian Copilot 使用 NexusGate
+icon: NotebookPen
+---
+
+Obsidian Copilot 是 Obsidian 笔记软件的 AI 助手插件，可以帮助你进行笔记总结、问答、写作辅助等。
+
+## 工具简介
+
+- **GitHub**：[logancyang/obsidian-copilot](https://github.com/logancyang/obsidian-copilot)
+- **支持平台**：Windows、macOS、Linux（Obsidian 支持的平台）
+- **特点**：
+  - 笔记问答
+  - 内容总结
+  - 写作辅助
+  - 本地知识库
+
+## 配置步骤
+
+### 1. 安装 Obsidian
+
+如果还没有安装 Obsidian，请先从 [obsidian.md](https://obsidian.md/) 下载安装。
+
+### 2. 安装 Copilot 插件
+
+1. 打开 Obsidian
+2. 进入「设置」→「第三方插件」
+3. 关闭「安全模式」
+4. 点击「浏览社区插件」
+5. 搜索「Copilot」
+6. 点击安装并启用
+
+{/* TODO: 添加 Obsidian 安装插件截图 */}
+{/* ![Obsidian 安装插件](./images/obsidian-install-plugin.png) */}
+
+### 3. 配置 NexusGate API
+
+1. 进入「设置」→「Copilot」
+2. 找到「OpenAI API Settings」
+3. 填入配置：
+
+| 配置项 | 值 |
+|--------|-----|
+| API Key | <ApiKeyLink /> |
+| OpenAI API Base URL | <ServerUrl path="/api/v1" /> |
+| Default Model | `gpt-4o` |
+
+{/* TODO: 添加 Obsidian Copilot 配置截图 */}
+{/* ![Obsidian Copilot 配置](./images/obsidian-copilot-config.png) */}
+
+### 4. 配置嵌入模型（可选）
+
+如果需要使用 RAG 功能：
+
+| 配置项 | 值 |
+|--------|-----|
+| Embedding Model | `text-embedding-3-small` |
+| Embedding API Base URL | <ServerUrl path="/api/v1" /> |
+
+### 5. 保存并测试
+
+重启 Obsidian 后，使用快捷键 `Ctrl+Shift+C` 打开 Copilot 面板。
+
+## 使用示例
+
+### 聊天问答
+
+1. 按 `Ctrl+Shift+C` 打开 Copilot
+2. 在对话框中输入问题
+3. 获取 AI 回答
+
+### 笔记总结
+
+1. 打开要总结的笔记
+2. 选中文本或使用整篇笔记
+3. 使用命令「Summarize」
+
+### 基于笔记问答
+
+1. 打开相关笔记
+2. 在 Copilot 中提问
+3. AI 会基于当前笔记内容回答
+
+### 写作辅助
+
+使用内置命令：
+- **Continue writing**: 继续写作
+- **Make it longer**: 扩展内容
+- **Make it shorter**: 精简内容
+- **Fix grammar**: 修正语法
+
+## 高级配置
+
+### 配置多个模型
+
+可以根据不同用途配置模型：
+
+```yaml
+聊天模型: gpt-4o
+总结模型: gpt-4o-mini
+嵌入模型: text-embedding-3-small
+```
+
+### 自定义 Prompt
+
+在设置中配置自定义系统提示词：
+
+```
+你是一位笔记助手，专门帮助整理和分析 Obsidian 笔记。
+你的回答应该：
+1. 简洁明了
+2. 使用 Markdown 格式
+3. 必要时引用笔记内容
+4. 提供可操作的建议
+```
+
+### 配置 RAG（知识库）
+
+启用本地知识库功能：
+
+1. 在设置中启用「Use Local Vector Store」
+2. 点击「Index Vault」索引笔记库
+3. 在对话中引用笔记内容
+
+### 配置快捷键
+
+在 Obsidian 设置中自定义快捷键：
+
+| 命令 | 建议快捷键 |
+|------|------------|
+| 打开 Copilot | `Ctrl+Shift+C` |
+| 总结当前笔记 | `Ctrl+Shift+S` |
+| 继续写作 | `Ctrl+Shift+W` |
+
+## 常见问题
+
+### Q: 连接失败？
+
+1. 检查 API Base URL 格式
+2. 确认 NexusGate 服务运行中
+3. 验证 API Key 是否正确
+
+### Q: 索引失败？
+
+1. 检查嵌入模型配置
+2. 确认 NexusGate 支持嵌入 API
+3. 减少初次索引的文件数量
+
+### Q: 响应很慢？
+
+1. 使用更快的模型（如 gpt-4o-mini）
+2. 减少对话上下文长度
+3. 检查网络连接
+
+### Q: 如何更新索引？
+
+当笔记库有更新时：
+
+1. 进入 Copilot 设置
+2. 点击「Reindex」
+3. 或设置自动索引
+
+## 使用技巧
+
+### 笔记链接
+
+在提问时使用 `[[笔记名]]` 引用特定笔记：
+
+```
+请总结 [[项目计划]] 中的关键点
+```
+
+### 批量处理
+
+使用 Templater 插件配合 Copilot 批量处理笔记。
+
+### 日记助手
+
+配置每日总结模板：
+
+```
+请总结今天的日记，提取：
+1. 主要完成的事项
+2. 遇到的问题
+3. 明天的计划
+```
+
+## 相关链接
+
+- [Obsidian 官网](https://obsidian.md/)
+- [Obsidian Copilot GitHub](https://github.com/logancyang/obsidian-copilot)
+- [使用文档](https://github.com/logancyang/obsidian-copilot/wiki)

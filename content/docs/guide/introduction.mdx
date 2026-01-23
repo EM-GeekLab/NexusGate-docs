@@ -1,0 +1,77 @@
+---
+title: Introduction
+description: Learn about NexusGate and its capabilities
+icon: BookOpen
+---
+
+## What is NexusGate?
+
+NexusGate is an open-source AI gateway service designed to provide unified AI model invocation management capabilities. It serves as an intermediary layer connecting your applications with various AI model providers.
+
+## Why NexusGate?
+
+### 1. Unified Management of Multiple AI Services
+
+If you use multiple AI providers simultaneously (such as OpenAI, Anthropic, DeepSeek), NexusGate helps you:
+
+- Centrally manage all API Keys
+- Unified monitoring of usage across services
+- Simplify downstream tool configuration
+
+### 2. Protect Your API Keys
+
+Through NexusGate, you can:
+
+- Create independent API Keys for different purposes
+- Set usage limits for Keys
+- Revoke compromised Keys at any time
+
+### 3. Monitoring and Analytics
+
+NexusGate provides detailed usage statistics:
+
+- Token usage tracking
+- Request success rate monitoring
+- Reasoning Token statistics (supports o1 and other reasoning models)
+
+## Core Features
+
+### OpenAI Compatible API
+
+NexusGate is fully compatible with the OpenAI API format, meaning:
+
+- All tools supporting OpenAI API can be used directly
+- No code changes required, just update the API endpoint
+- Supports Chat Completions, Models, and other core endpoints
+
+### Multi-Model Routing
+
+Support for configuring multiple upstream model providers:
+
+- **OpenAI**: GPT-4o, GPT-4o-mini, etc.
+- **Anthropic**: Claude 4 Opus/Sonnet
+- **DeepSeek**: DeepSeek-V3, DeepSeek-R1
+- **Alibaba Cloud**: Qwen series
+- **Volcengine**: Doubao models
+- **Local Deployment**: vLLM, SGLang, TGI, etc.
+
+### Usage Tracking
+
+Precise statistics for each request's resource consumption:
+
+```json
+{
+  "usage": {
+    "prompt_tokens": 100,
+    "completion_tokens": 50,
+    "total_tokens": 150,
+    "reasoning_tokens": 30
+  }
+}
+```
+
+## Next Steps
+
+- [Getting Started](./getting-started) - Deploy your NexusGate instance
+- [Integration Guide](../integrations/dev-tools/claude-code) - Configure your first downstream tool
+- [Compatibility Matrix](../compatibility/matrix) - View supported tools and providers

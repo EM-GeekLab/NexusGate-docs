@@ -1,0 +1,14 @@
+{
+  "title": "开发工具",
+  "pages": [
+    "claude-code",
+    "cline",
+    "continue",
+    "cursor",
+    "dify",
+    "langchain",
+    "llamaindex",
+    "comfyui",
+    "astrbot"
+  ]
+}

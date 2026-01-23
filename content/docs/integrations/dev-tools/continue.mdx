@@ -1,0 +1,184 @@
+---
+title: Continue
+description: Configure Continue with NexusGate
+icon: Code
+---
+
+Continue is an open-source AI code assistant extension for VS Code and JetBrains IDEs that provides code completion, chat, and editing capabilities.
+
+## Overview
+
+- **Official Website**: [continue.dev](https://continue.dev/)
+- **GitHub**: [continuedev/continue](https://github.com/continuedev/continue)
+- **Supported IDEs**: VS Code, JetBrains (IntelliJ, PyCharm, etc.)
+- **Features**:
+  - AI chat with codebase context
+  - Tab autocomplete
+  - Inline editing
+  - Custom slash commands
+
+## Configuration Steps
+
+### 1. Install Extension
+
+#### VS Code
+
+1. Open VS Code
+2. Go to Extensions (Ctrl+Shift+X)
+3. Search for "Continue"
+4. Click Install
+
+#### JetBrains
+
+1. Open Settings/Preferences
+2. Go to Plugins
+3. Search for "Continue"
+4. Click Install
+
+### 2. Open Configuration
+
+1. Click the Continue icon in the sidebar
+2. Click the gear icon to open settings
+3. Select "Open config.json"
+
+### 3. Configure API
+
+Edit `~/.continue/config.json`:
+
+```json
+{
+  "models": [
+    {
+      "title": "GPT-4o via NexusGate",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "apiBase": "YOUR_SERVER_URL/v1",
+      "apiKey": "YOUR_API_KEY"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Autocomplete",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "apiBase": "YOUR_SERVER_URL/v1",
+    "apiKey": "YOUR_API_KEY"
+  }
+}
+```
+
+Replace `YOUR_SERVER_URL` with <ServerUrl /> and `YOUR_API_KEY` with <ApiKeyLink />.
+
+### 4. Verify Configuration
+
+Press Ctrl+L to open chat and test the connection.
+
+## Usage Examples
+
+### Chat (Ctrl+L)
+
+Ask questions about your code:
+
+```
+Explain this function
+Find potential bugs
+Suggest improvements
+```
+
+### Edit (Ctrl+I)
+
+Select code and describe changes:
+
+```
+Add error handling
+Convert to async/await
+Add TypeScript types
+```
+
+### Tab Autocomplete
+
+Continue provides intelligent code completions as you type.
+
+### Slash Commands
+
+Use built-in commands:
+
+- `/edit` - Edit selected code
+- `/comment` - Add comments
+- `/share` - Share conversation
+- `/cmd` - Generate terminal commands
+
+## Advanced Configuration
+
+### Multiple Models
+
+Configure different models for different tasks:
+
+```json
+{
+  "models": [
+    {
+      "title": "Claude for reasoning",
+      "provider": "openai",
+      "model": "claude-sonnet-4-20250514",
+      "apiBase": "YOUR_SERVER_URL/v1",
+      "apiKey": "YOUR_API_KEY"
+    },
+    {
+      "title": "GPT-4o for coding",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "apiBase": "YOUR_SERVER_URL/v1",
+      "apiKey": "YOUR_API_KEY"
+    }
+  ]
+}
+```
+
+### Context Providers
+
+Add custom context to your prompts:
+
+```json
+{
+  "contextProviders": [
+    { "name": "code" },
+    { "name": "docs" },
+    { "name": "diff" },
+    { "name": "terminal" }
+  ]
+}
+```
+
+## Keyboard Shortcuts
+
+| Shortcut | Function |
+|----------|----------|
+| `Ctrl+L` | Open chat |
+| `Ctrl+I` | Inline edit |
+| `Ctrl+Shift+L` | Add to context |
+| `Tab` | Accept completion |
+| `Ctrl+Shift+R` | Regenerate |
+
+## FAQ
+
+### Q: Connection failed?
+
+1. Verify `apiBase` includes `/v1`
+2. Check `apiKey` is valid
+3. Ensure NexusGate is running
+
+### Q: Autocomplete not working?
+
+1. Check `tabAutocompleteModel` configuration
+2. Verify the model is available
+3. Restart the IDE
+
+### Q: How to use different models?
+
+Add multiple entries in the `models` array. Switch between them using the model selector in the chat panel.
+
+## Related Links
+
+- [Continue Documentation](https://docs.continue.dev/)
+- [Continue GitHub](https://github.com/continuedev/continue)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

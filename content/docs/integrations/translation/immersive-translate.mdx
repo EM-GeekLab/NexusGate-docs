@@ -1,0 +1,187 @@
+---
+title: Immersive Translate
+description: Configure Immersive Translate with NexusGate
+icon: Languages
+---
+
+Immersive Translate is a browser translation extension that supports bilingual web page translation, PDF translation, video subtitle translation, and more.
+
+## Overview
+
+- **Official Website**: [immersivetranslate.com](https://immersivetranslate.com/)
+- **Platforms**: Chrome, Edge, Firefox, Safari
+- **Features**:
+  - Bilingual side-by-side display
+  - Smart translation area detection
+  - Multiple translation services
+  - PDF and EPUB translation
+
+## Configuration Steps
+
+### 1. Install Extension
+
+#### Chrome / Edge
+
+1. Visit [Chrome Web Store](https://chrome.google.com/webstore)
+2. Search for "Immersive Translate"
+3. Click Install
+
+#### Firefox
+
+1. Visit [Firefox Add-ons](https://addons.mozilla.org/)
+2. Search for "Immersive Translate"
+3. Click Install
+
+#### Safari
+
+1. Search for "Immersive Translate" in Mac App Store
+2. Install the Safari extension
+
+### 2. Open Settings
+
+1. Click the Immersive Translate icon in the browser toolbar
+2. Click "Settings" or the gear icon
+
+### 3. Configure OpenAI Translation Service
+
+1. Find "Translation Service" in settings
+2. Select "OpenAI"
+3. Click "Custom API Endpoint"
+4. Fill in configuration:
+
+| Config Item | Value |
+|-------------|-------|
+| API Endpoint | <ServerUrl path="/api/v1/chat/completions" /> |
+| API Key | <ApiKeyLink /> |
+| Model | `gpt-4o-mini` |
+
+{/* TODO: Add Immersive Translate config screenshot */}
+{/* ![Immersive Translate Configuration](./images/immersive-translate-config.png) */}
+
+### 4. Set as Default Service
+
+Set OpenAI as default in the "Translation Service" list.
+
+## Usage Examples
+
+### Web Page Translation
+
+1. Open any foreign language webpage
+2. Click the extension icon or use shortcut
+3. Page displays bilingual side-by-side
+
+### PDF Translation
+
+1. Open a PDF file in the browser
+2. Click the extension's PDF translation feature
+3. Generate bilingual PDF
+
+### Video Subtitle Translation
+
+1. Open YouTube or other video sites
+2. Enable subtitle translation feature
+3. Display bilingual subtitles
+
+### Input Box Translation
+
+1. Enter text in any input box
+2. Use shortcut to trigger translation
+3. Replace with translation result
+
+## Advanced Configuration
+
+### Custom Translation Prompt
+
+Customize the translation prompt in settings:
+
+```
+You are a professional translation expert. Please translate the following {{from}} text into {{to}}.
+
+Requirements:
+1. Maintain original format
+2. Keep technical terms accurate
+3. Make language natural and fluent
+4. Localize expressions appropriately
+
+Original text:
+{{text}}
+```
+
+### Configure Translation Rules
+
+Configure different translation rules for different websites:
+
+```json
+{
+  "rules": [
+    {
+      "matches": ["twitter.com", "x.com"],
+      "translationService": "openai",
+      "model": "gpt-4o-mini"
+    },
+    {
+      "matches": ["arxiv.org"],
+      "translationService": "openai",
+      "model": "gpt-4o"
+    }
+  ]
+}
+```
+
+### Configure Shortcuts
+
+Customize shortcuts in settings:
+
+| Function | Suggested Shortcut |
+|----------|-------------------|
+| Translate page | `Alt + T` |
+| Translate selection | `Alt + Y` |
+| Toggle translation | `Alt + W` |
+
+### Exclude Translation Areas
+
+Use CSS selectors to exclude areas from translation:
+
+```
+.code-block
+pre
+code
+.no-translate
+```
+
+## FAQ
+
+### Q: Translation is slow?
+
+1. Use a faster model (e.g., gpt-4o-mini)
+2. Reduce the amount of text per translation
+3. Check network connection
+
+### Q: Some websites cannot be translated?
+
+1. Check if it's in the exclusion list
+2. Try refreshing the page
+3. Check if the site uses special frameworks
+
+### Q: Translation quality is poor?
+
+1. Try using a stronger model
+2. Adjust translation prompt
+3. Optimize settings for specific domains
+
+### Q: API call failed?
+
+1. Check API endpoint format
+2. Verify API Key is valid
+3. Confirm NexusGate service status
+
+### Q: How to translate local PDFs?
+
+1. Drag the PDF into the browser
+2. Or use the extension's "Upload PDF" feature
+
+## Related Links
+
+- [Immersive Translate Official Site](https://immersivetranslate.com/)
+- [Documentation](https://immersivetranslate.com/docs/)
+- [GitHub](https://github.com/immersive-translate/immersive-translate)

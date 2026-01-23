@@ -1,0 +1,137 @@
+---
+title: Cursor
+description: 配置 Cursor 使用 NexusGate
+icon: Code
+---
+
+Cursor 是一款基于 VS Code 的 AI 驱动代码编辑器，提供智能代码补全、聊天功能和 AI 辅助编辑。
+
+## 工具简介
+
+- **官方网站**: [cursor.com](https://cursor.com/)
+- **支持平台**: Windows、macOS、Linux
+- **特点**:
+  - AI 代码补全 (Tab)
+  - 内联编辑 (Ctrl+K)
+  - 带代码库上下文的聊天 (Ctrl+L)
+  - 兼容 VS Code 扩展
+
+## 配置步骤
+
+### 1. 安装 Cursor
+
+从 [cursor.com](https://cursor.com/) 下载并安装。
+
+### 2. 打开设置
+
+1. 打开 Cursor
+2. 进入设置 (Ctrl+,)
+3. 搜索 "OpenAI"
+
+### 3. 配置 API
+
+导航至 **Cursor Settings > Models > OpenAI API Key** 部分：
+
+| 配置项 | 值 |
+|--------|-----|
+| OpenAI API Key | <ApiKeyLink /> |
+| Override OpenAI Base URL | <ServerUrl path="/v1" /> |
+
+<Callout type="info">
+启用 "Override OpenAI Base URL" 选项以使用自定义 API 端点。
+</Callout>
+
+### 4. 选择模型
+
+在 Cursor 设置中配置要使用的模型：
+
+- 聊天: `gpt-4o` 或 `claude-sonnet-4-20250514`
+- 自动补全: `gpt-4o-mini`
+
+### 5. 验证配置
+
+1. 打开一个代码文件
+2. 按 Ctrl+L 打开聊天
+3. 提问以测试连接
+
+## 使用示例
+
+### 聊天 (Ctrl+L)
+
+打开 AI 聊天面板询问关于代码的问题：
+
+```
+这个函数是做什么的？
+如何优化这段代码？
+解释这个错误信息
+```
+
+### 内联编辑 (Ctrl+K)
+
+选中代码后按 Ctrl+K 进行内联编辑：
+
+```
+为这个函数添加错误处理
+转换为 TypeScript
+添加单元测试
+```
+
+### Tab 补全
+
+Cursor 在您输入时提供智能补全。按 Tab 接受建议。
+
+## 高级配置
+
+### 配置多个模型
+
+您可以添加多个模型配置：
+
+1. 进入 Cursor Settings > Models
+2. 添加通过 NexusGate 可用的模型
+3. 根据需要切换模型
+
+### 自定义规则
+
+在项目根目录创建 `.cursorrules` 文件：
+
+```
+- 所有新文件使用 TypeScript
+- 遵循现有代码风格
+- 为复杂逻辑添加注释
+- 使用 async/await 而非回调
+```
+
+## 快捷键
+
+| 快捷键 | 功能 |
+|--------|------|
+| `Ctrl+L` | 打开聊天 |
+| `Ctrl+K` | 内联编辑 |
+| `Ctrl+Shift+K` | 编辑选中内容 |
+| `Tab` | 接受补全 |
+| `Esc` | 取消建议 |
+
+## 常见问题
+
+### Q: 补全不工作？
+
+1. 检查 OpenAI API Key 是否正确设置
+2. 确认已启用 Override Base URL
+3. 确保 NexusGate 服务正在运行
+
+### Q: 聊天返回错误？
+
+1. 验证 API 端点格式：`<ServerUrl path="/v1" />`
+2. 检查 API Key 权限
+3. 确认模型名称有效
+
+### Q: 如何使用 Claude 模型？
+
+1. 确保在 NexusGate 中配置了 Anthropic 上游
+2. 在 Cursor 设置中输入模型名称如 `claude-sonnet-4-20250514`
+
+## 相关链接
+
+- [Cursor 官网](https://cursor.com/)
+- [Cursor 文档](https://docs.cursor.com/)
+- [NexusGate GitHub](https://github.com/EM-GeekLab/NexusGate)

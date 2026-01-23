@@ -1,0 +1,286 @@
+---
+title: 部署框架
+description: NexusGate 与 LLM 部署框架的兼容性
+icon: Server
+---
+
+本页面介绍如何将 NexusGate 与各种本地模型部署框架进行集成。
+
+<Callout type="info">
+自托管模型服务需要在 NexusGate 控制台中作为上游服务商进行配置。请在**上游服务商**页面使用其 OpenAI 兼容 API 端点进行添加。
+</Callout>
+
+## vLLM
+
+vLLM 是一个高性能的 LLM 推理框架，支持 PagedAttention 等优化技术。
+
+### 部署 vLLM
+
+```bash
+# 使用 Docker
+docker run --runtime nvidia --gpus all \
+  -v ~/.cache/huggingface:/root/.cache/huggingface \
+  -p 8000:8000 \
+  vllm/vllm-openai:latest \
+  --model Qwen/Qwen2.5-7B-Instruct \
+  --served-model-name qwen2.5-7b
+```
+
+### 在 NexusGate 中配置
+
+在 NexusGate 控制台中，添加新的上游服务商：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | OpenAI 兼容 |
+| Base URL | `http://localhost:8000/v1` |
+| API Key | 您的 vLLM API Key（如果配置了） |
+| 模型 | `qwen2.5-7b` |
+
+### 兼容性
+
+| 功能 | 状态 |
+|------|------|
+| Chat Completions | 支持 |
+| 流式响应 | 支持 |
+| 用量统计 | 支持 |
+| Function Calling | 支持（取决于模型） |
+| Vision | 支持（需要视觉模型） |
+
+## SGLang
+
+SGLang 是一个高效的 LLM 服务框架，专注于结构化生成。
+
+### 部署 SGLang
+
+```bash
+# 安装
+pip install sglang[all]
+
+# 启动服务
+python -m sglang.launch_server \
+  --model-path Qwen/Qwen2.5-7B-Instruct \
+  --port 8000 \
+  --host 0.0.0.0
+```
+
+### 在 NexusGate 中配置
+
+在 NexusGate 控制台中，添加新的上游服务商：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | OpenAI 兼容 |
+| Base URL | `http://localhost:8000/v1` |
+| 模型 | `Qwen/Qwen2.5-7B-Instruct` |
+
+### 兼容性
+
+| 功能 | 状态 |
+|------|------|
+| Chat Completions | 支持 |
+| 流式响应 | 支持 |
+| 用量统计 | 支持 |
+| Function Calling | 部分支持 |
+| Vision | 支持（需要视觉模型） |
+
+### 已知问题
+
+SGLang 的 `reasoning_tokens` 返回格式可能与标准不同。使用推理模型时请注意这一点。
+
+## TGI (Text Generation Inference)
+
+TGI 是 Hugging Face 提供的高性能推理服务。
+
+### 部署 TGI
+
+```bash
+docker run --gpus all --shm-size 1g \
+  -p 8080:80 \
+  -v ~/.cache/huggingface:/data \
+  ghcr.io/huggingface/text-generation-inference:latest \
+  --model-id Qwen/Qwen2.5-7B-Instruct \
+  --max-input-length 4096 \
+  --max-total-tokens 8192
+```
+
+### 在 NexusGate 中配置
+
+在 NexusGate 控制台中，添加新的上游服务商：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | OpenAI 兼容 |
+| Base URL | `http://localhost:8080/v1` |
+| 模型 | `Qwen/Qwen2.5-7B-Instruct` |
+
+### 兼容性
+
+| 功能 | 状态 |
+|------|------|
+| Chat Completions | 支持 |
+| 流式响应 | 支持 |
+| 用量统计 | 支持 |
+| Function Calling | 取决于模型 |
+| Vision | 不支持 |
+
+## Ollama
+
+Ollama 是一个易于使用的本地模型运行工具。
+
+### 部署 Ollama
+
+```bash
+# 安装 Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+
+# 拉取模型
+ollama pull llama3.2
+
+# 启动服务（默认端口 11434）
+ollama serve
+```
+
+### 在 NexusGate 中配置
+
+在 NexusGate 控制台中，添加新的上游服务商：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | Ollama |
+| Base URL | `http://localhost:11434/v1` |
+| 模型 | `llama3.2`、`qwen2.5`、`deepseek-r1` |
+
+### 兼容性
+
+| 功能 | 状态 |
+|------|------|
+| Chat Completions | 支持 |
+| 流式响应 | 支持 |
+| 用量统计 | 支持 |
+| Function Calling | 取决于模型 |
+| Vision | 支持（需要视觉模型） |
+
+### Ollama 特殊配置
+
+如需启用跨域请求：
+
+```bash
+# 设置环境变量
+export OLLAMA_ORIGINS="*"
+```
+
+## llama.cpp
+
+llama.cpp 提供轻量级的 CPU/GPU 推理能力。
+
+### 部署 llama.cpp 服务
+
+```bash
+# 编译
+git clone https://github.com/ggerganov/llama.cpp
+cd llama.cpp
+make LLAMA_CUDA=1
+
+# 启动服务
+./llama-server \
+  -m models/qwen2.5-7b.gguf \
+  --host 0.0.0.0 \
+  --port 8080
+```
+
+### 在 NexusGate 中配置
+
+在 NexusGate 控制台中，添加新的上游服务商：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | OpenAI 兼容 |
+| Base URL | `http://localhost:8080/v1` |
+| 模型 | `qwen2.5-7b` |
+
+### 兼容性
+
+| 功能 | 状态 |
+|------|------|
+| Chat Completions | 支持 |
+| 流式响应 | 支持 |
+| 用量统计 | 支持 |
+| Function Calling | 不支持 |
+| Vision | 需要多模态模型 |
+
+## MindIE
+
+MindIE 是华为的 AI 推理引擎。
+
+### 在 NexusGate 中配置
+
+在 NexusGate 控制台中，添加新的上游服务商：
+
+| 字段 | 值 |
+|------|-----|
+| 服务商类型 | OpenAI 兼容 |
+| Base URL | `http://localhost:8000/v1` |
+| 模型 | 您的模型名称 |
+
+### 兼容性
+
+| 功能 | 状态 |
+|------|------|
+| Chat Completions | 支持 |
+| 流式响应 | 支持 |
+| 用量统计 | 部分（取决于版本） |
+| Function Calling | 部分支持 |
+| Vision | 支持 |
+
+## 性能调优建议
+
+### vLLM
+
+```bash
+# 优化参数
+--tensor-parallel-size 2      # 多 GPU 并行
+--gpu-memory-utilization 0.9  # GPU 显存使用率
+--max-num-seqs 256           # 最大并发序列数
+```
+
+### Ollama
+
+```bash
+# 环境变量
+OLLAMA_NUM_PARALLEL=4        # 并行请求数
+OLLAMA_MAX_LOADED_MODELS=2   # 最大加载模型数
+```
+
+### llama.cpp
+
+```bash
+# 启动参数
+--n-gpu-layers 35            # GPU 层数
+--batch-size 512            # 批处理大小
+--ctx-size 8192             # 上下文长度
+```
+
+## 常见问题
+
+### Q: 模型列表显示不正确？
+
+本地部署框架的 `/models` 端点可能返回不同格式。在 NexusGate 中配置上游时，请手动指定模型名称。
+
+### Q: 用量统计不准确？
+
+部分框架的 Token 计数实现可能不一致。这是某些自托管推理框架的已知限制。
+
+### Q: 流式响应中断？
+
+1. 检查网络连接稳定性
+2. 增加超时配置
+3. 查看模型服务日志
+
+## 相关链接
+
+- [vLLM 文档](https://docs.vllm.ai/)
+- [SGLang 文档](https://github.com/sgl-project/sglang)
+- [TGI 文档](https://huggingface.co/docs/text-generation-inference)
+- [Ollama 文档](https://ollama.com/)
+- [llama.cpp 文档](https://github.com/ggerganov/llama.cpp)

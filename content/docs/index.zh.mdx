@@ -1,28 +1,28 @@
 ---
-title: 👋🏻 Welcome
-description: Unified AI Gateway for Model Management and Observability
+title: 👋🏻 欢迎使用
+description: 统一的 AI 网关，用于模型管理和可观测性
 ---
 
-Welcome to NexusGate! NexusGate is an open-source AI gateway service that provides unified AI model invocation management capabilities.
+欢迎使用 NexusGate！NexusGate 是一个开源的 AI 网关服务，旨在为您提供统一的 AI 模型调用管理能力。
 
-## What is NexusGate?
+## 什么是 NexusGate？
 
-NexusGate serves as an intermediary layer connecting your applications with various AI model providers, offering:
+NexusGate 作为中间层，连接您的应用与各种 AI 模型服务商，提供：
 
-- **Unified Interface**: Compatible with OpenAI API format, one interface for all models
-- **Usage Statistics**: Track token consumption, request counts, and other key metrics
-- **Multi-Model Support**: Support for OpenAI, Anthropic, DeepSeek, Alibaba Cloud, and more
-- **Downstream Compatibility**: Adapts to various AI tools and applications
+- **统一接口**：兼容 OpenAI API 格式，一套接口对接所有模型
+- **用量统计**：追踪 Token 消耗、请求次数等关键指标
+- **多模型支持**：支持 OpenAI、Anthropic、DeepSeek、阿里云百炼等服务商
+- **下游兼容**：适配各类 AI 工具和应用
 
-## Quick Start
+## 快速开始
 
 <Cards>
-  <Card title="Introduction" href="./guide/introduction" />
-  <Card title="Getting Started" href="./guide/getting-started" />
-  <Card title="Compatibility Matrix" href="./compatibility/matrix" />
+  <Card title="介绍" href="./guide/introduction" />
+  <Card title="快速开始" href="./guide/getting-started" />
+  <Card title="兼容性矩阵" href="./compatibility/matrix" />
 </Cards>
 
-## Architecture
+## 架构概览
 
 ```
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
@@ -36,7 +36,7 @@ NexusGate serves as an intermediary layer connecting your applications with vari
                                  ▼
                     ┌────────────────────────┐
                     │       NexusGate        │
-                    │   (OpenAI Compatible)  │
+                    │    (OpenAI 兼容 API)    │
                     └────────────┬───────────┘
                                  │
          ┌───────────────────────┼───────────────────────┐
@@ -48,29 +48,29 @@ NexusGate serves as an intermediary layer connecting your applications with vari
 └─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
 
-## Core Features
+## 核心特性
 
-### OpenAI Compatible API
+### OpenAI 兼容 API
 
-NexusGate is fully compatible with the OpenAI API format:
+NexusGate 完全兼容 OpenAI API 格式：
 
-- All tools supporting OpenAI API can be used directly
-- No code changes required, just update the API endpoint
-- Supports Chat Completions, Models, and other core endpoints
+- 所有支持 OpenAI API 的工具都可以直接使用
+- 无需修改现有代码，只需更改 API 地址
+- 支持 Chat Completions、Models 等核心接口
 
-### Multi-Model Routing
+### 多模型路由
 
-Support for configuring multiple upstream model providers:
+支持配置多个上游模型服务商：
 
-- **OpenAI**: GPT-4o, GPT-4o-mini, etc.
-- **Anthropic**: Claude 4 Opus/Sonnet
-- **DeepSeek**: DeepSeek-V3, DeepSeek-R1
-- **Alibaba Cloud**: Qwen series
-- **Local Deployment**: vLLM, SGLang, TGI, etc.
+- **OpenAI**：GPT-4o、GPT-4o-mini 等
+- **Anthropic**：Claude 4 Opus/Sonnet
+- **DeepSeek**：DeepSeek-V3、DeepSeek-R1
+- **阿里云百炼**：Qwen 系列
+- **本地部署**：vLLM、SGLang、TGI 等
 
-### Usage Tracking
+### 用量追踪
 
-Precise statistics for each request's resource consumption:
+精确统计每次请求的资源消耗：
 
 ```json
 {
@@ -83,7 +83,7 @@ Precise statistics for each request's resource consumption:
 }
 ```
 
-## Integration Guides
+## 集成指南
 
 <Cards>
   <Card title="Claude Code" href="./integrations/dev-tools/claude-code" />

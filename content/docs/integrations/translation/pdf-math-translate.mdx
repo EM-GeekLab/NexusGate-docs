@@ -1,0 +1,230 @@
+---
+title: PDFMathTranslate
+description: Configure PDFMathTranslate with NexusGate
+icon: FileText
+---
+
+PDFMathTranslate is a tool specifically designed for translating academic PDF documents while preserving formulas, charts, and formatting - ideal for translating research papers.
+
+## Overview
+
+- **GitHub**: [Byaidu/PDFMathTranslate](https://github.com/Byaidu/PDFMathTranslate)
+- **Platforms**: Windows, macOS, Linux
+- **Features**:
+  - Preserves mathematical formulas
+  - Maintains document layout
+  - Multiple translation services
+  - Batch translation support
+
+## Configuration Steps
+
+### 1. Install PDFMathTranslate
+
+#### Using pip
+
+```bash
+pip install pdf2zh
+```
+
+#### From Source
+
+```bash
+git clone https://github.com/Byaidu/PDFMathTranslate.git
+cd PDFMathTranslate
+pip install -e .
+```
+
+### 2. Configure Environment Variables
+
+Set NexusGate API information:
+
+```bash
+# Linux/macOS
+export OPENAI_BASE_URL="http://your-nexusgate-server:8080/api/v1"
+export OPENAI_API_KEY="your-nexusgate-api-key"
+
+# Windows PowerShell
+$env:OPENAI_BASE_URL="http://your-nexusgate-server:8080/api/v1"
+$env:OPENAI_API_KEY="your-nexusgate-api-key"
+```
+
+Replace with <ServerUrl path="/api/v1" /> and <ApiKeyLink />.
+
+Or configure permanently in `~/.bashrc` / `~/.zshrc`:
+
+```bash
+export OPENAI_BASE_URL="http://your-nexusgate-server:8080/api/v1"
+export OPENAI_API_KEY="your-nexusgate-api-key"
+```
+
+### 3. Verify Installation
+
+```bash
+pdf2zh --version
+```
+
+## Usage Examples
+
+### Basic Translation
+
+```bash
+# Translate single PDF
+pdf2zh input.pdf
+
+# Specify output file
+pdf2zh input.pdf -o output.pdf
+
+# Specify target language
+pdf2zh input.pdf -t zh
+```
+
+### Using Specific Model
+
+```bash
+# Use GPT-4o for translation
+pdf2zh input.pdf -s openai -m gpt-4o
+
+# Use GPT-4o-mini (faster)
+pdf2zh input.pdf -s openai -m gpt-4o-mini
+```
+
+### Batch Translation
+
+```bash
+# Translate all PDFs in directory
+pdf2zh ./papers/
+
+# Specify output directory
+pdf2zh ./papers/ -o ./translated/
+```
+
+### Translate Specific Pages
+
+```bash
+# Translate only first 10 pages
+pdf2zh input.pdf -p 1-10
+
+# Translate specific pages
+pdf2zh input.pdf -p 1,3,5-10
+```
+
+## Advanced Configuration
+
+### Configuration File
+
+Create config file `~/.pdf2zh/config.yaml`:
+
+```yaml
+# Translation service config
+service: openai
+model: gpt-4o-mini
+
+# API config
+openai:
+  base_url: http://your-nexusgate-server:8080/api/v1
+  api_key: your-nexusgate-api-key
+
+# Translation settings
+target_language: zh
+preserve_formula: true
+preserve_figure: true
+
+# Concurrency settings
+threads: 4
+```
+
+### Custom Translation Prompt
+
+```yaml
+# Add to config file
+prompt: |
+  You are a professional academic translation expert. Please translate the following academic text into Chinese.
+  Requirements:
+  1. Maintain accuracy of academic terminology
+  2. Keep formulas and variable names as-is
+  3. Preserve paragraph structure
+  4. Note English original for proper nouns on first occurrence
+```
+
+### Configure Multiple Translation Services
+
+```yaml
+services:
+  primary:
+    type: openai
+    base_url: http://your-nexusgate-server:8080/api/v1
+    api_key: your-api-key
+    model: gpt-4o
+
+  fallback:
+    type: openai
+    base_url: http://your-nexusgate-server:8080/api/v1
+    api_key: your-api-key
+    model: gpt-4o-mini
+```
+
+## Command Line Arguments
+
+| Argument | Description | Example |
+|----------|-------------|---------|
+| `-o` | Output file/directory | `-o output.pdf` |
+| `-t` | Target language | `-t zh` |
+| `-s` | Translation service | `-s openai` |
+| `-m` | Model name | `-m gpt-4o` |
+| `-p` | Page range | `-p 1-10` |
+| `--threads` | Concurrency | `--threads 4` |
+
+## FAQ
+
+### Q: Formulas display incorrectly after translation?
+
+1. Ensure using latest version
+2. Check if PDF is scanned (text version recommended)
+3. Try adjusting formula protection options
+
+### Q: Translation is slow?
+
+1. Use faster model (gpt-4o-mini)
+2. Increase concurrent threads
+3. Only translate needed pages
+
+### Q: Memory usage too high?
+
+1. Reduce concurrency
+2. Batch translate large documents
+3. Use `--low-memory` mode
+
+### Q: Translation quality is poor?
+
+1. Use stronger model (gpt-4o or claude)
+2. Customize translation prompt
+3. Adjust terminology for specific domains
+
+### Q: How to translate scanned PDFs?
+
+Scanned PDFs require OCR first:
+
+```bash
+# Use OCR mode
+pdf2zh input.pdf --ocr
+```
+
+## Web Interface
+
+PDFMathTranslate also provides a web interface:
+
+```bash
+# Start web service
+pdf2zh-server
+
+# Specify port
+pdf2zh-server --port 8000
+```
+
+Access `http://localhost:8000` for the graphical interface.
+
+## Related Links
+
+- [PDFMathTranslate GitHub](https://github.com/Byaidu/PDFMathTranslate)
+- [Documentation](https://github.com/Byaidu/PDFMathTranslate/blob/main/README.md)
+- [Issue Tracker](https://github.com/Byaidu/PDFMathTranslate/issues)

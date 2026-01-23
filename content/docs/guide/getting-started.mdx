@@ -1,0 +1,156 @@
+---
+title: Getting Started
+description: Quick guide to deploy and start using NexusGate
+icon: Play
+---
+
+This guide will help you quickly deploy NexusGate and start using it.
+
+## Prerequisites
+
+- Docker and Docker Compose
+- At least one AI provider API Key (such as OpenAI, Anthropic, DeepSeek, etc.)
+
+## Deploy NexusGate
+
+### Using Docker Compose (Recommended)
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/EM-GeekLab/NexusGate.git
+cd NexusGate
+```
+
+2. Copy the configuration file:
+
+```bash
+cp .env.example .env
+```
+
+3. Edit the `.env` file to configure basic settings:
+
+```bash
+# Database configuration
+DATABASE_URL=postgresql://postgres:postgres@db:5432/nexusgate
+
+# JWT secret (change to a random string for security)
+JWT_SECRET=your-secret-key
+```
+
+<Callout type="info">
+Upstream AI providers (OpenAI, Anthropic, etc.) are configured through the NexusGate web console, not via environment variables.
+</Callout>
+
+4. Start the service:
+
+```bash
+docker compose up -d
+```
+
+5. Access the console:
+
+Open your browser and visit <ServerUrl />
+
+## Initial Setup
+
+### 1. Create Admin Account
+
+On first launch, you'll be prompted to create an admin account. Follow the on-screen instructions to complete the setup.
+
+### 2. Configure Upstream Providers
+
+1. Log in to the NexusGate console
+2. Navigate to the **Upstreams** or **Providers** page
+3. Click **Add Provider** and select your AI service (e.g., OpenAI, Anthropic)
+4. Enter your API Key and configure the available models
+5. Save the configuration
+
+### 3. Create API Key
+
+1. Go to the **API Keys** page
+2. Click **Create API Key**
+3. Give it a descriptive name
+4. Save the generated Key (it will only be displayed once)
+
+## Configure Downstream Tools
+
+Once you have an API Key, use the following configuration in your downstream tools:
+
+| Config Item | Value |
+|-------------|-------|
+| API URL | <ServerUrl path="/v1" /> |
+| API Key | <ApiKeyLink /> |
+| Model | Select based on your configured upstream providers |
+
+### Example: Configure Chatbox
+
+1. Open Chatbox Settings
+2. Select **OpenAI API**
+3. Enter the configuration:
+   - API Host: <ServerUrl />
+   - API Path: `/v1/chat/completions`
+   - API Key: <ApiKeyLink />
+
+## Verify Connection
+
+Test the API connection using curl:
+
+<ConfigCode lang="bash">
+<CodeLine>curl -X POST <CodeString>"<ServerUrl path="/v1/chat/completions" />"</CodeString> {"\\"}</CodeLine>
+<CodeLine>  -H <CodeString>"Content-Type: application/json"</CodeString> {"\\"}</CodeLine>
+<CodeLine>  -H <CodeString>"Authorization: Bearer <ApiKeyLink />"</CodeString> {"\\"}</CodeLine>
+<CodeLine>  -d <CodeString>{`'{"model": "gpt-4o", "messages": [{"role": "user", "content": "Hello!"}]}'`}</CodeString></CodeLine>
+</ConfigCode>
+
+Successful response example:
+
+```json
+{
+  "id": "chatcmpl-xxx",
+  "object": "chat.completion",
+  "created": 1234567890,
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Hello! How can I help you today?"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 10,
+    "completion_tokens": 9,
+    "total_tokens": 19
+  }
+}
+```
+
+## Next Steps
+
+- Browse the [Integration Guides](../integrations/dev-tools/claude-code) to configure more tools
+- View the [Compatibility Matrix](../compatibility/matrix) to see supported providers and tools
+- Learn about [Upstream Providers](../compatibility/upstream) for detailed provider information
+
+## Troubleshooting
+
+### Connection Failed?
+
+1. Check if the NexusGate service is running: `docker compose ps`
+2. Verify the API URL format is correct (must include `/v1`)
+3. Confirm your API Key is valid and not expired
+
+### Model Unavailable?
+
+1. Ensure the upstream provider is configured in the NexusGate console
+2. Verify the upstream provider's API Key is correct
+3. Check the NexusGate logs for errors: `docker compose logs -f`
+
+### Cannot Access Console?
+
+1. Ensure port 8080 (or your configured port) is not blocked by a firewall
+2. Check if the container started successfully: `docker compose logs nexusgate`
+3. Verify the DATABASE_URL is correct and the database is accessible

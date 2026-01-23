@@ -1,0 +1,201 @@
+---
+title: Cherry Studio
+description: 配置 Cherry Studio 使用 NexusGate
+icon: Sparkles
+---
+
+Cherry Studio 是一款功能丰富的桌面 AI 助手，支持多模型对话、知识库、Agent 等高级功能。
+
+## 工具简介
+
+- **官方网站**：[cherry-ai.com](https://cherry-ai.com/)
+- **GitHub**：[kangfenmao/cherry-studio](https://github.com/kangfenmao/cherry-studio)
+- **支持平台**：Windows、macOS、Linux
+- **特点**：
+  - 多模型支持
+  - 本地知识库
+  - Agent 智能体
+  - 插件系统
+
+## 配置步骤
+
+### 1. 下载安装
+
+访问 [Cherry Studio 官网](https://cherry-ai.com/) 或 GitHub Releases 下载安装包。
+
+```bash
+# macOS (Homebrew)
+brew install --cask cherry-studio
+```
+
+### 2. 打开设置
+
+1. 启动 Cherry Studio
+2. 点击左下角「设置」图标
+3. 选择「模型服务」
+
+### 3. 添加 OpenAI 兼容服务
+
+1. 点击「添加服务」
+2. 选择「OpenAI」
+3. 填入配置：
+
+| 配置项 | 值 |
+|--------|-----|
+| 服务名称 | `NexusGate` |
+| API 地址 | <ServerUrl path="/api/v1" /> |
+| API Key | <ApiKeyLink /> |
+
+{/* TODO: 添加 Cherry Studio 配置截图 */}
+{/* ![Cherry Studio 配置](./images/cherry-studio-config.png) */}
+
+### 4. 添加模型
+
+在服务配置下添加可用模型：
+
+```
+gpt-4o
+gpt-4o-mini
+claude-sonnet-4-20250514
+deepseek-chat
+deepseek-reasoner
+```
+
+### 5. 保存并测试
+
+点击「保存」后创建新对话测试。
+
+## 使用示例
+
+### 基本对话
+
+1. 点击「+ 新对话」
+2. 选择模型
+3. 开始对话
+
+### 多模型对话
+
+Cherry Studio 支持在同一对话中使用多个模型：
+
+1. 发送消息后点击「换个模型回答」
+2. 选择其他模型获取不同回答
+3. 比较不同模型的输出
+
+### 使用 Agent
+
+1. 进入「Agent」页面
+2. 选择预设 Agent 或创建新 Agent
+3. 配置 Agent 的系统提示词和工具
+
+### 知识库问答
+
+1. 进入「知识库」页面
+2. 创建新知识库
+3. 上传文档（支持 PDF、Word、Markdown 等）
+4. 在对话中引用知识库
+
+## 高级配置
+
+### 配置多个服务商
+
+可以同时配置多个服务商：
+
+```yaml
+服务商 1: NexusGate (OpenAI 兼容)
+  - gpt-4o
+  - gpt-4o-mini
+  - claude-sonnet-4-20250514
+
+服务商 2: 本地模型 (Ollama)
+  - llama3
+  - mistral
+```
+
+### 自定义 Agent
+
+创建专业领域的 Agent：
+
+```yaml
+名称: 代码助手
+系统提示词: |
+  你是一位资深的软件工程师。
+  你擅长：
+  - 代码审查和优化
+  - 架构设计
+  - Bug 修复
+  - 单元测试编写
+
+  请使用中文回复，代码注释使用英文。
+
+模型: gpt-4o
+工具: 代码执行、文件读写
+```
+
+### 配置知识库
+
+优化知识库检索效果：
+
+| 设置 | 说明 | 建议值 |
+|------|------|--------|
+| 分块大小 | 文档分块长度 | 500 |
+| 重叠大小 | 分块重叠长度 | 50 |
+| Top K | 检索数量 | 5 |
+| 相似度阈值 | 最小相似度 | 0.7 |
+
+### 配置插件
+
+Cherry Studio 支持插件扩展：
+
+1. 进入设置 → 插件
+2. 浏览可用插件
+3. 安装并配置
+
+## 快捷键
+
+| 快捷键 | 功能 |
+|--------|------|
+| `Ctrl+N` | 新建对话 |
+| `Ctrl+Enter` | 发送消息 |
+| `Ctrl+Shift+N` | 新建 Agent 对话 |
+| `Ctrl+K` | 快速切换 |
+| `Ctrl+,` | 打开设置 |
+
+## 常见问题
+
+### Q: 模型列表为空？
+
+1. 检查 API 地址是否正确
+2. 手动添加模型名称
+3. 确认 NexusGate 服务状态
+
+### Q: 知识库检索不准确？
+
+1. 调整分块大小
+2. 优化文档格式
+3. 调整相似度阈值
+
+### Q: Agent 工具调用失败？
+
+1. 确保使用支持 Function Call 的模型
+2. 检查工具配置
+3. 查看错误日志
+
+### Q: 如何导出对话记录？
+
+1. 右键点击对话
+2. 选择「导出」
+3. 选择格式（Markdown、JSON、PDF）
+
+## 数据同步
+
+Cherry Studio 支持数据同步：
+
+1. 进入设置 → 同步
+2. 配置 WebDAV 或其他同步服务
+3. 启用自动同步
+
+## 相关链接
+
+- [Cherry Studio 官网](https://cherry-ai.com/)
+- [Cherry Studio GitHub](https://github.com/kangfenmao/cherry-studio)
+- [使用文档](https://docs.cherry-ai.com/)

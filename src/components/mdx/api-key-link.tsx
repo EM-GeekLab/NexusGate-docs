@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronDown } from 'lucide-react';
 import { useApiKey } from './api-key-context';
 
@@ -11,6 +12,8 @@ interface ApiKeyLinkProps {
 export function ApiKeyLink({ text }: ApiKeyLinkProps) {
   const [isZh, setIsZh] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const { apiKeys, selectedApiKey, setSelectedApiKey, isLoading, error } = useApiKey();
 
   useEffect(() => {
@@ -18,6 +21,37 @@ export function ApiKeyLink({ text }: ApiKeyLinkProps) {
       setIsZh(window.location.pathname.includes('/zh/'));
     }
   }, []);
+
+  // Update dropdown position
+  const updatePosition = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      // getBoundingClientRect returns viewport-relative position
+      // position: fixed also uses viewport-relative position
+      setDropdownPosition({
+        top: rect.bottom + 4,
+        left: rect.left,
+      });
+    }
+  };
+
+  // Update position when opening and on scroll/resize
+  useEffect(() => {
+    if (isOpen) {
+      updatePosition();
+
+      // Listen for scroll and resize events to update position
+      const handleScrollOrResize = () => updatePosition();
+
+      window.addEventListener('scroll', handleScrollOrResize, true);
+      window.addEventListener('resize', handleScrollOrResize);
+
+      return () => {
+        window.removeEventListener('scroll', handleScrollOrResize, true);
+        window.removeEventListener('resize', handleScrollOrResize);
+      };
+    }
+  }, [isOpen]);
 
   const handleClick = () => {
     if (typeof window !== 'undefined') {
@@ -52,8 +86,9 @@ export function ApiKeyLink({ text }: ApiKeyLinkProps) {
     : '';
 
   return (
-    <span className="relative inline-block">
+    <span className="inline-block">
       <button
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="fd-inline-code cursor-pointer inline-flex items-center gap-1 hover:text-fd-primary transition-colors"
         title={isZh ? '点击选择 API Key' : 'Click to select API Key'}
@@ -62,15 +97,21 @@ export function ApiKeyLink({ text }: ApiKeyLinkProps) {
         <ChevronDown className="size-3" />
       </button>
 
-      {isOpen && (
+      {isOpen && typeof document !== 'undefined' && createPortal(
         <>
           {/* Backdrop to close dropdown */}
           <div
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-[9998]"
             onClick={() => setIsOpen(false)}
           />
           {/* Dropdown menu */}
-          <div className="absolute left-0 top-full mt-1 z-50 min-w-[200px] rounded-md border bg-fd-popover p-1 shadow-md">
+          <div
+            className="fixed z-[9999] min-w-[200px] rounded-md border bg-fd-popover p-1 shadow-lg"
+            style={{
+              top: dropdownPosition.top,
+              left: dropdownPosition.left,
+            }}
+          >
             {apiKeys.map((apiKey) => (
               <button
                 key={apiKey.key}
@@ -97,7 +138,8 @@ export function ApiKeyLink({ text }: ApiKeyLinkProps) {
               </button>
             </div>
           </div>
-        </>
+        </>,
+        document.body
       )}
     </span>
   );

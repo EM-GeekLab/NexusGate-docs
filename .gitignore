@@ -17,5 +17,6 @@ node_modules
 
 .source
 
-# Build output (generated to backend/docs)
+# Build output
+dist/
 ../backend/docs/

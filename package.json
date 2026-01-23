@@ -5,10 +5,10 @@
   "sideEffects": false,
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && rm -rf ../backend/docs/server",
+    "build": "vite build && rm -rf dist/server ../backend/docs/server 2>/dev/null; [ -d dist/client ] && (cp -r dist/client/. ../NexusGate/backend/docs/ 2>/dev/null || cp -r dist/client/. ../backend/docs/); [ -d ../backend/docs/client ] && cp -r ../backend/docs/client/. ../backend/docs/ && rm -rf ../backend/docs/client; true",
     "start": "serve dist/client",
     "types:check": "fumadocs-mdx && tsc --noEmit",
-    "postinstall": "fumadocs-mdx"
+    "postinstall": "fumadocs-mdx 2>/dev/null || true"
   },
   "dependencies": {
     "@orama/orama": "^3.1.18",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "@types/mdx": "^2.0.13",
-    "@types/node": "^25.0.5",
+    "@types/node": "^18.19.0",
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.2",

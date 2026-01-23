@@ -9,14 +9,18 @@ interface NavTitleProps {
 export function NavTitle({ locale }: NavTitleProps) {
   const isZh = locale === 'zh';
 
-  // Use relative path to go up from /docs/ to root /
+  const handleClick = () => {
+    // Navigate to root, bypassing the /docs/ base path
+    window.location.href = window.location.origin + '/';
+  };
+
   return (
-    <a
-      href="/"
+    <button
+      onClick={handleClick}
       className="flex items-center gap-2 text-sm font-medium text-fd-foreground transition-colors hover:text-fd-foreground/80"
     >
       <ArrowLeft className="size-4" />
       {isZh ? '返回控制台' : 'Back to Dashboard'}
-    </a>
+    </button>
   );
 }

@@ -5,6 +5,7 @@ import { RootProvider } from 'fumadocs-ui/provider/tanstack';
 import { defineI18nUI } from 'fumadocs-ui/i18n';
 import SearchDialog from '@/components/search';
 import { i18n } from '@/lib/i18n';
+import { ApiKeyProvider } from '@/components/mdx';
 
 const { provider } = defineI18nUI(i18n, {
   translations: {
@@ -61,9 +62,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="flex flex-col min-h-screen">
-        <RootProvider i18n={provider(lang)} search={{ SearchDialog }}>
-          {children}
-        </RootProvider>
+        <ApiKeyProvider>
+          <RootProvider i18n={provider(lang)} search={{ SearchDialog }}>
+            {children}
+          </RootProvider>
+        </ApiKeyProvider>
         <Scripts />
       </body>
     </html>

@@ -9,15 +9,19 @@ interface SidebarBannerProps {
 export function SidebarBanner({ locale }: SidebarBannerProps) {
   const isZh = locale === 'zh';
 
+  const handleClick = () => {
+    window.location.href = window.location.origin + '/';
+  };
+
   return (
     <div className="px-4 pb-2">
-      <a
-        href="/"
-        className="flex items-center justify-center gap-2 rounded-md border border-fd-border px-3 py-2 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent hover:text-fd-accent-foreground"
+      <button
+        onClick={handleClick}
+        className="flex w-full items-center justify-center gap-2 rounded-md border border-fd-border px-3 py-2 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent hover:text-fd-accent-foreground"
       >
         <ArrowLeft className="size-4" />
         {isZh ? '返回控制台' : 'Back to Dashboard'}
-      </a>
+      </button>
     </div>
   );
 }

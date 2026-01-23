@@ -1,3 +1,8 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
+
+/* Custom inline code styling - ensure no backticks are displayed */
+.fd-inline-code {
+  @apply rounded-md bg-fd-muted px-1.5 py-0.5 font-mono text-sm;
+}

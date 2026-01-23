@@ -1,11 +1,10 @@
-import { Link } from '@tanstack/react-router';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 
 export function NotFound() {
   return (
     <HomeLayout
       nav={{
-        title: 'Tanstack Start',
+        title: 'NexusGate Docs',
       }}
       className="text-center py-32 justify-center"
     >
@@ -16,12 +15,12 @@ export function NotFound() {
           The page you are looking for might have been removed, had its name changed, or is
           temporarily unavailable.
         </p>
-        <Link
-          to="/"
+        <a
+          href="/en"
           className="mt-4 px-4 py-2 rounded-lg bg-fd-primary text-fd-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity"
         >
           Back to Home
-        </Link>
+        </a>
       </div>
     </HomeLayout>
   );

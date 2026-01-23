@@ -1,20 +1,15 @@
-import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import type { DocsLayoutProps } from 'fumadocs-ui/layouts/docs';
-import { SidebarFooter } from '@/components/sidebar-footer';
+import { SidebarBanner } from '@/components/sidebar-banner';
+import { i18n } from './i18n';
 
-export function baseOptions(): Omit<DocsLayoutProps, 'tree' | 'children'> {
+export function baseOptions(locale: string): Omit<DocsLayoutProps, 'tree' | 'children'> {
   return {
+    i18n,
     nav: {
       title: 'NexusGate Docs',
     },
-    links: [
-      {
-        text: 'Dashboard',
-        url: '/',
-      },
-    ],
     sidebar: {
-      footer: <SidebarFooter />,
+      banner: <SidebarBanner locale={locale} />,
     },
   };
 }

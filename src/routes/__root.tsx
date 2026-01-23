@@ -1,8 +1,28 @@
-import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-router';
+import { createRootRoute, HeadContent, Outlet, Scripts, useParams } from '@tanstack/react-router';
 import * as React from 'react';
 import appCss from '@/styles/app.css?url';
 import { RootProvider } from 'fumadocs-ui/provider/tanstack';
+import { defineI18nUI } from 'fumadocs-ui/i18n';
 import SearchDialog from '@/components/search';
+import { i18n } from '@/lib/i18n';
+
+const { provider } = defineI18nUI(i18n, {
+  translations: {
+    zh: {
+      displayName: '中文',
+      search: '搜索文档',
+      toc: '目录',
+      lastUpdate: '最后更新',
+      searchNoResult: '未找到结果',
+      previousPage: '上一页',
+      nextPage: '下一页',
+      chooseLanguage: '选择语言',
+    },
+    en: {
+      displayName: 'English',
+    },
+  },
+});
 
 export const Route = createRootRoute({
   head: () => ({
@@ -15,7 +35,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Fumadocs on TanStack Start',
+        title: 'NexusGate Docs',
       },
     ],
     links: [{ rel: 'stylesheet', href: appCss }],
@@ -32,13 +52,18 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const params = useParams({ strict: false }) as { lang?: string };
+  const lang = params.lang ?? i18n.defaultLanguage;
+
   return (
-    <html suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body className="flex flex-col min-h-screen">
-        <RootProvider search={{ SearchDialog }}>{children}</RootProvider>
+        <RootProvider i18n={provider(lang)} search={{ SearchDialog }}>
+          {children}
+        </RootProvider>
         <Scripts />
       </body>
     </html>

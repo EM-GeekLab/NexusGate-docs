@@ -9,12 +9,14 @@ import { baseOptions } from '@/lib/layout.shared';
 import { staticFunctionMiddleware } from '@tanstack/start-static-server-functions';
 import { useFumadocsLoader } from 'fumadocs-core/source/client';
 import { Suspense } from 'react';
+import { ServerUrl, ApiKeyLink, InlineCode, ConfigCode, CodeKeyword, CodeString, CodeComment, CodeLine } from '@/components/mdx';
 
-export const Route = createFileRoute('/$')({
+export const Route = createFileRoute('/$lang/$' as any)({
   component: Page,
   loader: async ({ params }) => {
-    const slugs = params._splat?.split('/') ?? [];
-    const data = await loader({ data: slugs });
+    const { lang, _splat } = params as { lang: string; _splat?: string };
+    const slugs = _splat?.split('/') ?? [];
+    const data = await loader({ data: { slugs, lang } });
     await clientLoader.preload(data.path);
     return data;
   },
@@ -23,22 +25,22 @@ export const Route = createFileRoute('/$')({
 const loader = createServerFn({
   method: 'GET',
 })
-  .inputValidator((slugs: string[]) => slugs)
+  .inputValidator((input: { slugs: string[]; lang: string }) => input)
   .middleware([staticFunctionMiddleware])
-  .handler(async ({ data: slugs }) => {
-    const page = source.getPage(slugs);
+  .handler(async ({ data: { slugs, lang } }) => {
+    const page = source.getPage(slugs, lang);
     if (!page) throw notFound();
 
     return {
       path: page.path,
-      pageTree: await source.serializePageTree(source.getPageTree()),
+      lang,
+      pageTree: await source.serializePageTree(source.getPageTree(lang)),
     };
   });
 
 const clientLoader = browserCollections.docs.createClientLoader({
   component(
     { toc, frontmatter, default: MDX },
-    // you can define props for the component
     props: {
       className?: string;
     },
@@ -51,6 +53,14 @@ const clientLoader = browserCollections.docs.createClientLoader({
           <MDX
             components={{
               ...defaultMdxComponents,
+              ServerUrl,
+              ApiKeyLink,
+              code: InlineCode,
+              ConfigCode,
+              CodeKeyword,
+              CodeString,
+              CodeComment,
+              CodeLine,
             }}
           />
         </DocsBody>
@@ -61,9 +71,10 @@ const clientLoader = browserCollections.docs.createClientLoader({
 
 function Page() {
   const data = useFumadocsLoader(Route.useLoaderData());
+  const { lang } = Route.useParams();
 
   return (
-    <DocsLayout {...baseOptions()} tree={data.pageTree}>
+    <DocsLayout {...baseOptions(lang)} tree={data.pageTree}>
       <Suspense>
         {clientLoader.useContent(data.path, {
           className: '',

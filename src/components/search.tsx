@@ -18,16 +18,17 @@ function initOrama() {
   return create({
     schema: { _: 'string' },
     // https://docs.orama.com/docs/orama-js/supported-languages
+    // Using English for all languages as Chinese requires special tokenizer
     language: 'english',
   });
 }
 
 export default function DefaultSearchDialog(props: SharedProps) {
-  const { locale } = useI18n(); // (optional) for i18n
+  const { locale } = useI18n();
   const { search, setSearch, query } = useDocsSearch({
     type: 'static',
     initOrama,
-    locale,
+    // Don't pass locale to avoid language errors - use English tokenizer for all
   });
 
   return (

@@ -12,7 +12,7 @@ export default defineConfig({
   },
   build: {
     outDir: '../backend/docs',
-    emptyDirBeforeWrite: true,
+    emptyOutDir: true,
   },
   plugins: [
     mdx(await import('./source.config')),
@@ -35,7 +35,10 @@ export default defineConfig({
           path: '/',
         },
         {
-          path: '/test',
+          path: '/en',
+        },
+        {
+          path: '/zh',
         },
         {
           path: '/api/search',

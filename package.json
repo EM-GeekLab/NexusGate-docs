@@ -5,10 +5,10 @@
   "sideEffects": false,
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && rm -rf dist/server 2>/dev/null; [ -f dist/client/_shell.html ] && [ ! -f dist/client/index.html ] && cp dist/client/_shell.html dist/client/index.html; [ -d dist/client ] && (cp -r dist/client/. ../NexusGate/backend/docs/ 2>/dev/null || cp -r dist/client/. ../backend/docs/ 2>/dev/null) || true",
+    "build": "vite build && rm -rf dist/server 2>/dev/null; [ -f dist/client/_shell.html ] && [ ! -f dist/client/index.html ] && cp dist/client/_shell.html dist/client/index.html; [ -d dist/client ] && (cp -r dist/client/. ../NexusGate/backend/docs/ 2>/dev/null || cp -r dist/client/. ../backend/docs/ 2>/dev/null)",
     "start": "serve dist/client",
     "types:check": "fumadocs-mdx && tsc --noEmit",
-    "postinstall": "fumadocs-mdx 2>/dev/null || true"
+    "postinstall": "fumadocs-mdx 2>/dev/null"
   },
   "dependencies": {
     "@orama/orama": "^3.1.18",

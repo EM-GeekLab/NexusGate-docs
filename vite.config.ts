@@ -28,7 +28,7 @@ export default defineConfig({
           crawlLinks: true,
         },
       },
-      pages: [],
+      pages: [{ path: '/en' }, { path: '/zh' }],
     }),
     react(),
   ],

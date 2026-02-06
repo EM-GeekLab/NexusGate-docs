@@ -25,7 +25,7 @@ export default defineConfig({
         enabled: true,
         prerender: {
           enabled: false,
-          crawlLinks: false,
+          crawlLinks: true,
         },
       },
       pages: [],

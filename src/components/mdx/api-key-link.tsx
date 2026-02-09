@@ -80,11 +80,6 @@ export function ApiKeyLink({ text }: ApiKeyLinkProps) {
   const selectedKeyInfo = apiKeys.find(k => k.key === selectedApiKey);
   const displayName = selectedKeyInfo?.comment || (isZh ? '选择 API Key' : 'Select API Key');
 
-  // Mask the API key for display
-  const maskedKey = selectedApiKey
-    ? `${selectedApiKey.slice(0, 8)}...${selectedApiKey.slice(-4)}`
-    : '';
-
   return (
     <span className="inline-block">
       <button
@@ -93,7 +88,7 @@ export function ApiKeyLink({ text }: ApiKeyLinkProps) {
         className="fd-inline-code cursor-pointer inline-flex items-center gap-1 hover:text-fd-primary transition-colors"
         title={isZh ? '点击选择 API Key' : 'Click to select API Key'}
       >
-        <span>{maskedKey || displayName}</span>
+        <span>{selectedApiKey || displayName}</span>
         <ChevronDown className="size-3" />
       </button>
 
@@ -124,8 +119,8 @@ export function ApiKeyLink({ text }: ApiKeyLinkProps) {
                 }`}
               >
                 <div className="font-medium">{apiKey.comment || (isZh ? '未命名' : 'Unnamed')}</div>
-                <div className="text-xs text-fd-muted-foreground font-mono">
-                  {apiKey.key.slice(0, 8)}...{apiKey.key.slice(-4)}
+                <div className="text-xs text-fd-muted-foreground font-mono break-all">
+                  {apiKey.key}
                 </div>
               </button>
             ))}

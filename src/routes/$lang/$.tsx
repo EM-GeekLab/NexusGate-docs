@@ -6,7 +6,7 @@ import browserCollections from 'fumadocs-mdx:collections/browser';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { baseOptions } from '@/lib/layout.shared';
-import { staticFunctionMiddleware } from '@tanstack/start-static-server-functions';
+import { staticFunctionMiddleware } from '@/lib/static-function-middleware';
 import { useFumadocsLoader } from 'fumadocs-core/source/client';
 import { Suspense } from 'react';
 import { ServerUrl, ApiKeyLink, InlineCode, ConfigCode, CodeKeyword, CodeString, CodeComment, CodeLine } from '@/components/mdx';
